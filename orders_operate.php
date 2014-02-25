@@ -320,10 +320,10 @@ function approve() {
 		  WHERE id=$id" ;
 		$result = $db_conn->query($query);
 		//Send reminder mail to the people who requested this order after the order is approved.
-		$query="SELECT * FROM `orders_mails` WHERE `key`='is_approve_mail'";
+		$query="SELECT * FROM `orders_mails` WHERE `key`='is_approve_mail_to_requester'";
 		$result=$db_conn->query($query);
-		$match_orders_mails=$result->fetch_assoc();
-		if ($match_orders_mails['value']==1) {
+		$match_orders_mails_approve=$result->fetch_assoc();
+		if ($match_orders_mails_approve['value']==1) {
 			$created_by=$order['created_by'];
 			$people=get_record_from_id('people',$created_by);
 			$to=trim($people['email']);
@@ -1284,10 +1284,10 @@ function receive() {
 			}
 			//Send mail to the people who requested this order after the product is received by other people.
 			$created_by=$order['created_by'];
-			$query="SELECT * FROM `orders_mails` WHERE `key`='is_receive_mail'";
+			$query="SELECT * FROM `orders_mails` WHERE `key`='is_receive_mail_to_requester'";
 			$result=$db_conn->query($query);
-			$match_orders_mails=$result->fetch_assoc();
-			if ($match_orders_mails['value']==1&&$received_by!=$created_by) {
+			$match_orders_mails_receive=$result->fetch_assoc();
+			if ($match_orders_mails_receive['value']==1&&$received_by!=$created_by) {
 				$people=get_record_from_id('people',$created_by);
 				$to=trim($people['email']);
 				$subject = 'Your order received';
