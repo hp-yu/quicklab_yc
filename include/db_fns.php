@@ -27,6 +27,34 @@ function query_select_choose($name, $query, $value, $display, $default='')
 
   return($select);
 }
+function query_select_choose_numeric($name, $query, $value, $display, $default='0')
+{
+  $db_conn = db_connect();
+  $result = $db_conn->query($query);
+  if (!$result)
+  {
+    return('');
+  }
+
+  $select  = "<select id ='$name' name='$name'>";
+  $select .= '<option value="0"';
+  if($default == '') $select .= ' selected ';
+  $select .= '>- Choose -</option>';
+
+  for ($i=0; $i < $result->num_rows; $i++)
+  {
+    $option = $result->fetch_assoc();
+    $select .= "<option value='{$option[$value]}'";
+    if ($option[$value] == $default)
+    {
+      $select .= ' selected';
+    }
+    $select .=  ">{$option[$display]}</option>";
+  }
+  $select .= "</select>\n";
+
+  return($select);
+}
 function query_select($name, $query, $value, $display, $default='')
 {
   $db_conn = db_connect();

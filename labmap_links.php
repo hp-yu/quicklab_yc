@@ -364,6 +364,13 @@ function MoveLinkForm ()
     {
   	  alert_map();
     }
+        ?>
+<script type="text/javascript" src="include/phprpc/js/compressed/phprpc_client.js"></script>
+<script type="text/javascript" src="include/phprpc/cascade_select.js"></script>
+<script>
+rpc_cascade_select.useService('include/phprpc/cascade_select.php');
+</script>
+    <?php
 	$nodeIds=implode(",",$_REQUEST['selectedLink']);
 	standardForm ("MOVELINK", $_REQUEST['parent'], $_REQUEST['parentName'], $_REQUEST['user']);
 	echo '<input type=hidden name=nodeIds value='.$nodeIds.">" .  "\n";
@@ -372,10 +379,7 @@ function MoveLinkForm ()
 	echo "<tr><td valign=top>Move selected<br>boxes from:<td valign=bottom>";
 	echo getPath($_REQUEST['parent']);
 	echo "<tr><td valign=top>Move To:<td>" .  "\n";
-	echo '<SELECT name=moveTo size=24>' .  "\n";
-	$db_conn=db_connect();
-	outputFolderSelection ($_REQUEST['user'], 0, "",$db_conn);
-	echo "</SELECT>" .  "\n";
+	echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/></div>";
 	echo "<tr><td>&nbsp;<td align=left>" .  "\n";
 	/*
 	print_r($_REQUEST['selectedLink']) ;
@@ -471,6 +475,13 @@ function CopyFolderForm ()
     {
   	  alert_map();
     }
+        ?>
+<script type="text/javascript" src="include/phprpc/js/compressed/phprpc_client.js"></script>
+<script type="text/javascript" src="include/phprpc/cascade_select.js"></script>
+<script>
+rpc_cascade_select.useService('include/phprpc/cascade_select.php');
+</script>
+    <?php
 	$nodeId = $_REQUEST['parent'];
 	$db_conn=db_connect();
 	$queryString = "SELECT name, pid, note FROM location WHERE ((id=" . $nodeId . "))";
@@ -502,12 +513,9 @@ function CopyFolderForm ()
 		echo $name.  "\n";
 		echo "<tr><td valign=top>Comments:<td>" .  "\n";
 		//echo FixUpItems($comments) .  "\n";
-		//echo $comments.  "\n";
+		echo $comments.  "\n";
 		echo "<tr><td valign=top>Paste To:<td>" .  "\n";
-		echo "<SELECT name=moveTo size=24>" ."\n";
-		$db_conn=db_connect();
-		outputFolderSelection ($rsHits['id'], 0, "",$db_conn);
-		echo "</SELECT>" .  "\n";
+		echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/></div>";
 		echo "<tr><td> <td align=left>"."\n";
 		echo '<input type=submit name=whichButton value="Save">';
 		echo ' <input type=submit name=whichButton value="Cancel">';
@@ -522,6 +530,13 @@ function MoveFolderForm ()
     {
   	  alert_map();
     }
+    ?>
+<script type="text/javascript" src="include/phprpc/js/compressed/phprpc_client.js"></script>
+<script type="text/javascript" src="include/phprpc/cascade_select.js"></script>
+<script>
+rpc_cascade_select.useService('include/phprpc/cascade_select.php');
+</script>
+    <?php
 	$nodeId = $_REQUEST['parent'];
 	$db_conn=db_connect();
 	$queryString = "SELECT name, pid, note FROM location WHERE ((id=" . $nodeId . "))";
@@ -553,12 +568,9 @@ function MoveFolderForm ()
 		echo $name.  "\n";
 		echo "<tr><td valign=top>Comments:<td>" .  "\n";
 		//echo FixUpItems($comments) .  "\n";
-		//echo $comments.  "\n";
+		echo $comments.  "\n";
 		echo "<tr><td valign=top>Move To:<td>" .  "\n";
-		echo "<SELECT name=moveTo size=24>" ."\n";
-		$db_conn=db_connect();
-		outputFolderSelection ($rsHits['id'], 0, "",$db_conn);
-		echo "</SELECT>" .  "\n";
+		echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/></div>";
 		echo "<tr><td> <td align=left>"."\n";
 		echo '<input type=submit name=whichButton value="Save">';
 		echo ' <input type=submit name=whichButton value="Cancel">';
@@ -652,13 +664,22 @@ function MoveLink ()
 {
 	$selectedLink=split(",",$_REQUEST['nodeIds']);
 	$num_selectedLink=count($selectedLink);
+	
+	$num_select = $_REQUEST['num_select'];
+	for ($i=1;$i<=$num_select;$i++) {
+		if ($_REQUEST['S'.$i]!="") {
+			$moveTo = $_REQUEST['S'.$i];
+		}
+	}
+		
 	for($i=0;$i<$num_selectedLink;$i++)
 	{
-	//for each selectedLink in split($_REQUEST("nodeIds"), ",");
-		//$selectedLink = trim($selectedLink[$i]);
 		$db_conn=db_connect();
-		$queryString = "UPDATE location SET pid = ".$_REQUEST['moveTo']." WHERE (((id)=".$selectedLink[$i]."))";
-		$rs = $db_conn->query($queryString);
+		
+		if ($moveTo*1!=$selectedLink[$i]*1) {
+			$queryString = "UPDATE location SET pid = ".$moveTo." WHERE (((id)=".$selectedLink[$i]."))";
+			$rs = $db_conn->query($queryString);
+		}
 	}
 	ShowLinks  ($_REQUEST['user'], $_REQUEST['parent']);
 }
@@ -798,7 +819,14 @@ function RecursiveDeleteOfFolders($folderId)
 function CopyFolder ()
 {
 	$currentFolder = $_REQUEST['nodeId'];
-	$movetoFolder = $_REQUEST['moveTo'];
+	
+	$num_select = $_REQUEST['num_select'];
+	for ($i=1;$i<=$num_select;$i++) {
+		if ($_REQUEST['S'.$i]!="") {
+			$movetoFolder = $_REQUEST['S'.$i];
+		}
+	}
+	
 	$db_conn=db_connect();
 
 	$queryString = "SELECT * FROM location WHERE (id=" . $currentFolder .")";
@@ -812,7 +840,6 @@ function CopyFolder ()
 	$rs = $db_conn->query($queryString);
 	$movetoFolder=$db_conn->insert_id;
 
-	$db_conn=db_connect();
 	CopyFolderRecursion($currentFolder,$movetoFolder,$db_conn);
 
 	ShowLinks  ($_REQUEST['user'], $movetoFolder);
@@ -845,15 +872,20 @@ function MoveFolder ()
 	$currentFolder = $_REQUEST['nodeId'];
 	$db_conn=db_connect();
 
-	$queryString = "SELECT * FROM location WHERE ((id=" . $currentFolder . "))";
-	$rs = $db_conn->query($queryString);
-	$rsHits=$rs->fetch_assoc();
-	$queryString = "UPDATE location SET pid = ".$_REQUEST['moveTo']." WHERE (((id)=".$currentFolder."))";
-	$rs = $db_conn->query($queryString);
-	//debugPrint queryString
-	//Conn.Execute queryString, , adExecuteNoRecords
-	ShowLinks  ($_REQUEST['user'], $_REQUEST['parent']);
-	causeTreeToReload();
+	$num_select = $_REQUEST['num_select'];
+	for ($i=1;$i<=$num_select;$i++) {
+		if ($_REQUEST['S'.$i]!="") {
+			$moveTo = $_REQUEST['S'.$i];
+		}
+	}
+	
+	if ($moveTo*1!=$currentFolder*1) {
+		$queryString = "UPDATE location SET pid = ".$moveTo." WHERE (((id)=".$currentFolder."))";
+		$rs = $db_conn->query($queryString);
+		ShowLinks  ($_REQUEST['user'], $_REQUEST['parent']);
+		causeTreeToReload();
+	}
+	
 }
 
 function DeleteFolder ()

@@ -2,7 +2,7 @@
 // load error handling module
 require_once('error_handler.php');
 // load configuration file
-require_once('config.php');
+//require_once('config.php');
 
 // class supports server-side suggest & autocomplete functionality
 class Suggest

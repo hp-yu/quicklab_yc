@@ -1031,38 +1031,68 @@ function request()
 		$query="SELECT * FROM `orders_approve` WHERE `key`='is_approve'";
 		$result=$db_conn->query($query);
 		$match_orders_approve=$result->fetch_assoc();
-		$query="SELECT * FROM `orders_mails` WHERE `key`='is_request_mail'";
+		$query="SELECT * FROM `orders_approve` WHERE `key`='lower_limit'";
 		$result=$db_conn->query($query);
-		$match_orders_mails=$result->fetch_assoc();
-		if ($match_orders_approve['value']==1&&$match_orders_mails['value']==1) {
-			$query="SELECT * FROM orders_admin";
-			$result=$db_conn->query($query);
-			while ($match=$result->fetch_assoc()) {
-				$people=get_record_from_id('people',$match['people_id']);
-				$subject = 'Order reminder from quicklab';
-				if ($match['upper_limit']==""&&$price>=$match['lower_limit']) {
-					$to=$people['email'];
-					$price_limit_str="lower_limit={$match['lower_limit']}";
-					$people=get_record_from_id('people',$created_by);
-					$message = "
-  <p>".$people['name']." requested ".$trade_name." (price:".$price.") on ".$create_date."</p>
-  <p><a href='http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."' target='_blank'>Go to quicklab and approve.</a> (If it can not link to the quicklab, copy the address below.)<br>http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."</p>
-";
-					$mail= new Mailer();
-					$mail->basicSetting();
-					$mail->Subject =$subject;
-					$css="<style>body{font-family:Verdana, Arial, sans-serif;font-size:8pt;}td{font-family:Verdana, Arial, sans-serif;font-size:8pt;}</style>";
-					$mail->MsgHTML($css.$message);
-					$mail->AddAddress($to);
-					@$mail->Send();
+		$match_orders_approve_limit=$result->fetch_assoc();
+		$query="SELECT * FROM `orders_mails` WHERE `key`='is_request_mail_to_administrator'";
+		$result=$db_conn->query($query);
+		$match_orders_mails_administrator=$result->fetch_assoc();
+		$query="SELECT * FROM `orders_mails` WHERE `key`='is_request_mail_to_approver'";
+		$result=$db_conn->query($query);
+		$match_orders_mails_approver=$result->fetch_assoc();
+		if ($match_orders_approve['value']==1&&$price>=$match_orders_approve_limit['value']) {
+			if ($match_orders_mails_administrator['value']==1) {
+				$query="SELECT * FROM orders_admin";
+				$result=$db_conn->query($query);
+				while ($match=$result->fetch_assoc()) {
+					$people=get_record_from_id('people',$match['people_id']);
+					$subject = 'Order reminder from quicklab';
+					if ($match['upper_limit']==""&&$price>=$match['lower_limit']) {
+						$to=$people['email'];
+						$price_limit_str="lower_limit={$match['lower_limit']}";
+						$people=get_record_from_id('people',$created_by);
+						$message = "
+	  <p>".$people['name']." requested ".$trade_name." (price:".$price.") on ".$create_date."</p>
+	  <p><a href='http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."' target='_blank'>Go to quicklab and approve.</a> (If it can not link to the quicklab, copy the address below.)<br>http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."</p>
+	";
+						$mail= new Mailer();
+						$mail->basicSetting();
+						$mail->Subject =$subject;
+						$css="<style>body{font-family:Verdana, Arial, sans-serif;font-size:8pt;}td{font-family:Verdana, Arial, sans-serif;font-size:8pt;}</style>";
+						$mail->MsgHTML($css.$message);
+						$mail->AddAddress($to);
+						@$mail->Send();
+					}
+					if ($match['lower_limit']<>""&&$match['upper_limit']<>""&&$price>=$match['lower_limit']&&$price<=$match['upper_limit']) {
+						$to=$people['email'];
+						$price_limit_str="lower_limit={$match['lower_limit']}&upper_limit={$match['upper_limit']}";
+						$people=get_record_from_id('people',$created_by);
+						$message = "
+	  <p>".$people['name']." requested ".$trade_name." (price:".$price.") on ".$create_date."</p>
+	  <p><a href='http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."' target='_blank'>Go to quicklab and approve.</a> (If it can not link to the quicklab, copy the address below.)<br>http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."</p>
+	";
+						$mail= new Mailer();
+						$mail->basicSetting();
+						$mail->Subject =$subject;
+						$css="<style>body{font-family:Verdana, Arial, sans-serif;font-size:8pt;}td{font-family:Verdana, Arial, sans-serif;font-size:8pt;}</style>";
+						$mail->MsgHTML($css.$message);
+						$mail->AddAddress($to);
+						@$mail->Send();
+					}
 				}
-				elseif ($price>=$match['lower_limit']&&$price<=$match['upper_limit']) {
+			}		
+			//
+			if ($match_orders_mails_approver['value']==1) {
+				$query="SELECT order_approver FROM people where id=$created_by";
+				$result=$db_conn->query($query);
+				while ($match=$result->fetch_assoc()) {
+					$people=get_record_from_id('people',$match['order_approver']);
+					$subject = 'Order reminder from quicklab';
 					$to=$people['email'];
-					$price_limit_str="lower_limit={$match['lower_limit']}&upper_limit={$match['upper_limit']}";
 					$people=get_record_from_id('people',$created_by);
 					$message = "
   <p>".$people['name']." requested ".$trade_name." (price:".$price.") on ".$create_date."</p>
-  <p><a href='http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."' target='_blank'>Go to quicklab and approve.</a> (If it can not link to the quicklab, copy the address below.)<br>http://".IP_ADDRESS."/quicklab/orders.php?state=1&".$price_limit_str."</p>
+  <p><a href='http://".IP_ADDRESS."/quicklab/orders.php?id=$order_id' target='_blank'>Go to quicklab and approve.</a> (If it can not link to the quicklab, copy the address below.)<br>http://".IP_ADDRESS."/quicklab/orders.php?id=$order_id</p>
 ";
 					$mail= new Mailer();
 					$mail->basicSetting();
@@ -1073,7 +1103,7 @@ function request()
 					@$mail->Send();
 				}
 			}
-		}
+ 		}
 ?>
 <script>
 window.returnValue='ok';

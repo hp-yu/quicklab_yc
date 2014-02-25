@@ -3,15 +3,15 @@ include('include/includes.php');
 ?>
 <?php
 //��SESSION��¼һ��ҳ��ĵ�ַ�����ڴӶ���ҳ�淵��?
-  $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
+$_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 ?>
 <?php
-  do_html_header('People-Quicklab');
-  do_header();
-  do_leftnav();
+do_html_header('People-Quicklab');
+do_header();
+do_leftnav();
 ?>
 <?php
-  js_selectall();
+js_selectall();
 ?>
 <script>
 function submitResultsForm() {
@@ -57,12 +57,12 @@ function submitResultsForm() {
       <td align="center" valign="middle">
         <h2>People&nbsp;&nbsp;
 		<?php
-	        if (userPermission("3")) {
-	          echo '<a href="people_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" border="0"/></a></h2>';
- 	        }
- 	        else {
- 	          echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
- 	        }
+		if (userPermission("3")) {
+			echo '<a href="people_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" border="0"/></a></h2>';
+		}
+		else {
+			echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
+		}
 			?>
       </td>
     </tr>
@@ -73,12 +73,12 @@ search_keywords('people',$fields,"",1);
         <TR>
         <td>
         AND state:<?php
-		$state=array(array("0","in lab"),array("1","leave lab"));
+        $state=array(array("0","in lab"),array("1","leave lab"));
 		echo option_select_all('state',$state,2,$_REQUEST['state']);?>
         </td>
         </TR>
 		<?php
-        $sort=array('id'=>'id','name'=>'CONVERT(name using GBK)','enter date'=>'date_enter');
+		$sort=array('id'=>'id','name'=>'CONVERT(name using GBK)','enter date'=>'date_enter');
         resultsDisplayControl($sort,10);?>
   </table>
 </form>
@@ -111,8 +111,8 @@ for ($i=0; $i<$num_keywords; $i++) {
 	}
 }
 
-$query =  "SELECT * FROM people WHERE
-($keywords_string) AND id LIKE '$id'
+$query =  "SELECT * from people
+ WHERE ($keywords_string) AND id LIKE '$id'
 AND state LIKE '$state' ORDER BY $sort $order";
 
 $_SESSION['query']=$query;//used for EXCEL export
@@ -127,6 +127,8 @@ if ($results  && $results->num_rows>0) {
 	echo "Email</td><td class='results_header'>";
 	echo "Enter date</td><td class='results_header'>";
 	echo "Status</td><td class='results_header'>";
+	echo "State</td><td class='results_header'>";
+	echo "Order approver</td><td class='results_header'>";
 	echo "Operate</td></tr>";
 
 	while ($matches = $results->fetch_array()) {
@@ -136,6 +138,17 @@ if ($results  && $results->num_rows>0) {
 		echo "{$matches['email']}</td><td class='results'>";
 		echo "{$matches['date_enter']}</td><td class='results'>";
 		echo "{$matches['status']}</td><td class='results'>";
+		$state=array(array("0","in lab"),array("1","leave lab"));
+		for ($i=0; $i < 2; $i++)
+		{
+			if ($state[$i][0] == $matches['state'])
+			{
+				echo $state[$i][1];
+			}
+		}
+		echo "</td><td class='results'>";
+		$people=get_name_from_id('people',$matches['order_approver']);
+		echo "{$people['name']}</td><td class='results'>";
 		if (userPermission(2,$matches['id'])) {
 			echo '<a href="people_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
 		}

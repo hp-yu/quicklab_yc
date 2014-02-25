@@ -120,7 +120,7 @@ function quickId() {
 <div id="dropmenu4" class="dropmenudiv" style="width: 150px;">
 <a href="./people.php">People</a>
 <a href="./users.php">Users</a>
-<a href="./roles.php">Roles</a>
+<!--<a href="./roles.php">Roles</a>-->
 <a href="./projects.php">Projects</a>
 <a href="./accounts.php">Accounts</a>
 <a href="./sellers.php">Sellers</a>

@@ -23,7 +23,7 @@ function refreshLeftFrame() {
 
 <frameset rows="30,*" framespacing="0" frameborder="0">
 <frame name="controlFrame" src="kbase_control.php" noresize frameborder="0" scrolling="No">
-<frameset cols="25%,*" framespacing="1" frameborder="1">
+<frameset cols="20%,*" border="1" framespacing="1" frameborder="1">
 <frame name="treeframe" src="kbase_leftnav.php" frameborder="1">
 <?php
 if (isset($id)&&$id!="") {
@@ -38,5 +38,6 @@ else {
 ?>
 </frameset>
 </frameset><noframes></noframes>
+
 
 </html>
