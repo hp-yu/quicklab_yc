@@ -10,7 +10,7 @@ include_once('include/includes.php');
 <?php
   do_html_header('Chemicals-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   js_selectall();
@@ -40,11 +40,11 @@ function   addStorage (module_id, item_id) {
       <td align='center' valign='middle'><h2>Chemicals&nbsp;&nbsp;<?php
       if (userPermission("3")){
       	echo "<a href='chemicals_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a>";
-      	echo "&nbsp;<a href='chemicals_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
+      	//echo "&nbsp;<a href='chemicals_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
       }
       else {
       	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/>';
-      	echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
+      	//echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
  	    }?>
 	  </td>
     </tr>
@@ -78,31 +78,32 @@ pagerForm('chemicals',$query);
 		echo "<form action='' method='post' name='results' target='_self' >";
 		echo "<table width='100%' class='results'>";
 		echo "<tr><td class='results_header'><input type='checkbox' name='clickall' onclick=selectall(this.checked)></td><td class='results_header'>";
-		echo "ID</td><td class='results_header'>";
+		echo "Quick ID</td><td class='results_header'>";
 		echo "Name</td><td class='results_header'>";
 		echo "Create</td><td class='results_header'>";
 		echo "Operate</td><td class='results_header'>";
 		echo "Storage</td><td class='results_header'>";
 		echo "Order</td></tr>";
 		while ($matches = $results->fetch_array()) {
+			$module=get_record_from_name('modules','chemicals');
 			echo "<tr><td class='results'><input type='checkbox'  onclick=changechecked(this)  name='selectedItem[]' value={$matches[id]}></td><td class='results'>";
-			echo "{$matches[id]}</td><td width='200' class='results'>";
+			echo get_quick_id($module[id],$matches[id])."</td><td width='200' class='results'>";
 			echo "<a href='chemicals_operate.php?type=detail&id={$matches[id]}'>".wordwrap($matches[name],190,"<br>")."</a></td><td class='results'>";
 			$people=get_record_from_id('people',$matches['created_by']);
 			echo $people['name']." ".$matches['date_create']."</td><td class='results'>";
-			$module=get_record_from_name('modules','chemicals');
+			
 			if (userPermission('2',$matches['created_by'])) {
-				echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
+//				echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='chemicals_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='chemicals_operate.php?type=structure&id=".$matches['id']."'><img src='./assets/image/general/structure.gif' alt='structure' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='chemicals_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
+//				echo "<a href='chemicals_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='chemicals_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
 			}
 			else {
-				echo '<img src="./assets/image/general/label-s.gif" alt="Print label" border="0"/>&nbsp;&nbsp;';
+//				echo '<img src="./assets/image/general/label-s.gif" alt="Print label" border="0"/>&nbsp;&nbsp;';
 				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
 				echo '<img src="./assets/image/general/structure.gif" alt="structure" border="0"/>&nbsp;&nbsp;';
-				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
+//				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
 				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
 			}
 			//query the storages of this item where the state is in stock.

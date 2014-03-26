@@ -15,24 +15,22 @@ include('include/includes.php');
  }
 ?>
 <?php
-  do_html_header('Users-Quicklab');
+  do_html_header_begin('Users operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  StandardForm();
+  //do_leftnav();
+  processRequest();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 
 <?php
-function StandardForm()
-{
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Users</h2></div></td></tr>
-<?php
-	processRequest();
-}
+
 function addform()
 {
   if(!userPermission('2'))
@@ -40,17 +38,38 @@ function addform()
   	alert();
   }
   ?>
-  <form name='add' method='post' action=''>
+ <script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			username: "required",
+			password: "required",
+			people_id: "required",
+			authority: "required",
+			valid: "required"
+		},
+		messages: {
+			username: {required: 'required'},
+			password: {required: 'required'},
+			people_id: {required: 'required'},
+			authority: {required: 'required'},
+			valid: {required: 'required'}
+		}});
+});
+</script>
+  <form name='add_form' id="add_form" method='post' action=''>
+  <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Users</h2></div></td></tr>
       <tr>
         <td colspan="2"><h3>Add a new user: </h3></td>
         </tr>
       <tr>
         <td width="20%">Username:</td>
-        <td width="80%"><input type="text" name="username" value="<?php echo stripslashes(htmlspecialchars($_POST['username']))?>"/>*[a-z,A-Z,0-9,_]</td>
+        <td width="80%"><input type="text" name="username" id="username" value="<?php echo stripslashes(htmlspecialchars($_POST['username']))?>"/>*[a-z,A-Z,0-9,_]</td>
       </tr>
       <tr>
         <td>Password:</td>
-        <td><input type="password" name="password" />*</td>
+        <td><input type="password" name="password" id="password" />*</td>
       </tr>
       <tr>
         <td>Real person: </td>
@@ -79,7 +98,7 @@ function addform()
         <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
       </tr>
     <?php HiddenInputs("add");?>
-    </form></table>
+   </table> </form>
   <?php
 }
 function editform()
@@ -90,8 +109,26 @@ function editform()
   }
   $user = get_record_from_id('users',$_REQUEST['id']);
   ?>
+ 
 <script type="text/javascript" src="include/js/moveoptions.js"></script>
-    <form name='edit' method='post' action=''>
+ <script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			people_id: "required",
+			authority: "required",
+			valid: "required"
+		},
+		messages: {
+			people_id: {required: 'required'},
+			authority: {required: 'required'},
+			valid: {required: 'required'}
+		}});
+});
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Users</h2></div></td></tr>
       <tr>
         <td colspan="2"><h3>Edit:</h3></td>
         </tr>
@@ -129,7 +166,7 @@ function editform()
         <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
         <input type="hidden" name="oldusername" value='<?php echo $user['username'];?>'></td></tr>
     <?php HiddenInputs("edit");?>
-    </form></table>
+    </table></form>
   <?php
 }
 function DeleteForm()
@@ -139,6 +176,8 @@ function DeleteForm()
   	alert();
   }
     echo  "<form name='delete' method='post' action=''>";
+    echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Users</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the user: ";
 	$user = get_record_from_id('users',$_REQUEST['id']);
     echo $user['username'];

@@ -13,7 +13,7 @@ if (!check_auth_user())
 <?php
   do_html_header('Reagent categories-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   if(!userPermission(3)){

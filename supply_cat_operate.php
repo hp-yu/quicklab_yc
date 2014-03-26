@@ -15,24 +15,22 @@ include('include/includes.php');
  }
 ?>
 <?php
-  do_html_header('Supply categories-Quicklab');
+  do_html_header_begin('Supply categories operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  StandardForm();
+  //do_leftnav();
+  processRequest();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 
 <?php
-function StandardForm()
-{
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Supply categories</h2></div></td></tr>
-<?php
-	processRequest();
-}
+
 function addform()
 {
   if(!userPermission('3'))
@@ -40,13 +38,26 @@ function addform()
   	alert();
   }
   ?>
-  <form name='add' method='post' action=''>
+ <script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required"
+		},
+		messages: {
+			name: {required: 'required'}
+		}});
+});
+</script>
+  <form name='add_form' id="add_form" method='post' action=''>
+  <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Supply categories</h2></div></td></tr>
       <tr>
         <td colspan="2"><h3>Add a supply category: </h3></td>
         </tr>
       <tr>
         <td width="20%">Name:</td>
-        <td width="80%"><input type="text" name="name" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td width="80%"><input type="text" name="name" id="name" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td colspan="2"><input type="submit" name="Submit" value="Submit" />
@@ -54,7 +65,7 @@ function addform()
         <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
       </tr>
     <?php HiddenInputs("add");?>
-    </form></table>
+   </table> </form>
   <?php
 }
 function editform()
@@ -65,13 +76,26 @@ function editform()
   }
   $supply_cat = get_record_from_id('supply_cat',$_REQUEST['id']);
   ?>
-    <form name='edit' method='post' action=''>
+  <script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required"
+		},
+		messages: {
+			name: {required: 'required'}
+		}});
+});
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Supply categories</h2></div></td></tr>
       <tr>
         <td colspan="2"><h3>Edit supply category:</h3></td>
         </tr>
       <tr>
         <td width="20%">Name: </td>
-        <td width="80%"><input type='text' name='name' size="40" value="<?php
+        <td width="80%"><input type='text' name='name' id="name" size="40" value="<?php
   echo stripslashes(htmlspecialchars($supply_cat['name']));?>">*</td>
       </tr>
       <tr>
@@ -80,7 +104,7 @@ function editform()
         <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
         <input type="hidden" name="oldusername" value='<?php echo $user['username'];?>'></td></tr>
     <?php HiddenInputs("edit");?>
-    </form></table>
+   </table> </form>
   <?php
 }
 function add()

@@ -18,23 +18,20 @@ if ($_REQUEST['type']=='import_template') {
 }
 ?>
 <?php
-  do_html_header('Cells operate-Quicklab');
+  do_html_header_begin('Cells operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  standard_form();
+  //do_leftnav();
+  process_request();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 <?php
-function standard_form()
-{
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>
-<?php
-	process_request();
-}
 
 function add_form() {
 	if(!userPermission('3'))
@@ -42,12 +39,50 @@ function add_form() {
   	  alert();
     }
 	?>
-    <form name='add' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required",
+			project: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			project: {required: 'required'}
+		}});
+});
+function moveOptionToText(e1, e2) {
+	for(var i=0;i<e1.options.length;i++){
+		if(e1.options[i].selected) {
+			var e = e1.options[i]
+			if(e.value!='') {
+			  e2.value=e.text;
+			}
+		}
+	}
+}
+function moveOptionToTextarea(e1, e2){
+	for(var i=0;i<e1.options.length;i++){
+		if(e1.options[i].selected) {
+			var e = e1.options[i]
+			if(e2.value=='') {
+				e2.value=e.text;
+			}
+			else {
+				e2.value+=",\r\n"+e.text;
+			}
+		}
+	}
+}
+</script>
+    <form name='add_form' id="add_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new cell:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td>Project:</td><td><?php
@@ -62,7 +97,7 @@ function add_form() {
       <tr>
         <td>ATCC number:</td>
         <td><input type='text' name='atcc_nbr' value="<?php echo stripslashes(htmlspecialchars($_POST['atcc_nbr']))?>"/>&nbsp;
-        <a href="http://www.atcc.org/common/catalog/all/allIndex.cfm" target="_blank"><img src='./assets/image/general/atcc.gif' alt='Search at ATCC' border='0'/></a></td>
+        </td>
       </tr>
       <tr>
         <td>Organism:</td>
@@ -105,7 +140,7 @@ function add_form() {
     	</td>
       </tr>
       <?php hidden_inputs('created_by','date_create','add');?>
-      </form></table>
+      </table></form>
       <?php
 }
 
@@ -117,12 +152,50 @@ function edit_form()
   	alert();
   }
   ?>
-    <form name='edit' method='post' action=''>
+ <script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required",
+			project: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			project: {required: 'required'}
+		}});
+});
+function moveOptionToText(e1, e2) {
+	for(var i=0;i<e1.options.length;i++){
+		if(e1.options[i].selected) {
+			var e = e1.options[i]
+			if(e.value!='') {
+			  e2.value=e.text;
+			}
+		}
+	}
+}
+function moveOptionToTextarea(e1, e2){
+	for(var i=0;i<e1.options.length;i++){
+		if(e1.options[i].selected) {
+			var e = e1.options[i]
+			if(e2.value=='') {
+				e2.value=e.text;
+			}
+			else {
+				e2.value+=",\r\n"+e.text;
+			}
+		}
+	}
+}
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>
   	  <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php
   echo stripslashes(htmlspecialchars($cell['name']));?>">*</td>
       </tr>
       <tr>
@@ -138,8 +211,7 @@ function edit_form()
       <tr>
         <td>ATCC number:</td>
         <td><input type='text' name='atcc_nbr' value="<?php
-     echo $cell['atcc_nbr'];?>">&nbsp;
-        <a href="http://www.atcc.org/common/catalog/all/allIndex.cfm" target="_blank"><img src='./assets/image/general/atcc.gif' alt='Search at ATCC' border='0'/></a></td>
+     echo $cell['atcc_nbr'];?>">&nbsp;</td>
       </tr>
       <tr>
         <td>Organism:</td>
@@ -185,7 +257,7 @@ function edit_form()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td>
       </tr>
       <?php hidden_inputs('updated_by','date_update','edit');?>
-    </form></table>
+   </table> </form>
   <?php
 }
 
@@ -233,6 +305,8 @@ function detail()
     }
   $cell = get_record_from_id('cells',$_REQUEST['id']);
 ?>
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
       <a href="cells_operate.php?type=edit&id=<?php echo $cell['id']?>"/><img src="./assets/image/general/edit.gif" border="0"/></a></h3></td>
       </tr>
@@ -250,7 +324,7 @@ function detail()
       </tr>
       <tr>
         <td>ATCC number:</td>
-        <td><?php echo "<a href='http://www.atcc.org/common/catalog/numSearch/numResults.cfm?atccNum=".$cell['atcc_nbr']."' target='_blank'>".$cell['atcc_nbr']."</a>";?></td>
+        <td><?php echo $cell['atcc_nbr'];?></td>
       </tr>
       <tr>
         <td>Organism:</td>
@@ -343,19 +417,24 @@ function delete_form()
 
 	if($relateditem_count==0&&$storage_count==0&&$order_count==0)
 	{
-	echo "<form name='delete' method='post' action=''>";
-    echo "<tr><td colspan='2'><h3>Are you sure to delete the cell: ";
-    echo $cell['name'];
-	echo "?</h3></td>
-      </tr>
-      <tr>
-        <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
-    hidden_inputs('','',"delete");
-    echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+		echo "<form name='delete' method='post' action=''>";
+		echo "<table width='100%' class='operate' >
+		<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>";
+	    echo "<tr><td colspan='2'><h3>Are you sure to delete the cell: ";
+	    echo $cell['name'];
+		echo "?</h3></td>
+	      </tr>
+	      <tr>
+	        <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
+	    hidden_inputs('','',"delete");
+	    echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
+	      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+	    echo "</table></form>";
 	}
 	else
 	{
+		echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>";
 		echo "<tr><td><h3>This cell related to ";
 		if($relateditem_count!=0)
 		{
@@ -374,20 +453,23 @@ function delete_form()
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+		echo "</table>";
 	}
-	echo "</form></table>";
+	
   }
   elseif($_SESSION['selecteditemDel'])//multiple delete
   {
 		$num_selecteditemDel=count($_SESSION['selecteditemDel']);
 	echo "<form name='edit' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the $num_selecteditemDel cell(s)?<br>
     cell related to other items, storages, orders <br>can not be deleted.</h3></td></tr> ";
 	echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     hidden_inputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
-	echo "</form></table>";
+	echo "</table></form>";
   }
 }
 function import_form() {
@@ -396,6 +478,8 @@ function import_form() {
   }
   ?>
 <form name='preview' method='post' action='' enctype="multipart/form-data">
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Cells</h2></div></td></tr>
 <tr><td colspan='2'><h3>Import from file:</h3></td></tr>
 <tr>
 <td width='20%'>File:</td>

@@ -8,7 +8,7 @@ include_once('include/includes.php');
 <?php
   do_html_header('Address book-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   js_selectall();
@@ -24,11 +24,11 @@ include_once('include/includes.php');
 <?php
 if (userPermission("3")){
 	echo "<a href='abook_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a>";
-	echo "&nbsp;<a href='abook_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
+	//echo "&nbsp;<a href='abook_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
 }
 else {
 	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/>';
-	echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
+	//echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
 }
 ?>
 	  	</td>

@@ -2,7 +2,7 @@
 include_once('include/includes.php');
 do_html_header('Restriction enzyme databse-Quicklab');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <?php
 js_selectall();

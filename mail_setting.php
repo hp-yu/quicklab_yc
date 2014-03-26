@@ -7,7 +7,7 @@ include_once('include/includes.php');
 <?php
   do_html_header('Mail setting-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   if(!userPermission(1)){

@@ -15,23 +15,20 @@ include('include/includes.php');
  }
 ?>
 <?php
-  do_html_header('Projects operate-Quicklab');
+  do_html_header_begin('Projects operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  StandardForm();
+  //do_leftnav();
+  processRequest();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 <?php
-function StandardForm()
-{
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>
-<?php
-	processRequest();
-}
 
 function AddForm()
 {
@@ -40,12 +37,25 @@ function AddForm()
   	  alert();
     }
 	?>
-  <form name='add' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required"
+		},
+		messages: {
+			name: {required: 'required'}
+		}});
+});
+</script>
+  <form name='add_form' id="add_form" method='post' action=''>
+  <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new projects:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td>Description:</td>
@@ -77,7 +87,7 @@ function AddForm()
     	</td>
       </tr>
       <input type="hidden" name="action" value="add">
-      </form></table>
+      </table></form>
       <?php
 }
 
@@ -89,12 +99,25 @@ function EditForm()
   	alert();
   }
   ?>
-    <form name='edit' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required"
+		},
+		messages: {
+			name: {required: 'required'}
+		}});
+});
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>
   	  <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php
   echo stripslashes(htmlspecialchars($project['name']));?>">*</td>
       </tr>
       <tr>
@@ -130,7 +153,7 @@ function EditForm()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td>
       </tr>
       <input type="hidden" name="action" value="edit"/>
-    </form></table>
+   </table> </form>
   <?php
 }
 
@@ -142,6 +165,8 @@ function Detail()
     }
   $project = get_record_from_id('projects',$_REQUEST['id']);
 ?>
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>
       <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="projects_operate.php?type=edit&id=<?php echo $project['id']?>"/>
     <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3></td>
@@ -221,6 +246,8 @@ function DeleteForm()
 	if($relateditem_count==0&&$storage_count==0&&$order_count==0)
 	{
 	echo "<form name='delete' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the project: ";
     echo $project['name'];
 	echo "?</h3></td>
@@ -230,9 +257,12 @@ function DeleteForm()
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+    echo "</table></form>";
 	}
 	else
 	{
+		echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>";
 		echo "<tr><td><h3>This project related to ";
 		if($relateditem_count!=0)
 		{
@@ -251,20 +281,23 @@ function DeleteForm()
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+		echo "</table>";
 	}
-	echo "</form></table>";
+	
   }
   elseif($_SESSION['selecteditemDel'])//multiple delete
   {
 		$num_selecteditemDel=count($_SESSION['selecteditemDel']);
 	echo "<form name='edit' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the $num_selecteditemDel project(s)?<br>
     project related to other items, storages, orders <br>can not be deleted.</h3></td></tr> ";
 	echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
-	echo "</form></table>";
+	echo "</table></form>";
   }
 }
 function Add()

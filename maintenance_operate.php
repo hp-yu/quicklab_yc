@@ -17,7 +17,7 @@ include('include/includes.php');
 <?php
   do_html_header('Device maitenance-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
   StandardForm();
   do_rightbar();
   do_footer();

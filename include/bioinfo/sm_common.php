@@ -808,5 +808,4 @@ function sm_feature_finder($features,$sequence){
 	return $result;
 }
 
-
 ?>

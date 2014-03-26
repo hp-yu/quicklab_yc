@@ -2,7 +2,7 @@
 include('include/includes.php');
 ?>
 <?php
-//��SESSION��¼һ��ҳ��ĵ�ַ�����ڴӶ���ҳ�淵��??
+//��SESSION��¼һ��ҳ��ĵ�ַ�����ڴӶ���ҳ�淵��???
 $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 ?>
 <html>
@@ -14,7 +14,7 @@ $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 <body leftmargin="5" topmargin="5">
 <?php
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <?php
 js_selectall();

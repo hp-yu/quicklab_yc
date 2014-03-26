@@ -19,23 +19,21 @@ include('include/includes.php');
  }
 ?>
 <?php
-  do_html_header('Address book-Quicklab');
+  do_html_header_begin('Address book operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  StandardForm();
+  //do_leftnav();
+  processRequest();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 <?php
-function StandardForm()
-{
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Address book</h2></div></td></tr>
-<?php
-	processRequest();
-}
+
 
 function AddForm()
 {
@@ -44,12 +42,25 @@ function AddForm()
   	  alert();
     }
 	?>
-  <form name='add' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required"
+		},
+		messages: {
+			name: {required: 'required'}
+		}});
+});
+</script>
+  <form name='add_form' id="add_form" method='post' action=''>
+  <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Address book</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td>Email:</td>
@@ -101,7 +112,7 @@ function AddForm()
     	</td>
       </tr>
       <input type="hidden" name="action" value="add">
-      </form></table>
+      </table></form>
       <?php
 }
 
@@ -113,12 +124,25 @@ function EditForm()
   	alert();
   }
   ?>
-    <form name='edit' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required"
+		},
+		messages: {
+			name: {required: 'required'}
+		}});
+});
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Address book</h2></div></td></tr>
   	  <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php
   echo stripslashes(htmlspecialchars($abook['name']));?>">*</td>
       </tr>
       <tr>
@@ -169,7 +193,7 @@ function EditForm()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td>
       </tr>
       <input type="hidden" name="action" value="edit"/>
-    </form></table> 
+    </table></form> 
   <?php
 }
 
@@ -181,6 +205,8 @@ function Detail()
     }
   $abook = get_record_from_id('abook',$_REQUEST['id']);
 ?>
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Address book</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
       <a href="abook_operate.php?type=edit&id=<?php echo $abook['id']?>"/>
       <img src="./assets/image/general/edit.gif" border="0"/></a>
@@ -249,6 +275,8 @@ function ImportForm()
   }
   ?>
   <form name='preview' method='post' action='' enctype="multipart/form-data">
+  <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Address book</h2></div></td></tr>
 		<tr>
 			<td colspan='2'><h3>Import from file (txt or csv format):</h3></td>
   	</tr>

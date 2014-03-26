@@ -11,7 +11,7 @@ if (!check_auth_user()) {
 <?php
   do_html_header('Custom fields-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   if(!userPermission(2)) {

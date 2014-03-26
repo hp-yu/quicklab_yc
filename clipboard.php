@@ -4,7 +4,7 @@ include('include/includes.php');
 <?php
   do_html_header('Clipboard-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
   <table width='80%' class='search'>
     <tr>

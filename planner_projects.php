@@ -34,7 +34,7 @@ function StandardForm()
 function AddForm()
 {
 	do_header();
-  do_leftnav();
+  //do_leftnav();
 	if(!userPermission('3'))
     {
   	  alert();
@@ -86,7 +86,7 @@ function AddForm()
 
 function EditForm() {
 	do_header();
-  do_leftnav();
+  //do_leftnav();
   if(!userPermission('3')) {
   	alert();
   }
@@ -372,7 +372,7 @@ if ($w==0) {
 }
 $span_e=7-$w;
 $enddate = date('Y-m-d',strtotime($enddate."   +$span_e   day"));
-//���������
+//���������?
 $datediff = (strtotime($enddate) - strtotime($startdate))/60/60/24;
 //����������
 $date=$startdate;
@@ -412,7 +412,7 @@ for($i=0;$i<=$datediff;$i++) {
 	else {
 		echo "<td class=\"gantt_header_3\"";
 	}
-	//ͻ�����
+	//ͻ�����?
 	if ($date==date("Y-m-d")) {
 		echo " width=20 style='color:red'>".date('d',strtotime($date))."</td>";
 	}
@@ -434,7 +434,7 @@ foreach ($project as $key_p=>$value_p) {
 	$colspan = $datediff+1;
 	foreach ($task as $key=>$value) {
 		echo "<tr>";
-		//�������
+		//�������?
 		$query="SELECT root FROM planner_tasks WHERE id=$key";
 		$rs=$db_conn->query($query);
 		$match=$rs->fetch_assoc();
@@ -448,7 +448,7 @@ foreach ($project as $key_p=>$value_p) {
 		$rs=$db_conn->query($query);
 		$task=$rs->fetch_assoc();
 
-		//������ӽڵ�
+		//������ӽڵ�?
 		$workdays=0;
 		if ($task['right']-$task['left']>1) {
 			//�����ۼƹ�����
@@ -458,7 +458,7 @@ foreach ($project as $key_p=>$value_p) {
 				$workdays += (strtotime($match['enddate']) - strtotime($match['startdate']))/60/60/24+1;
 			}
 			echo "<td class='gantt_task_other'><b>$workdays d</b></td>";
-			//�����������
+			//�����������?
 			$query= "SELECT DATEDIFF(MAX(a.enddate),MIN(a.startdate)) AS duration FROM planner_tasks a, planner_task_people b WHERE (a.left BETWEEN {$task['left']} AND {$task['right']}) AND ((a.right-a.left)=1) AND (a.project=$value_p) AND (a.id=b.task_id) AND (b.people_id LIKE '$people')";
 			$rs=$db_conn->query($query);
 			$match=$rs->fetch_assoc();
@@ -482,7 +482,7 @@ foreach ($project as $key_p=>$value_p) {
 				//�����ۼƹ�����
 				$workdays = (strtotime($task['enddate']) - strtotime($task['startdate']))/60/60/24+1;
 				echo "<td class='gantt_task_other'>$workdays d</td>";
-				//�����������
+				//�����������?
 				echo "<td class='gantt_task_other'>$workdays d</td>";
 				//����ʱ����
 				$gantt_chart = (strtotime($task['enddate']) - strtotime($task['startdate']))/60/60/24+1;
@@ -501,7 +501,7 @@ foreach ($project as $key_p=>$value_p) {
 			else {
 				//�����ۼƹ�����
 				echo "<td class='gantt_task_other'></td>";
-				//�����������
+				//�����������?
 				echo "<td class='gantt_task_other'></td>";
 				//����ʱ����
 				echo "<td class='gantt_task_empty' colspan=$colspan></td>";
@@ -519,11 +519,11 @@ $db_conn=db_connect();
 $result = $db_conn->query("SELECT * FROM planner_tasks WHERE id=$root AND project=$project;");
 $row = $result->fetch_assoc();
 
-// ׼��һ��յ���ֵ��ջ
+// ׼��һ��յ���ֵ���?
 $right = array();
 $task=array();
 
-// ��ø������������ڵ�
+// ��ø������������ڵ�?
 $result = $db_conn->query("SELECT * FROM planner_tasks WHERE `left` BETWEEN {$row['left']} AND {$row['right']} AND project=$project ORDER BY `left` ASC;");
 
 // ��ʾÿһ��
@@ -539,10 +539,10 @@ array_pop($right);
 }
 }
 
-// �����ʾ�ڵ�����
+// �����ʾ�ڵ�����?
 $task[$row['id']]=str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',count($right)).$row['name'];
 
-// �����ڵ���뵽��ջ��
+// �����ڵ���뵽��ջ��?
 $right[] = $row['right'];
 }
 return $task;

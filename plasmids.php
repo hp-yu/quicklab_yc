@@ -8,7 +8,7 @@ $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 <?php
 do_html_header('Plasmids-Quicklab');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <?php
 js_selectall();
@@ -31,9 +31,10 @@ search_keywords('Plasmids',$fields);
 echo "<tr><td colspan='2' height='21' valign='top'>And project:";
 $query= "select * from projects ORDER BY name";
 echo query_select_all('project', $query,'id','name',$_REQUEST['project']);
-echo "&nbsp;&nbsp;Bank:&nbsp;&nbsp;";
-$bank=array("Yes"=>"1","No"=>"0");
-echo array_select_all("bank",$bank,$_REQUEST['bank']);
+echo "&nbsp;&nbsp;";
+//echo "Bank:&nbsp;&nbsp;";
+//$bank=array("Yes"=>"1","No"=>"0");
+//echo array_select_all("bank",$bank,$_REQUEST['bank']);
 echo "</td></tr>";
 search_create_mask();
 resultsDisplayControl($sort,10);
@@ -49,7 +50,7 @@ if($_REQUEST['order']==null){$_REQUEST['order']='DESC';}
 if($_REQUEST['project']==null){$_REQUEST['project']='%';}
 if($_REQUEST['created_by']==null){$_REQUEST['created_by']='%';}
 if($_REQUEST['mask']==null){$_REQUEST['mask']='%';}
-if($_REQUEST['bank']==null){$_REQUEST['bank']="%";}
+//if($_REQUEST['bank']==null){$_REQUEST['bank']="%";}
 
 $id=$_REQUEST['id'];
 $fields=$_REQUEST['fields'];
@@ -58,7 +59,7 @@ $order=$_REQUEST['order'];
 $project=$_REQUEST['project'];
 $created_by=$_REQUEST['created_by'];
 $mask=$_REQUEST['mask'];
-$bank=$_REQUEST['bank'];
+//$bank=$_REQUEST['bank'];
 
 //seperate the keywords by space ("AND" "LIKE")
 $keywords = split(' ', $_REQUEST['keywords']);
@@ -89,7 +90,7 @@ $query =  "SELECT *,
   AND created_by LIKE '$created_by'
   AND mask LIKE '$mask'
   $mask_str
-	AND bank LIKE '$bank'
+
   ORDER BY $sort $order";
 $_SESSION['query']=$query;//used for EXCEL export
 pagerForm('plasmids',$query);
@@ -126,30 +127,30 @@ function   bank (plasmid_id) {
 		echo "<form action='' method='post' name='results' target='_self' >";
 		echo "<table width='100%' class='results'>";
 		echo "<tr><td class='results_header' width='4%'><input type='checkbox' name='clickall' onclick=selectall(this.checked)></td><td class='results_header' width='4%'>";
-		echo "ID</td><td class='results_header' width='30%'>";
+		echo "Quick ID</td><td class='results_header' width='30%'>";
 		echo "Name</td><td class='results_header' width='15%'>";
 		echo "Create</td><td class='results_header' width='15%'>";
 		echo "Operate</td><td class='results_header' width='8%'>";
 		echo "Storage</td><td class='results_header' width='8%'>";
-		echo "Order</td><td class='results_header' width='8%'>";
-		echo "Bank</td><td class='results_header' width='8%'>";
-		echo "Request</td></tr>";
+		echo "Order</td></tr>";
+//		echo "Bank</td><td class='results_header' width='8%'>";
+//		echo "Request</td></tr>";
 		while ($matches = $results->fetch_array()) {
 			echo "<tr><td class='results'><input type='checkbox'  onclick=changechecked(this)  name='selectedItem[]' value={$matches[id]}></td><td class='results'>";
-			echo "{$matches[id]}</td><td class='results'>";
+			echo  get_quick_id($module[id],$matches[id])."</td><td class='results'>";
 			echo "<a href='plasmids_operate.php?type=detail&id={$matches[id]}'>".$matches['name']."</a></td><td class='results'>";
 			$people=get_record_from_id('people',$matches['created_by']);
 			echo $people['name']." ".$matches['date_create']."</td><td class='results'>";
-			echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
+			//echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
 			if (userPermission('2',$matches['created_by'])) {
 				echo "<a href='plasmid_mapping.php?plasmid_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/plasmid-mapping-s.gif' alt='Plasmid mapping' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='plasmids_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='plasmids_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
+				//echo "<a href='plasmids_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='plasmids_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
 			} else {
 				echo "<img src='./assets/image/general/plasmid-mapping-s-grey.gif' alt='Plasmid mapping' border='0'/>&nbsp;&nbsp;";
 				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
-				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
+				//echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
 				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
 			}
 			//query the storages of this item where the state is in stock.
@@ -183,45 +184,45 @@ function   bank (plasmid_id) {
 			}
 			echo "&nbsp;&nbsp;";
 			if (userPermission('3')) {
-				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a></td><td class=\"results\">";
+				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a></td>";
 			} else {
-				echo "<img src=\"./assets/image/general/add-s-grey.gif\" alt=\"Request\" border=\"0\"/></td><td class=\"results\">";
+				echo "<img src=\"./assets/image/general/add-s-grey.gif\" alt=\"Request\" border=\"0\"/>";
 			}
-			//query the bank.
-			$query = "select * from plasmid_bank WHERE `plasmid_id` = '{$matches['id']}'";
-			$rs = $db_conn->query($query);
-			$num_bank=$rs->num_rows;
-			if($num_bank>0) {
-				if (userPermission('2')) {
-					echo '<a href="plasmid_bank.php?plasmid_id='.$matches['id'].'" target="_blank">'.$num_bank.'</a>&nbsp;&nbsp;';
-				} else {
-					echo $num_bank."&nbsp;&nbsp;";
-				}
-			}
-			if (userPermission('2')) {
-				echo "<a onclick=\"bank({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Add to bank\" border=\"0\"/></a>";
-			} else {
-				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Add to bank" border="0"/>';
-			}
-			echo "</td><td class=\"results\">";
-			//request
-			$query = "select id from plasmid_request WHERE `plasmid_id` = '{$matches['id']}'";
-			$rs = $db_conn->query($query);
-			$num_request=$rs->num_rows;
-			//$query="SELECT SUM(`volume`) AS `total_volume` FROM `plasmid_request` WHERE `plasmid_id`='{$matches['id']}'";
-			//$result_request = $db_conn->query($query);
-			//$match_request=$result_request->fetch_assoc();
-			//$total_volume=$match_request['total_volume'];
-			if($num_request>0) {
-				echo '<a href="plasmid_request.php?plasmid_id='.$matches['id'].'" target="_blank">'.$num_request.'</a>&nbsp;&nbsp;';
-			}
-			if ($num_bank>0) {
-				if (userPermission('3')) {
-					echo "<a onclick=\"request({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a>";
-				} else {
-					echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" border="0"/>';
-				}
-			}
+//			query the bank.
+//			$query = "select * from plasmid_bank WHERE `plasmid_id` = '{$matches['id']}'";
+//			$rs = $db_conn->query($query);
+//			$num_bank=$rs->num_rows;
+//			if($num_bank>0) {
+//				if (userPermission('2')) {
+//					echo '<a href="plasmid_bank.php?plasmid_id='.$matches['id'].'" target="_blank">'.$num_bank.'</a>&nbsp;&nbsp;';
+//				} else {
+//					echo $num_bank."&nbsp;&nbsp;";
+//				}
+//			}
+//			if (userPermission('2')) {
+//				echo "<a onclick=\"bank({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Add to bank\" border=\"0\"/></a>";
+//			} else {
+//				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Add to bank" border="0"/>';
+//			}
+//			echo "</td><td class=\"results\">";
+//			request
+//			$query = "select id from plasmid_request WHERE `plasmid_id` = '{$matches['id']}'";
+//			$rs = $db_conn->query($query);
+//			$num_request=$rs->num_rows;
+//			$query="SELECT SUM(`volume`) AS `total_volume` FROM `plasmid_request` WHERE `plasmid_id`='{$matches['id']}'";
+//			$result_request = $db_conn->query($query);
+//			$match_request=$result_request->fetch_assoc();
+//			$total_volume=$match_request['total_volume'];
+//			if($num_request>0) {
+//				echo '<a href="plasmid_request.php?plasmid_id='.$matches['id'].'" target="_blank">'.$num_request.'</a>&nbsp;&nbsp;';
+//			}
+//			if ($num_bank>0) {
+//				if (userPermission('3')) {
+//					echo "<a onclick=\"request({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a>";
+//				} else {
+//					echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" border="0"/>';
+//				}
+//			}
 			echo "</td></tr>";
 		}
 		echo '</table>';

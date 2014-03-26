@@ -9,7 +9,7 @@ include_once('include/includes.php');
 <?php
   do_html_header('Animals-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   js_selectall();
@@ -96,7 +96,7 @@ function   addStorage (module_id, item_id) {
   <?php
 
 	//standardSearch('Animals',$fields);
-	resultsDisplayControl($sort,5);
+	resultsDisplayControl($sort,10);
 	?>
   </table>
 </form>
@@ -161,12 +161,14 @@ function   addStorage (module_id, item_id) {
   $_SESSION['query']=$query;//used for EXCEL export
 
   pagerForm('animals',$query);
+  
+  $module=get_record_from_name('modules','animals');
 
   if ($results  && $results->num_rows) {
   	echo "<form action='' method='post' name='results' target='_self' >";
   	echo "<table width='100%' class='results'>";
   	echo "<tr><td class='results_header'><input type='checkbox' name='clickall' onclick=selectall(this.checked)></td><td class='results_header'>";
-  	echo "ID</td><td class='results_header'>";
+  	echo "Quick ID</td><td class='results_header'>";
   	echo "Name&Details</td><td class='results_header'>";
   	echo "State</td><td class='results_header'>";
   	echo "Operate</td><td class='results_header'>";
@@ -174,10 +176,10 @@ function   addStorage (module_id, item_id) {
   	echo "Order</td></tr>";
   	while ($matches = $results->fetch_array()) {
   		echo "<tr><td class='results'><input type='checkbox'  onclick=changechecked(this)  name='selectedItem[]' value={$matches[id]}></td><td class='results'>";
-  		echo "{$matches[id]}</td><td width='200' class='results'>";
+  		echo get_quick_id($module[id],$matches[id])."</td><td width='200' class='results'>";
   		echo "<a href='animals_operate.php?type=detail&id={$matches[id]}'>".wordwrap($matches[name],190,"<br>")."<br>";
   		if ($matches['health']) {
-  			$health=array('??????'=>'1','ï¿??ï¿??'=>'2','SPF'=>'3','??????'=>'4');
+  			$health=array('General'=>'1','Clean'=>'2','SPF'=>'3','Sterile'=>'4');
   			foreach ($health as $key=>$value) {
   				if ($matches['health'] == $value) {
   					echo $key.",";
@@ -219,17 +221,16 @@ function   addStorage (module_id, item_id) {
   		echo "</td><td class='results'>";
   		if (userPermission('2',$matches['created_by'])) {
   			echo "<a href='animals_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
-  			echo "<a href='animals_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
+//  			echo "<a href='animals_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
   			echo "<a href='animals_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
   		}
   		else
   		{
   			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
-  			echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
+//  			echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
   			echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
   		}
   		//query the storages of this item where the state is in stock.
-  		$module=get_record_from_name('modules','animals');
   		$db_conn=db_connect();
   		$query = "select id from storages WHERE module_id='{$module['id']}'
                 AND item_id = '{$matches['id']}'

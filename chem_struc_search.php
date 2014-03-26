@@ -33,7 +33,7 @@ if ($subdirdigits > ($digits - 1)) { $subdirdigits = $digits - 1; }
 <?php
 do_html_header('Structure search');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 
 <?php

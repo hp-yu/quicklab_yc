@@ -1,604 +1,721 @@
 /* CSS Document */
 
-body {
-font-family:Verdana, Arial, sans-serif;
-font-size:8pt;
+body
+{
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
 }
-
 h2
 {
-font-family: Verdana, Arial, sans-serif;
-font-size:18pt;
-line-height:100%;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 18pt;
+    line-height: 100%;
 }
 h3
 {
-font-family: Verdana, Arial, sans-serif;
-font-size:16pt;
-line-height:100%;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 16pt;
+    line-height: 100%;
 }
 h4
 {
-font-family: Verdana, Arial, sans-serif;
-font-size:14pt;
-line-height:100%;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 14pt;
+    line-height: 100%;
 }
-#header {
-	margin:0px;
-	padding-left:5px;
-	padding-right:5px;
+#header
+{
+    margin: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
-#menu {
-	margin:0px;
+#logo
+{
+    position: absolute;
+    text-align: left;
+    top: 0px;
+    width: 200px;
+    height: 40px;
+    z-index: 1;
 }
-#logo {
-	position:absolute;
-	text-align: left;
-	top:0px;
-	width:200px;
-	height:40px;
-	z-index:1;
+#banner_graphic
+{
+    position: absolute;
+    left: 250px;
+    top: 0px;
+    width: 400px;
+    height: 40px;
+    z-index: 1;
 }
-#banner_graphic {
-	position:absolute;
-	left:250px;
-	top:0px;
-	width:400px;
-	height:40px;
-	z-index:1;
+#login
+{
+    text-align: right;
+    width: 100%;
+    height: 40px;
+    z-index: 1;
 }
-#login {
-	text-align: right;
-	width:100%;
-	height:40px;
-	z-index:1;
+#logout
+{
+    position: absolute;
+    text-align: right;
+    top: 0px;
+    width: 100%;
+    height: 40px;
+    z-index: 1;
 }
-#logout {
-	position:absolute;
-	text-align: right;
-	top:0px;
-	width:100%;
-	height:40px;
-	z-index:1;
+#contents
+{
+    margin: 0px;
 }
-#contents {
-	margin:0px;
+#code
+{
+    margin-right: 5px;
+    position: relative;
+    text-align: right;
+    top: 1px;
+    width: 100%;
+    height: 15px;
 }
-#code {
-  margin-right:5px;
-	position:relative;
-	text-align: right;
-	top:1px;
-	width:100%;
-	height:15px;
+TD
+{
+    font-size: 8pt;
+    font-family: Verdana, Arial, sans-serif;
+    text-decoration: none;
+    white-space: nowrap; /*word-break:break-all; �Զ����� */
 }
-TD {
-	font-size: 8pt;
-	font-family:Verdana, Arial, sans-serif;
-	text-decoration: none;
-	white-space:nowrap;
-	/*word-break:break-all; �Զ����� */
-}
-A  {text-decoration: none;
-    color: blue}
-select {
-	z-index: 1;
-}
-A:hover {
+A
+{
     text-decoration: none;
     color: blue;
-	BACKGROUND-COLOR:pink;
+}
+select
+{
+    z-index: 1;
+}
+A:hover
+{
+    text-decoration: none;
+    color: blue;
+    background-color: pink;
 }
 
-p {
-font-family:Verdana, Arial, sans-serif;
-font-size:8pt;
-color:#000000;
-line-height:18px;
-padding:3px;
+p
+{
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 8pt;
+    color: #000000;
+    line-height: 18px;
+    padding: 3px;
 }
 
-.bold {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12pt;
-	line-height: 18px;
-	font-weight: bold;
-	color: #000000;
+.bold
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    line-height: 18px;
+    font-weight: bold;
+    color: #000000;
 }
-.navigation {
-	font-family: verdana,helvetica;
-	font-size: 12pt;
-	text-decoration: none;
-	padding: 4px;
-	color: #006633;
+.navigation
+{
+    font-family: verdana,helvetica;
+    font-size: 12pt;
+    text-decoration: none;
+    padding: 4px;
+    color: #006633;
 }
 .navigation:hover {
 
 }
-.frame {
-	border: 1px solid #006633;
-	margin: 3px;
-	padding: 3px;
+.frame
+{
+    border: 1px solid #006633;
+    margin: 3px;
+    padding: 3px;
 }
-.frame2{
-	border-top-color: #006633;
-	border-top-style: solid;
-	border-top-width: 1px;
+.frame2
+{
+    border-top-color: #006633;
+    border-top-style: solid;
+    border-top-width: 1px;
 }
-.records {
-	font-family: Arial, ;
-	font-size: 10pt;
-	line-height: 18px;
-	font-weight: normal;
-	color: #000000;
+.records
+{
+    font-family: Arial,;
+    font-size: 10pt;
+    line-height: 18px;
+    font-weight: normal;
+    color: #000000;
 }
-.navigation2 {
-	font-family: Verdana, sans-serif;
-	font-size: 12pt;
-	font-style: normal;
-	font-weight: bold;
-	background-color: #006633;
-	padding: 2px;
-	visibility: visible;
-	color: #FFFFFF;
-	text-decoration: none;
+.navigation2
+{
+    font-family: Verdana, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: bold;
+    background-color: #006633;
+    padding: 2px;
+    visibility: visible;
+    color: #FFFFFF;
+    text-decoration: none;
 }
-.navigation2:hover {
-	font-family: Verdana, sans-serif;
-	font-size: 12pt;
-	font-style: normal;
-	font-weight: bold;
-	background-color: #006633;
-	padding: 2px;
-	visibility: visible;
-	color: #FFFFFF;
+.navigation2:hover
+{
+    font-family: Verdana, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: bold;
+    background-color: #006633;
+    padding: 2px;
+    visibility: visible;
+    color: #FFFFFF;
 }
-#dropmenudiv{
-position:absolute;
-border:1px solid black;
-border-bottom-width: 0;
-font:normal 10px Verdana;
-line-height:15px;
-z-index:100;
+#dropmenudiv
+{
+    position: absolute;
+    border: 1px solid black;
+    border-bottom-width: 0;
+    font: normal 10px Verdana;
+    line-height: 15px;
+    z-index: 100;
 }
-#dropmenudiv a{
-width: 100%;
-display: block;
-text-indent: 3px;
-border-bottom: 1px solid black;
-padding: 1px 0;
-text-decoration: none;
-font-weight: bold;
-color:#006633;
+#dropmenudiv a
+{
+    width: 100%;
+    display: block;
+    text-indent: 3px;
+    border-bottom: 1px solid black;
+    padding: 1px 0;
+    text-decoration: none;
+    font-weight: bold;
+    color: #006633;
 }
-#dropmenudiv a:hover{ /*hover background color*/
-	background-color: #006633;
-	color: #FFFFFF;
+#dropmenudiv a:hover
+{
+    /*hover background color*/
+    background-color: #006633;
+    color: #FFFFFF;
 }
-table.search {
-	border: 1px solid #006633;
-	padding: 0px;
-	margin: 0px;
+table.search
+{
+    margin: 5px 0px 0px 0px;
+    border: 1px solid #006633;
+    padding: 0px;
 }
-table.standard {
-	border: 1px solid #006633;
-	padding: 0px;
-	margin: 0px;
+table.pager
+{
+    margin: 5px 0px 0px 0px;
+    padding: 0px;
 }
-table.contents {
-	border: 1px solid #006633;
-	padding: 0px;
-	margin: 0px;
+table.standard
+{
+    border: 1px solid #006633;
+    padding: 0px;
+    margin: 5px 0px 0px 0px;
 }
-table.results {
-  margin: 3px 0px;
-	text-align: center;
-	border-spacing: 1px;
-	border: 1px solid #006633;
-	background-color: #cccccc;
-	jerry:expression(cellSpacing="1");
+table.contents
+{
+    border: 1px solid #006633;
+    padding: 0px;
+    margin: 0px;
 }
-table.posts {
-	border-top-color: #006633;
-	border-top-style: solid;
-	border-top-width: 1px;
+table.login
+{
+    margin: 250px auto 0px auto;
+    border: 1px solid #CCCCCC;
 }
-table.template {
-	text-align: center;
+table.results
+{
+    margin: 5px 0px 0px 0px;
+    text-align: center;
+    border-spacing: 1px;
+    border: 1px solid #006633;
+    background-color: #cccccc;
+    jerry: expression(cellSpacing="1");
 }
-table.footer {
-	border-top-color: #006633;
-	border-top-style: solid;
-	border-top-width: 1px;
+table.menu
+{
+    padding: 0px 5px 0px 0px;
+    background-color: #006633;
 }
-table.calc {
-	border-bottom-color: #006633;
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
+table.posts
+{
+    border-top-color: #006633;
+    border-top-style: solid;
+    border-top-width: 1px;
 }
-td.footer {
-	font-size: 8pt;
-	font-family: verdana,helvetica;
+table.template
+{
+    text-align: center;
 }
-td.sequence {
-	font-size: 9pt;
-	font-family: Courier New;
+table.footer
+{
+    border-top-color: #006633;
+    border-top-style: solid;
+    border-top-width: 1px;
+    margin-top: 5px;
 }
-td.search {
-	background-color: #CCCCCC;
-	background-repeat: repeat-y;
+table.calc
+{
+    border-bottom-color: #006633;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
 }
-td.results_header {
-	background-color: #999999;
-	color: #FFFFFF;
-	font: bold;
-	padding-left: 3px;
-	padding-right: 3px;
-	padding-top: 1px;
-	padding-bottom: 1px;
+td.footer
+{
+    font-size: 8pt;
+    font-family: verdana,helvetica;
 }
-th.results_header {
-	background-color: #FF0000;
+td.sequence
+{
+    font-size: 9pt;
+    font-family: Courier New;
 }
-td.layout {
-	margin:3px;
+td.search
+{
+    background-color: #CCCCCC;
+    background-repeat: repeat-y;
 }
-td.prompt {
-	color:blue;
+td.results_header
+{
+    background-color: #999999;
+    color: #FFFFFF;
+    font: bold;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
-td.results{
-	background-color: #FFFFFF;
+th.results_header
+{
+    background-color: #FF0000;
 }
-table.operate {
-	border: 1px solid #006633;
+td.layout
+{
+    margin: 3px;
 }
-table.ads {
-	border: 1px solid #006633;
-	padding: 3px;
-	margin: 3px 0px;
+td.prompt
+{
+    color: blue;
 }
-table.alert {
-	border: 1px solid red;
-	padding: 3px;
-	margin: 3px 0px;
+td.results
+{
+    background-color: #FFFFFF;
 }
-input {
-	font-size: 8pt;
-	font-family: verdana,helvetica;
+table.operate
+{
+    border: 1px solid #006633;
+    margin-top: 5px;
+}
+table.ads
+{
+    border: 1px solid #006633;
+    padding: 3px;
+    margin: 3px 0px;
+}
+table.alert
+{
+    border: 1px solid red;
+    padding: 3px;
+    margin: 5px 0px 0px 0px;
+}
+input
+{
+    font-size: 8pt;
+    font-family: verdana,helvetica;
+}
+input.login
+{
+    font-size: 20px;
+    width: 200px;
+    height: 30px;
+}
+select
+{
+    font-size: 8pt;
+    font-family: verdana,helvetica;
 }
 
-select {
-	font-size: 8pt;
-	font-family: verdana,helvetica;
+textarea
+{
+    font-size: 8pt;
+    font-family: verdana,helvetica;
 }
-
-textarea {
-	font-size: 8pt;
-	font-family: verdana,helvetica;
+textarea.sequence
+{
+    font-size: 9pt;
+    font-family: Courier New;
 }
-textarea.sequence {
-	font-size: 9pt;
-	font-family: Courier New;
+submit
+{
+    font-size: 8pt;
+    font-family: verdana,helvetica;
 }
-submit {
-	font-size: 8pt;
-	font-family: verdana,helvetica;
-}
-form{
- margin: 0 px;
+form
+{
+    margin: 0px;
 }
 /***********************************************
 * Chrome CSS Drop Down Menu- �???? Dynamic Drive DHTML code library (www.dynamicdrive.com)
 * This notice MUST stay intact for legal use
 * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
 ***********************************************/
-.chromestyle{
-width: 100%;
-font:bold 12px Verdana;
+.chromestyle
+{
+    width: 100%;
+    font: bold 14px Verdana;
 }
 
-.chromestyle:after{ /*Add margin between menu and rest of content in Firefox*/
-content: ".";
-display: block;
-height: 0;
-clear: both;
-visibility: hidden;
+.chromestyle:after
+{
+    /*Add margin between menu and rest of content in Firefox*/
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
-.chromestyle ul{
-width:100%;
-border: 0px solid #BBB;
-background: #006633;
-/*url(../include/chrometheme/chromebg.gif) center center repeat-x; /*THEME CHANGE HERE*/
-padding: 3px;
-margin: 0;
-text-align: left; /*set value to "left", "center", or "right"*/
-text-indent: 200px;
-height: 15px;
+.chromestyle ul
+{
+    width: 100%;
+    border: 0px solid #BBB;
+    background: #006633; /*url(../include/chrometheme/chromebg.gif) center center repeat-x; /*THEME CHANGE HERE*/
+    padding: 3px 0px 3px 0px;
+    margin: 0;
+    text-align: left; /*set value to "left", "center", or "right"*/
+    text-indent: 200px;
 }
 
-.chromestyle ul li{
-display: inline;
+.chromestyle ul li
+{
+    display: inline;
 }
 
-.chromestyle ul li a{
-color: #ffffff;
-padding: 3px 7px;
-margin: 0;
-text-decoration: none;
-border-right: 1px solid #DADADA;
+.chromestyle ul li a
+{
+    color: #ffffff;
+    padding: 3px 7px 3px 7px;
+    margin: 0;
+    text-decoration: none;
+    border-right: 1px solid #DADADA;
 }
 
-.chromestyle ul li a:hover, .chromestyle ul li a.selected{
-/*background: url(../include/chrometheme/chromebg-over.gif) center center repeat-x; /*THEME CHANGE HERE*/
-background-color: #006633;
-color: #ffffff;
+.chromestyle ul li a:hover, .chromestyle ul li a.selected
+{
+    /*background: url(../include/chrometheme/chromebg-over.gif) center center repeat-x; /*THEME CHANGE HERE*/
+    background-color: #006633;
+    color: #ffffff;
 }
 
 /* ######### Style for Drop Down Menu ######### */
 
-.dropmenudiv{
-position:absolute;
-top: 0;
-border: 1px solid #006633; /*THEME CHANGE HERE*/
-border-bottom-width: 0;
-font:normal 10px Verdana;
-line-height:12px;
-z-index:100;
-background-color: #cccccc;
-width: 200px;
-visibility: hidden;
-filter: progid:DXImageTransform.Microsoft.Shadow(color=#CACACA,direction=135,strength=4); /*Add Shadow in IE. Remove if desired*/
+.dropmenudiv
+{
+    position: absolute;
+    top: 0;
+    border: 1px solid #006633; /*THEME CHANGE HERE*/
+    border-bottom-width: 0;
+    font: normal 10px Verdana;
+    line-height: 12px;
+    z-index: 100;
+    background-color: #cccccc;
+    width: 200px;
+    visibility: hidden;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color=#CACACA,direction=135,strength=4); /*Add Shadow in IE. Remove if desired*/
 }
 
 
-.dropmenudiv a{
-width: auto;
-display: block;
-text-indent: 3px;
-border-bottom: 1px solid #006633; /*THEME CHANGE HERE*/
-padding: 2px 0;
-text-decoration: none;
-font-weight: bold;
-color: #006633;
+.dropmenudiv a
+{
+    width: auto;
+    display: block;
+    text-indent: 3px;
+    border-bottom: 1px solid #006633; /*THEME CHANGE HERE*/
+    padding: 2px 0;
+    text-decoration: none;
+    font-weight: bold;
+    color: #006633;
 }
 
-* html .dropmenudiv a{ /*IE only hack*/
-width: 100%;
+* html .dropmenudiv a
+{
+    /*IE only hack*/
+    width: 100%;
 }
 
-.dropmenudiv a:hover{ /*THEME CHANGE HERE*/
-background-color: #006633;
-color: #ffffff;
+.dropmenudiv a:hover
+{
+    /*THEME CHANGE HERE*/
+    background-color: #006633;
+    color: #ffffff;
 }
 
 /*glossymenu leftnav*/
-.mylabtitle{
-font-family:Verdana, Arial, sans-serif;
-font-size:12pt;
-font-weight: bold;
-padding-left: 10px;
+.mylabtitle
+{
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    padding-left: 10px;
 }
 
-.posts{
+.posts{ 
 color: ;
 font: ;
 padding-left: 10px;
+ }
+
+
+.glossymenu
+{
+    margin: 0px 0;
+    padding: 0;
+    width: 200px; /*width of menu*/
 }
 
-.glossymenu{
-margin: 0px 0;
-padding: 0;
-width: 200px; /*width of menu*/
+.glossymenu a.menuitem
+{
+    /*background: url(glossyback.gif) repeat-x bottom left;*/
+    font: bold 11px "verdana";
+    color: #006633;
+    display: block;
+    position: relative; /*To help in the anchoring of the ".statusicon" icon image*/
+    width: auto;
+    padding: 4px 0;
+    padding-left: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid #006633;
+    cursor: hand;
 }
 
-.glossymenu a.menuitem{
-/*background: url(glossyback.gif) repeat-x bottom left;*/
-font: bold 11px "verdana";
-color: #006633;
-display: block;
-position: relative; /*To help in the anchoring of the ".statusicon" icon image*/
-width: auto;
-padding: 4px 0;
-padding-left: 10px;
-text-decoration: none;
-border-bottom: 1px solid #006633;
-cursor: hand;
+.glossymenu a.openheader
+{
+    /*CSS class to apply to expandable header when it's expanded*/
+    color: #00cc33;
 }
 
-.glossymenu a.openheader{ /*CSS class to apply to expandable header when it's expanded*/
-color: #00cc33;
+.glossymenu a.menuitem .statusicon
+{
+    /*CSS for icon image that gets dynamically added to headers*/
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: none;
 }
 
-.glossymenu a.menuitem .statusicon { /*CSS for icon image that gets dynamically added to headers*/
-position: absolute;
-top: 5px;
-right: 5px;
-border: none;
-}
-
-.glossymenu a.menuitem:hover {
+.glossymenu a.menuitem:hover 
+{
 /*background-image: url(glossyback2.gif);*/
 }
 
-.glossymenu div.submenu{ /*DIV that contains each sub menu*/
-background: white;
+.glossymenu div.submenu
+{
+    /*DIV that contains each sub menu*/
+    background: white;
 }
 
-.glossymenu div.submenu ul{ /*UL of each sub menu*/
-list-style-type: none;
-margin: 0;
-padding: 0;
+.glossymenu div.submenu ul
+{
+    /*UL of each sub menu*/
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.glossymenu div.submenu ul li{
-padding: 0;
-padding-top: 1px; /*bottom spacing between menu items*/
-padding-bottom: 1px; /*bottom spacing between menu items*/
+.glossymenu div.submenu ul li
+{
+    padding: 0;
+    padding-top: 1px; /*bottom spacing between menu items*/
+    padding-bottom: 1px; /*bottom spacing between menu items*/
 }
 
-.glossymenu div.submenu ul li a{
-color: #A70303;
-/*background: url(arrowbullet.png) no-repeat center left; /*custom bullet list image*/
-display: block;
-padding: 2px 0;
-padding-left: 19px; /*link text is indented 19px*/
-text-decoration: none;
-font-weight: bold;
-border-bottom: 1px solid #dadada;
-font-size: 90%;
+.glossymenu div.submenu ul li a
+{
+    color: #A70303; /*background: url(arrowbullet.png) no-repeat center left; /*custom bullet list image*/
+    display: block;
+    padding: 2px 0;
+    padding-left: 19px; /*link text is indented 19px*/
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 1px solid #dadada;
+    font-size: 90%;
 }
 
-.glossymenu div.submenu ul li a:hover{
-color: #A70303;
-background-color: #F3F3F3;
+.glossymenu div.submenu ul li a:hover
+{
+    color: #A70303;
+    background-color: #F3F3F3;
 }
 
-.taskpopup{
-position:absolute;
-border: 1px solid #006633; /*THEME CHANGE HERE*/
-font:normal 12px Verdana;
-line-height:12px;
-z-index:100;
-background-color: #cccccc;
-width: 225px;
-visibility: hidden;
-filter: progid:DXImageTransform.Microsoft.Shadow(color=#CACACA,direction=135,strength=4); /*Add Shadow in IE. Remove if desired*/
+.taskpopup
+{
+    position: absolute;
+    border: 1px solid #006633; /*THEME CHANGE HERE*/
+    font: normal 12px Verdana;
+    line-height: 12px;
+    z-index: 100;
+    background-color: #cccccc;
+    width: 225px;
+    visibility: hidden;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color=#CACACA,direction=135,strength=4); /*Add Shadow in IE. Remove if desired*/
 }
 
-.taskpopup ul{
-list-style-type:none;
-padding: 2px;
-margin: 0;
-text-align: left; /*set value to "left", "center", or "right"*/
+.taskpopup ul
+{
+    list-style-type: none;
+    padding: 2px;
+    margin: 0;
+    text-align: left; /*set value to "left", "center", or "right"*/
 }
 
-.taskpopup li{
-padding: 2px;
-text-align: left; /*set value to "left", "center", or "right"*/
+.taskpopup li
+{
+    padding: 2px;
+    text-align: left; /*set value to "left", "center", or "right"*/
 }
 /**********************************
 form validation
 ***********************************/
-input.error { border: 2px solid red; }
-form label.error, label.error {
-	/* remove the next line when you have trouble in IE6 with labels in list */
-	color: red;
-	font-style: italic
+input.error
+{
+    border: 2px solid red;
+}
+form label.error, label.error
+{
+    /* remove the next line when you have trouble in IE6 with labels in list */
+    color: red;
+    font-style: italic;
 }
 /**********************************
 suggest
 ***********************************/
-.suggestcontent {
-  height: 100%;
-  width: 100%;
-  text-align:left
+.suggestcontent
+{
+    height: 100%;
+    width: 100%;
+    text-align: left;
 }
-.suggestmessage {
-  font-weight: bold;
-  text-align: left;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  margin-top: 10px
+.suggestmessage
+{
+    font-weight: bold;
+    text-align: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
-.suggestscroll {
-  position: absolute;
-  margin: 0 auto;
-  visibility: hidden;
-  background-color: white;
-  z-index: 2;
-  height: 180px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-left-style: solid;
-  border-collapse: collapse;
-  border-bottom-style: solid;
-  border-color: #000000;
-  border-width: 1px;
-  overflow: auto;
+.suggestscroll
+{
+    position: absolute;
+    margin: 0 auto;
+    visibility: hidden;
+    background-color: white;
+    z-index: 2;
+    height: 180px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-collapse: collapse;
+    border-bottom-style: solid;
+    border-color: #000000;
+    border-width: 1px;
+    overflow: auto;
 }
-.suggestscroll div {
-  margin: 0 auto;
-  text-align:left
+.suggestscroll div
+{
+    margin: 0 auto;
+    text-align: left;
 }
-.suggest table{
-  width: 100%;
-  font-size: 11px;
-  font-weight: normal;
-  color: #676767;
-  text-decoration: none;
-  border: 1px;
-  padding: 0px;
-  text-align:left;
-  margin: 0px
+.suggest table
+{
+    width: 100%;
+    font-size: 11px;
+    font-weight: normal;
+    color: #676767;
+    text-decoration: none;
+    border: 1px;
+    padding: 0px;
+    text-align: left;
+    margin: 0px;
 }
-.highlightrow {
-  background-color: #999999;
-  cursor: pointer
+.highlightrow
+{
+    background-color: #999999;
+    cursor: pointer;
 }
 /**********************************
 colorselector
 ***********************************/
-.colorselector {
-width: 20px;
-height: 20px;
-border: 1px solid #808080;
-cursor: pointer;
+.colorselector
+{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #808080;
+    cursor: pointer;
 }
-.colorselectdiv {
-border: 1px solid #808080;
-width: 20;
-height: 20;
-cursor: pointer;
+.colorselectdiv
+{
+    border: 1px solid #808080;
+    width: 20;
+    height: 20;
+    cursor: pointer;
 }
-.colorselecttable {
-background-color: #cccccc;
+.colorselecttable
+{
+    background-color: #cccccc;
 }
-.colorholder {
-position:absolute;
+.colorholder
+{
+    position: absolute;
 }
 /**********************************
 plasmid mapping
 ***********************************/
-#plasmid_mapping_map {
-	margin : 5px;
-  width: 600px;
-  height: 425px;
-  border: solid 1px #000000;
-  overflow: auto
+#plasmid_mapping_map
+{
+    margin: 5px;
+    width: 600px;
+    height: 425px;
+    border: solid 1px #000000;
+    overflow: auto;
 }
-#plasmid_mapping_seq {
-	margin : 5px;
-  width: 600px;
-  height: 130px;
-  border: solid 1px #000000;
-  overflow: auto
+#plasmid_mapping_seq
+{
+    margin: 5px;
+    width: 600px;
+    height: 130px;
+    border: solid 1px #000000;
+    overflow: auto;
 }
-#plasmid_mapping_basic {
-  margin : 5px;
-  width: 480px;
-  height: 125px;
-  border: solid 1px #000000;
-  overflow: auto
+#plasmid_mapping_basic
+{
+    margin: 5px;
+    width: 480px;
+    height: 125px;
+    border: solid 1px #000000;
+    overflow: auto;
 }
-#plasmid_mapping_res {
-  margin : 5px;
-  width: 480px;
-  height: 140px;
-  border: solid 1px #000000;
-  overflow: auto
+#plasmid_mapping_res
+{
+    margin: 5px;
+    width: 480px;
+    height: 140px;
+    border: solid 1px #000000;
+    overflow: auto;
 }
-#plasmid_mapping_fea {
-  margin : 5px;
-  width: 480px;
-  height: 142px;
-  border: solid 1px #000000;
-  overflow: auto
+#plasmid_mapping_fea
+{
+    margin: 5px;
+    width: 480px;
+    height: 142px;
+    border: solid 1px #000000;
+    overflow: auto;
 }
-#plasmid_mapping_insert {
-  margin : 5px;
-  width: 480px;
-  height: 90px;
-  border: solid 1px #000000;
-  overflow: auto
+#plasmid_mapping_insert
+{
+    margin: 5px;
+    width: 480px;
+    height: 90px;
+    border: solid 1px #000000;
+    overflow: auto;
 }

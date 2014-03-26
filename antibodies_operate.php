@@ -17,26 +17,53 @@ if ($_REQUEST['type']=='import_template') {
 }
 ?>
 <?php
-do_html_header('Antibodies operate-Quicklab');
-do_header();
-do_leftnav();
-standard_form();
-do_rightbar();
-do_footer();
-do_html_footer();
+  do_html_header_begin('Antibodies operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
+  do_header();
+  //do_leftnav();
+  process_request();
+  do_rightbar();
+  do_footer();
+  do_html_footer();
 ?>
 <?php
-function standard_form()
+
+function add_form()
 {
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>
+	if(!userPermission('3'))
+	{
+		alert();
+	}
+	?>
 <script type="text/javascript">
-function moveOptionToText(e1, e2){
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required",
+			project: "required",
+			antibody_type: "required",
+			specification: "required",
+			host: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			project: {required: 'required'},
+			antibody_type: {required: 'required'},
+			specification: {required: 'required'},
+			host: {required: 'required'}
+		}});
+});
+function moveOptionToText(e1, e2) {
 	for(var i=0;i<e1.options.length;i++){
 		if(e1.options[i].selected) {
 			var e = e1.options[i]
-			e2.value=e.value;
+			if(e.value!='') {
+			  e2.value=e.text;
+			}
 		}
 	}
 }
@@ -54,23 +81,14 @@ function moveOptionToTextarea(e1, e2){
 	}
 }
 </script>
-<?php
-process_request();
-}
-
-function add_form()
-{
-	if(!userPermission('3'))
-	{
-		alert();
-	}
-	?>
-    <form name='add' method='post' action='' target="_self">
+    <form name='add_form' id="add_form" method='post' action='' target="_self">
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new antibody:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td>Project:</td><td><?php
@@ -110,15 +128,7 @@ function add_form()
       </tr>
       <tr>
         <td>Species reactivity:</td>
-        <td><select name="species_reactivities[]" size="4" multiple
-  	ondblclick="moveOptionToTextarea(document.getElementById('species_reactivities[]'), document.getElementById('species_reactivity'))"><?php
-  	$db_conn=db_connect();
-  	$query="SELECT * FROM species ORDER BY name";
-  	$result=$db_conn->query($query);
-  	while ($match=$result->fetch_array()) {
-  		echo "<option value={$match['name']}  style='font-family:bold'>".$match['name']."</option>";
-  	}?></select>
-  	<textarea name='species_reactivity' cols="25" rows="4"><?php echo stripslashes(htmlspecialchars($_POST['species_reactivity']))?></textarea></td>
+        <td><input type='text' name='species_reactivity' size="20" value="<?php echo stripslashes(htmlspecialchars($_POST['species_reactivity']))?>"/></td>
       </tr>
       <tr>
         <td>Specificity:</td>
@@ -126,27 +136,11 @@ function add_form()
       </tr>
       <tr>
         <td>Marker:</td>
-        <td><select name="markers[]" size="4" multiple
-  	ondblclick="moveOptionToTextarea(document.getElementById('markers[]'), document.getElementById('marker'))"><?php
-  	$db_conn=db_connect();
-  	$query="SELECT * FROM antibody_options WHERE option_type='marker' ORDER BY name";
-  	$result=$db_conn->query($query);
-  	while ($match=$result->fetch_array()) {
-  		echo "<option value={$match['name']} >".$match['name']."</option>";
-  	}?></select>
-  	<textarea name='marker' cols="25" rows="4"><?php echo stripslashes(htmlspecialchars($_POST['marker']))?></textarea></td>
+        <td><input type='text' name='application' size="20" value="<?php echo stripslashes(htmlspecialchars($_POST['application']))?>"/></td>
       </tr>
       <tr>
         <td>Application:</td>
-        <td><select name="applications[]" size="4" multiple
-  	ondblclick="moveOptionToTextarea(document.getElementById('applications[]'), document.getElementById('application'))"><?php
-  	$db_conn=db_connect();
-  	$query="SELECT * FROM antibody_options WHERE option_type='app' ORDER BY name";
-  	$result=$db_conn->query($query);
-  	while ($match=$result->fetch_array()) {
-  		echo "<option value={$match['name']} >".$match['name']."</option>";
-  	}?></select>
-  	<textarea name='application' cols="25" rows="4"><?php echo stripslashes(htmlspecialchars($_POST['application']))?></textarea></td>
+        <td><input type='text' name='marker' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['marker']))?>"/></td>
       </tr>
       <tr>
         <td>Purity:</td>
@@ -199,7 +193,7 @@ function add_form()
     	</td>
       </tr>
       <?php hidden_inputs('created_by','date_create','add');?>
-      </form></table>
+      </table></form>
       <?php
 }
 
@@ -211,19 +205,63 @@ function edit_form()
 		alert();
 	}
   ?>
-    <form name='edit' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required",
+			project: "required",
+			antibody_type: "required",
+			specification: "required",
+			host: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			project: {required: 'required'},
+			antibody_type: {required: 'required'},
+			specification: {required: 'required'},
+			host: {required: 'required'}
+		}});
+});
+function moveOptionToText(e1, e2) {
+	for(var i=0;i<e1.options.length;i++){
+		if(e1.options[i].selected) {
+			var e = e1.options[i]
+			if(e.value!='') {
+			  e2.value=e.text;
+			}
+		}
+	}
+}
+function moveOptionToTextarea(e1, e2){
+	for(var i=0;i<e1.options.length;i++){
+		if(e1.options[i].selected) {
+			var e = e1.options[i]
+			if(e2.value=='') {
+				e2.value=e.text;
+			}
+			else {
+				e2.value+=",\r\n"+e.text;
+			}
+		}
+	}
+}
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>
   	  <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php
   echo $antibody['name'];?>">*</td>
       </tr>
       <tr>
         <td>Project:</td><td><?php
         $query= "select * from projects";
 		echo query_select_choose('project', $query,'id','name',$antibody['project']);?>
-        </td></tr>
+        *</td></tr>
       <tr>
         <td>Description:</td>
         <td><textarea name='description' cols='50' rows='3'><?php
@@ -258,15 +296,7 @@ function edit_form()
       </tr>
       <tr>
         <td>Species reactivity:</td>
-        <td><select name="species_reactivities[]" size="4" multiple
-  	ondblclick="moveOptionToTextarea(document.getElementById('species_reactivities[]'), document.getElementById('species_reactivity'))"><?php
-  	$db_conn=db_connect();
-  	$query="SELECT * FROM species ORDER BY name";
-  	$result=$db_conn->query($query);
-  	while ($match=$result->fetch_array()) {
-  		echo "<option value={$match['name']} >".$match['name']."</option>";
-  	}?></select>
-  	<textarea name='species_reactivity' cols="25" rows="4"><?php echo $antibody['species_reactivity']?></textarea></td>
+        <td><input type='text' name='species_reactivity' size="20" value="<?php echo $antibody['species_reactivity']?>"/></td>
       </tr>
       <tr>
         <td>Specificity:</td>
@@ -274,27 +304,11 @@ function edit_form()
       </tr>
       <tr>
         <td>Marker:</td>
-        <td><select name="markers[]" size="4" multiple
-  	ondblclick="moveOptionToTextarea(document.getElementById('markers[]'), document.getElementById('marker'))"><?php
-  	$db_conn=db_connect();
-  	$query="SELECT * FROM antibody_options WHERE option_type='marker' ORDER BY name";
-  	$result=$db_conn->query($query);
-  	while ($match=$result->fetch_array()) {
-  		echo "<option value={$match['name']} >".$match['name']."</option>";
-  	}?></select>
-  	<textarea name='marker' cols="25" rows="4"><?php echo $antibody['marker']?></textarea></td>
+        <td><input type='text' name='marker' size="20" value="<?php echo $antibody['marker']?>"/></td>
       </tr>
       <tr>
         <td>Application:</td>
-        <td><select name="applications[]" size="4" multiple
-  	ondblclick="moveOptionToTextarea(document.getElementById('applications[]'), document.getElementById('application'))"><?php
-  	$db_conn=db_connect();
-  	$query="SELECT * FROM antibody_options WHERE option_type='app' ORDER BY name";
-  	$result=$db_conn->query($query);
-  	while ($match=$result->fetch_array()) {
-  		echo "<option value={$match['name']} >".$match['name']."</option>";
-  	}?></select>
-  	<textarea name='application' cols="25" rows="4"><?php echo $antibody['application']?></textarea></td>
+        <td><input type='text' name='application' size="40" value="<?php echo $antibody['application']?>"/></td>
       </tr>
       <tr>
         <td>Purity:</td>
@@ -324,7 +338,7 @@ function edit_form()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td>
       </tr>
       <?php hidden_inputs('updated_by','date_update','edit');?>
-    </form></table>
+   </table> </form>
   <?php
 }
 
@@ -372,6 +386,8 @@ function detail()
 	}
 	$antibody = get_record_from_id('antibodies',$_REQUEST['id']);
 ?>
+	<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
       <a href="antibodies_operate.php?type=edit&id=<?php echo $antibody['id']?>"/><img src="./assets/image/general/edit.gif" border="0"/></a></h3></td>
       </tr>
@@ -520,6 +536,8 @@ function delete_form()
     	if($relateditem_count==0&&$storage_count==0&&$order_count==0)
     	{
     		echo "<form name='delete' method='post' action=''>";
+    		echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>";
     		echo "<tr><td colspan='2'><h3>Are you sure to delete the antibody: ";
     		echo $antibody['name'];
     		echo "?</h3></td>
@@ -529,9 +547,12 @@ function delete_form()
     		hidden_inputs('','',"delete");
     		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+    		echo "</table></form>";
     	}
     	else
     	{
+    		echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>";
     		echo "<tr><td><h3>This antibody related to ";
     		if($relateditem_count!=0)
     		{
@@ -550,20 +571,23 @@ function delete_form()
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+    		echo "</table>";
     	}
-    	echo "</form></table>";
+    	
 	}
 	elseif($_SESSION['selecteditemDel'])//multiple delete
 	{
 		$num_selecteditemDel=count($_SESSION['selecteditemDel']);
 		echo "<form name='edit' method='post' action=''>";
+		echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>";
 		echo "<tr><td colspan='2'><h3>Are you sure to delete the $num_selecteditemDel antibody(s)?<br>
     antibody related to other items, storages, orders <br>can not be deleted.</h3></td></tr> ";
 		echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
 		hidden_inputs('','',"delete");
 		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
-		echo "</form></table>";
+		echo "</table></form>";
 	}
 }
 function import_form() {
@@ -577,6 +601,8 @@ function submit() {
 }
 </script>
 <form name='preview' method='post' action='' enctype="multipart/form-data">
+<table width="100%" class="operate" >
+<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>
 <tr><td colspan='2'><h3>Import from file:</h3></td></tr>
 <tr>
 <td width='20%'>File:</td>

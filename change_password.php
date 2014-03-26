@@ -5,17 +5,16 @@ include('include/includes.php');
   do_html_header('Users-Quicklab');
   do_header();
 ?>
-<table width=100% height="500" border="0" cellpadding="0" cellspacing="0">
-<tr>
 <?php 
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   // check permission
   $userauth=check_user_authority($_COOKIE['wy_user']);
   if ($userauth!=1&&$_REQUEST['username']!=$_COOKIE['wy_user'])
   {
-   echo '<td valign="top"><h3>You do not have the authority to do this!</h3></td></tr></table>';
+   echo '<table width=100% height="500" border="0" cellpadding="0" cellspacing="0">
+<tr><td valign="top"><h3>You do not have the authority to do this!</h3></td></tr></table>';
    do_footer();
    do_html_footer();
    exit;
@@ -29,7 +28,7 @@ function StandardForm()
 	      <tr><td colspan='2'><div align='center'>
           <h2>Users</h2></div></td></tr>";
 	processRequest();
-	echo  "</table></form></td></tr></table>";
+	echo  "</table></form>";
 }
 function change_password_form()
 {

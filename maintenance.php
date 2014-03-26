@@ -7,7 +7,7 @@ $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 <?php
 do_html_header('Device maintenance-Quicklab');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <?php
 if(!userPermission(3)){

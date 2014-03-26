@@ -494,7 +494,7 @@ function export_excel($module_name,$query)
 function order_form()
 {
 	do_header();
-	do_leftnav();
+	//do_leftnav();
 	if(!userPermission('3')) {
 		alert();
 	}
@@ -515,7 +515,7 @@ function order_form()
 function quick_order_form()
 {
 	do_header();
-	do_leftnav();
+	//do_leftnav();
 	if(!userPermission('2'))
 	{
 		alert();

@@ -4,7 +4,7 @@ include_once('include/includes.php');
 <?php
   do_html_header('Chemical structure editor-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <SCRIPT LANGUAGE="JavaScript">
 

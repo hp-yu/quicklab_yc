@@ -434,12 +434,12 @@ if ($plasmid_map_name!=""&&$plasmid_map_size!=""&&$plasmid_map_diameter!="") {
 if (!empty($_POST['sequence'])) {
 	echo $_POST['sequence'];
 } elseif (!empty($_POST['backbone'])) {
-	$query="SELECT * FROM ".TB_PLASMID_SEQUENCES." WHERE `plasmid_id`='{$_POST['backbone']}'";
+	$query="SELECT * FROM plasmid_sequences WHERE `plasmid_id`='{$_POST['backbone']}'";
 	$rs=$db_conn->query($query);
 	$match=$rs->fetch_assoc();
 	if(!empty($match['sequence'])) {echo sm_tidyup($match['sequence']);}
 } elseif (!empty($_GET['plasmid_id'])) {
-	$query="SELECT * FROM ".TB_PLASMID_SEQUENCES." WHERE `plasmid_id`='{$_POST['plasmid_id']}'";
+	$query="SELECT * FROM plasmid_sequences WHERE `plasmid_id`='{$_POST['plasmid_id']}'";
 	$rs=$db_conn->query($query);
 	$match=$rs->fetch_assoc();
 	if(!empty($match['sequence'])) {echo sm_tidyup($match['sequence']);}

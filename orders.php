@@ -8,7 +8,7 @@ $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 <?php
 do_html_header('Orders-Quicklab');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <?php
 js_selectall();

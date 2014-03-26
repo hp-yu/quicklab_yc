@@ -62,7 +62,7 @@ function query_select($name, $query, $value, $display, $default='')
   if (!$result) {
     return('');
   }
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name'  id ='$name'>";
   for ($i=0; $i < $result->num_rows; $i++) {
     $option = $result->fetch_assoc();
     $select .= "<option value='{$option[$value]}'";
@@ -84,7 +84,7 @@ function query_select_all($name, $query, $value, $display, $default='')
     return('');
   }
 
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name'  id ='$name'>";
   $select .= '<option value="%"';
   if($default == '') $select .= ' selected ';
   $select .= '>- Select all -</option>';
@@ -105,7 +105,7 @@ function query_select_all($name, $query, $value, $display, $default='')
 }
 function option_select($name, $option, $num, $default='')
 {
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name'  id ='$name'>";
   for ($i=0; $i<$num; $i++)
   {
     $select .= "<option value='{$option[$i][0]}'";
@@ -119,7 +119,7 @@ function option_select($name, $option, $num, $default='')
   return($select);
 }
 function array_select($name, $array, $default='') {
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name'  id ='$name'>";
   foreach ($array as $key=>$value) {
     $select .= "<option value='$value'";
     if ($value == $default) {
@@ -132,7 +132,7 @@ function array_select($name, $array, $default='') {
 }
 function array_select_choose($name, $array, $default='')
 {
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name' id ='$name'>";
   $select .= '<option value=""';
   if($default == '') $select .= ' selected ';
   $select .= '>- Choose -</option>';
@@ -150,7 +150,7 @@ function array_select_choose($name, $array, $default='')
 }
 function array_select_all($name, $array, $default='')
 {
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name' id ='$name'>";
   $select .= '<option value=""';
   if($default == '') $select .= ' selected ';
   $select .= '>- Select all -</option>';
@@ -168,7 +168,7 @@ function array_select_all($name, $array, $default='')
 }
 function option_select_choose($name, $option, $num, $default='')
 {
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name' id ='$name'>";
   $select .= '<option value=""';
   if($default == '') $select .= ' selected ';
   $select .= '>- Choose -</option>';
@@ -188,7 +188,7 @@ function option_select_choose($name, $option, $num, $default='')
 }
 function option_select_all($name, $option, $num, $default='')
 {
-  $select  = "<select name='$name'>";
+  $select  = "<select name='$name' id ='$name'>";
   $select .= '<option value="%"';
   if($default == '') $select .= ' selected ';
   $select .= '>- Select all -</option>';
@@ -250,5 +250,11 @@ function get_record_from_name($tablename,$name)
   $query = "select * from $tablename where name = '$name'";
   $result = $db_conn->query($query);
   return($result->fetch_assoc());
+}
+function get_quick_id ($module_id,$item_id)
+{
+		while(strlen($module_id)<2) $module_id="0".$module_id;
+		while(strlen($item_id)<6) $item_id="0".$item_id;
+		return $module_id.$item_id;
 }
 ?>

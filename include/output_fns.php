@@ -1,9 +1,20 @@
 <?php
 function do_html_header($title)
 {
-	if (!check_auth_user()) {
-		login();
-	}
+		// print an HTML header
+?>
+  <html>
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><?php echo $title;?></title>
+	<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+	<BASE target='_self'>
+  </head>
+  <body leftmargin="5" topmargin="5">
+<?php
+}
+function do_html_header_begin($title)
+{
 	// print an HTML header
 ?>
   <html>
@@ -12,6 +23,12 @@ function do_html_header($title)
 	<title><?php echo $title;?></title>
 	<link href="CSS/general.css" rel="stylesheet" type="text/css" />
 	<BASE target='_self'>
+<?php
+}
+function do_html_header_end()
+{
+	// print an HTML header
+?>
   </head>
   <body leftmargin="5" topmargin="5">
 <?php
@@ -25,9 +42,7 @@ function do_html_footer() {
 }
 
 function do_header() {
-	if (!check_auth_user()) {
-		login();
-	}
+	check_login_status();
 	?>
 <table id="header" width="100%" cellpadding="0" cellspacing="0">
 <tr>
@@ -61,7 +76,7 @@ function do_header() {
 </table>
 <script type="text/javascript" src="include/chromejs/chrome.js">
 </script>
-<table id="menu" width="100%" cellpadding="0" cellspacing="0">
+<table id="menu" width="100%" cellpadding="0" cellspacing="0" class="menu">
 <tr>
 <td>
 <div class="chromestyle" id="chromemenu">
@@ -70,15 +85,14 @@ function do_header() {
 <li><a href="#" rel="dropmenu1">Materials</a></li>
 <li><a href="#" rel="dropmenu2">Methods</a></li>
 <li><a href="#" rel="dropmenu3">Tools</a></li>
-<li><a href="#" rel="dropmenu6">Schedule</a></li>
+<!--<li><a href="#" rel="dropmenu6">Schedule</a></li>-->
 <li><a href="#" rel="dropmenu7">Manage</a></li>
 <li><a href="#" rel="dropmenu4">Admin</a></li>
-<li><a href="#" rel="dropmenu5">Help</a></li>
+<!--<li><a href="#" rel="dropmenu5">Help</a></li>-->
 </ul>
 </div>
 </td>
-<td style="background:#006633">
-<div id="code">
+<td style="background:#006633" align="right">
 <script>
 function quickId() {
 	if (document.quickIdFrom.code.value=="Quick ID") {
@@ -87,10 +101,9 @@ function quickId() {
 }
 </script>
 <form name="quickIdFrom" action="code.php" method="get" target="_blank">
-<input class="code" type="text" size="15" name="code" style="font-size:10;height:15px;text-align: middle;" value="Quick ID" onclick="javascript:quickId()" align="middle">
-<input type="submit" value="Go" style="font-size:8;height:15px;width=20px">
+<input class="code" type="text" size="15" name="code" style="font-size:10;height:20px;text-align: middle;" value="Quick ID" onclick="javascript:quickId()" align="middle">
+<!--<input type="submit" value="Go" style="font-size:10;height:20px;">-->
 </form>
-</div>
 </td>
 </tr>
 </table>
@@ -107,11 +120,11 @@ function quickId() {
 <div id="dropmenu2" class="dropmenudiv" style="width: 150px;">
 <a href="./kbase.php"  target="_blank">Knowledge base</a>
 </div>
-<div id="dropmenu3" class="dropmenudiv" style="width: 150px;">
+<div id="dropmenu3" class="dropmenudiv" style="width: 200px;">
 <a href="./storages.php">Storage</a>
 <a href="./plasmid_mapping.php">Plasmid mapping</a>
-<a href="./label.php">Label printer</a>
-<a href="./solution_calc.php">Solution calculator</a>
+<!--<a href="./label.php">Label printer</a>-->
+<!--<a href="./solution_calc.php">Solution calculator</a>-->
 <a href="./jme.php">Chemical structure editor</a>
 <a href="./sendmail.php">Send mail</a>
 <a href="./posts.php">Posts</a>
@@ -133,22 +146,22 @@ function quickId() {
 <a href="./supply_cat.php">Supply categories</a>
 <a href="./device_cat.php">Device categories</a>
 <a href="./mail_setting.php">Mail setting</a>
-<a href="./custom_fields.php">Custom fields</a>
+<!--<a href="./custom_fields.php">Custom fields</a>-->
 </div>
 
 <div id="dropmenu5" class="dropmenudiv" style="width: 150px;">
 <a href="./tutorial.php">Tutorial</a>
 <a href="./about.php">About Quicklab</a>
 </div>
-<div id="dropmenu6" class="dropmenudiv" style="width: 150px;">
+<!--<div id="dropmenu6" class="dropmenudiv" style="width: 150px;">
 <a href="./planner.php">Planner</a>
-</div>
+</div>-->
 </div>
 <div id="dropmenu7" class="dropmenudiv" style="width: 150px;">
 <a href="./orders.php">Orders</a>
 <a href="./labmap.php" target="_blank">Lab map</a>
-<a href="./plasmid_request.php">Plasmid request</a>
-<a href="./plasmid_bank.php">Plasmid bank</a>
+<!--<a href="./plasmid_request.php">Plasmid request</a>
+<a href="./plasmid_bank.php">Plasmid bank</a>-->
 </div>
 <script type="text/javascript">
 cssdropdown.startchrome("chromemenu")
@@ -326,11 +339,14 @@ function do_footer()
 {
 ?>
 </td></tr></table>
-<table width="100%" height="12" border="0" cellpadding="0" cellspacing="0" class="footer" style="margin-top:3pt">
-  <tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="footer">
+	<tr>
+		<Td>&nbsp;</Td>
+	</tr>
+<!--  <tr>
     <td width="61%" class="footer">&copy;2007 Quicklab. Copyright.</td>
     <td width="39%" align="right" class="footer">Version 1.00 Beta</td>
-  </tr>
+  </tr>-->
 </table>
 <?php
 }
@@ -550,7 +566,7 @@ function selectSubmit($module_name)
 <select name="actionRequest" onchange="javascipt:submitResultsForm(<?php echo $module_id ?>)">
 <option value="" selected> -Choose- </option>
 <option value="store">Store</option>
-<option value="clipboard">Clipboard</option>
+<!--<option value="clipboard">Clipboard</option>-->
 <option value="delete">Delete</option>
 </select>
 <input type="hidden" name="actionType" value=""></td>
@@ -565,11 +581,11 @@ function search_header($module_name) {
 	<?php
 	if (userPermission("3")){
 		echo "<a href='".$module_name."_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a>";
-		echo "&nbsp;<a href='".$module_name."_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
+//		echo "&nbsp;<a href='".$module_name."_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
 	}
 	else {
 		echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/>';
-		echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
+//		echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
 	}
  	?>
 </td></tr>
@@ -940,7 +956,7 @@ function pagerForm($module_name,$query,$PageSize='10',$export=1)
 	$turnover=turnover($pager->isFirstPage,$pager->isLastPage,
 	$pager->numItems,$pager->numPages,$pager->PreviousPageID,$pager->NextPageID,$getURL);
 	if ($results  && $results->num_rows) {
-		echo "<table width='100%'><tr><td align='left'>";
+		echo "<table width='100%' class='pager'><tr><td align='left'>";
 		echo "Totally ".$pager->numItems." items, page ".$page." / ".$pager->numPages.". ".
 		$turnover."</td>";
 		if ($export==1) {
@@ -981,28 +997,28 @@ function   addStorage (module_id, item_id)
 		echo "<form action='' method='post' name='results' target='_self' >";
 		echo "<table width='100%' class='results'>";
 		echo "<tr><td class='results_header'><input type='checkbox' name='clickall' onclick=selectall(this.checked)></td><td class='results_header'>";
-		echo "ID</td><td class='results_header'>";
+		echo "Quick ID</td><td class='results_header'>";
 		echo "Name</td><td class='results_header'>";
 		echo "Create</td><td class='results_header'>";
 		echo "Operate</td><td class='results_header'>";
 		echo "Storage</td><td class='results_header'>";
 		echo "Order</td></tr>";
 		while ($matches = $results->fetch_array()) {
+			$module=get_record_from_name('modules',$module_name);
 			echo "<tr><td class='results'><input type='checkbox'  onclick=changechecked(this)  name='selectedItem[]' value={$matches[id]}></td><td class='results'>";
-			echo "{$matches[id]}</td><td width='200' class='results'>";
+			echo get_quick_id($module[id],$matches[id])."</td><td width='200' class='results'>";
 			echo "<a href='".$module_name."_operate.php?type=detail&id={$matches[id]}'>".wordwrap($matches[name],190,"<br>")."</a></td><td class='results'>";
 			$people=get_record_from_id('people',$matches['created_by']);
-			echo $people['name']." ".$matches['date_create']."</td><td class='results'>";
-			$module=get_record_from_name('modules',$module_name);
+			echo $people['name']." ".$matches['date_create']."</td><td class='results'>";			
 			if (userPermission('2',$matches['created_by'])) {
-				echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
+//				echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='".$module_name."_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='".$module_name."_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
+//				echo "<a href='".$module_name."_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
 				echo "<a href='".$module_name."_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
 			} else {
-				echo '<img src="./assets/image/general/label-s.gif" alt="Print label" border="0"/>&nbsp;&nbsp;';
+//				echo '<img src="./assets/image/general/label-s.gif" alt="Print label" border="0"/>&nbsp;&nbsp;';
 				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
-				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
+//				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
 				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
 			}
 			//query the storages of this item where the state is in stock.

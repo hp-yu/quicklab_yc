@@ -8,7 +8,7 @@ include_once('include/includes.php');
 <?php
   do_html_header('Solution center-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   js_selectall();

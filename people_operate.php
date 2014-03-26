@@ -15,22 +15,21 @@ include('include/includes.php');
  }
 ?>
 <?php
-  do_html_header('People operate-Quicklab');
+  do_html_header_begin('People operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  StandardForm();
+  //do_leftnav();
+  processRequest();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 <?php
-function StandardForm()
-{
-	echo "<table width='100%'  class='operate'>
-	      <tr><td colspan='2'><div align='center'>
-          <h2>People</h2></div></td></tr>";
-	processRequest();
-}
+
 function AddForm()
 {
 	if(!userPermission('3'))
@@ -38,12 +37,32 @@ function AddForm()
   	  alert();
     }
     ?>
-    <form name='add' method='post' action='' enctype='multipart/form-data'>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required",
+			email: "required",
+			date_enter: "required",
+			status: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			email: {required: 'required'},
+			date_enter: {required: 'required'},
+			status: {required: 'required'}
+		}});
+});
+</script>
+    <form name='add_form' id="add_form" method='post' action='' enctype='multipart/form-data'>
+    <table width='100%'  class='operate'>
+	      <tr><td colspan='2'><div align='center'>
+          <h2>People</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new people:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' value="<?php echo stripslashes(htmlspecialchars($_POST['name'])) ?>"/>*</td>
+        <td width='80%'><input type='text' name='name' id="name" value="<?php echo stripslashes(htmlspecialchars($_POST['name'])) ?>"/>*</td>
       </tr>
       <tr>
         <td >Photo:<br>(JPEG format)</td>
@@ -66,7 +85,7 @@ function AddForm()
       </tr>
       <tr>
         <td>Email:</td>
-        <td><input type='text' name='email' size="30" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])) ?>"/>*</td>
+        <td><input type='text' name='email' id="email" size="30" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])) ?>"/>*</td>
       </tr>
       <tr>
         <td>Mobile:</td>
@@ -98,7 +117,7 @@ function AddForm()
       </tr>
       <tr>
         <td>Status:</td>
-        <td><input type='text' name='status' value="<?php echo stripslashes(htmlspecialchars($_POST['status'])) ?>"/>*</td>
+        <td><input type='text' name='status' id="status" value="<?php echo stripslashes(htmlspecialchars($_POST['status'])) ?>"/>*</td>
       </tr>
       <tr>
       <tr>
@@ -110,7 +129,7 @@ function AddForm()
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td></tr>
     <?php HiddenInputs("add");?>
-    </form></table>
+    </table></form>
   <?php
 }
 function EditForm()
@@ -121,12 +140,32 @@ function EditForm()
   }
   $people = get_record_from_id('people',$_REQUEST['id']);
   ?>
-  <form name='edit' method='post' action='' enctype='multipart/form-data'>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required",
+			email: "required",
+			date_enter: "required",
+			status: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			email: {required: 'required'},
+			date_enter: {required: 'required'},
+			status: {required: 'required'}
+		}});
+});
+</script>
+  <form name='edit_form' id="edit_form" method='post' action='' enctype='multipart/form-data'>
+  <table width='100%'  class='operate'>
+	      <tr><td colspan='2'><div align='center'>
+          <h2>People</h2></div></td></tr>
   <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' value='<?php echo $people['name'];?>'>*</td>
+        <td width='80%'><input type='text' name='name' id="name" value='<?php echo $people['name'];?>'>*</td>
       </tr>
       <tr>
         <td >Photo:</br>(JPEG format)
@@ -168,7 +207,7 @@ function EditForm()
       </tr>
       <tr>
         <td>Email:</td>
-        <td><input type='text' name='email' size="30" value='<?php echo $people['email'];?>'>*</td>
+        <td><input type='text' name='email' id="email" size="30" value='<?php echo $people['email'];?>'>*</td>
       </tr>
       <tr>
         <td>Mobile:</td>
@@ -204,7 +243,7 @@ function EditForm()
       </tr>
       <tr>
         <td>Status:</td>
-        <td><input type='text' name='status' value='<?php echo $people['status'];?>'>*</td>
+        <td><input type='text' name='status' id="status" value='<?php echo $people['status'];?>'>*</td>
       </tr>
       <tr>
         <td >State:</td>
@@ -224,7 +263,7 @@ function EditForm()
     	</tr>
    
 	<?php HiddenInputs("edit");?>
-	</from></table>
+	</table></from>
   <?php
 }
 function Detail()
@@ -238,6 +277,9 @@ function Detail()
     }
     $people = get_record_from_id('people',$_REQUEST['id']);
 	?>
+	<table width='100%'  class='operate'>
+	      <tr><td colspan='2'><div align='center'>
+          <h2>People</h2></div></td></tr>
   <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="people_operate.php?type=edit&id=<?php echo $people['id']?>"/>
     <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3></td>
@@ -335,6 +377,9 @@ function DeleteForm()
   	  alert();
     }
     echo "<form name='delete' method='post' action=''>";
+    echo "<table width='100%'  class='operate'>
+	      <tr><td colspan='2'><div align='center'>
+          <h2>People</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the people: ";
 	$people = get_record_from_id('people',$_REQUEST['id']);
     echo $people['name'];

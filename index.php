@@ -5,7 +5,7 @@ include('include/includes.php');
 <?php
 do_html_header('Home-Quicklab');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <form action='index.php' method='get' name='search' target='_self'>
 <table class='search' width="100%">

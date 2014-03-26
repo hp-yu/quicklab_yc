@@ -12,7 +12,12 @@ function check_auth_user()
       return false;
     }
   }
-function login () {
+function check_login_status () {
+	if (!check_auth_user()) {
+		header('Location: '.'login.php?ReturnUrl='.$_SERVER['REQUEST_URI'] );
+	}
+}
+function loginx () {
 	if (filled_out(array($_REQUEST["username"],$_REQUEST["password"]))) {
 		$username = $_POST['username'];
 		$password = $_POST['password'];

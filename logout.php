@@ -23,5 +23,5 @@
     // if they weren't logged in but came to this page somehow
     echo 'You were not logged in, and so have not been logged out.<br />'; 
   }*/
-  header('Location: '.'index.php');
+  header('Location: '.'login.php');
 ?> 

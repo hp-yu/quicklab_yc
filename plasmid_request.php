@@ -4,7 +4,7 @@ include('include/includes.php');
 <?php
 do_html_header('Plasmid request-Quicklab');
 do_header();
-do_leftnav();
+//do_leftnav();
 ?>
 <?php
 js_selectall();

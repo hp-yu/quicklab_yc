@@ -18,18 +18,10 @@ if ($_REQUEST['type']=='import_template') {
 }
 ?>
 <?php
-  do_html_header('Primers operate-Quicklab');
-  do_header();
-  do_leftnav();
-  standard_form();
-  do_rightbar();
-  do_footer();
-  do_html_footer();
+  do_html_header_begin('Primers operate-Quicklab');
 ?>
-<?php
-function standard_form() {
-?>
-<script type="text/javascript" src="include/jquery/lib/jquery.js"></script>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="include/bioinfo/sm_common.js"></script>
 <script>
 function cal_seq_len(){
@@ -44,11 +36,16 @@ $(document).ready(function() {
 	cal_seq_len();
 });
 </script>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
 <?php
-	process_request();
-}
+  do_html_header_end();
+  do_header();
+  //do_leftnav();
+  process_request();
+  do_rightbar();
+  do_footer();
+  do_html_footer();
+?>
+<?php
 
 function add_form()
 {
@@ -57,18 +54,35 @@ function add_form()
   	  alert();
     }
 	?>
-    <form name='add' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			name: "required",
+			project: "required",
+			raw_seq: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			project: {required: 'required'},
+			raw_seq: {required: 'required'}
+		}});
+});
+</script>
+    <form name='add_form' id="add_form" method='post' action=''>
+    <table width="100%" class="operate" >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new primer:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td>Project:</td><td><?php
 		$query= "select * from projects where state=1";
 		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>
-        </td>
+        *</td>
       </tr>
       <tr>
         <td>Description:</td>
@@ -91,8 +105,8 @@ function add_form()
         <td><input type='text' name='purity' value="<?php echo stripslashes(htmlspecialchars($_POST['purity']))?>"/></td>
       </tr>
       <tr><td>Sequence:</br><span id="seq_len" style="background-color:yellow"></span></td>
-      <td><textarea name='raw_seq' class="sequence" cols="80" rows="4" onchange="tidyup('raw_seq');cal_seq_len()"><?php echo stripslashes($_POST['raw_seq']) ?></textarea>*</td>
-      </tr>
+      <td><textarea id="raw_seq"  name='raw_seq' class="sequence" cols="80" rows="4" onchange="tidyup('raw_seq');cal_seq_len()"><?php echo stripslashes($_POST['raw_seq'])?></textarea>*</td>
+      </tr>   
       <tr>
         <td>Note:</td>
         <td><textarea name='note' cols="50" rows="3"><?php echo stripslashes($_POST['note']) ?></textarea></td>
@@ -111,7 +125,7 @@ function add_form()
     	</td>
       </tr>
       <?php hidden_inputs('created_by','date_create','add');?>
-      </form></table>
+      </table></form>
       <?php
 }
 
@@ -123,12 +137,29 @@ function edit_form()
   	alert();
   }
   ?>
-    <form name='edit' method='post' action=''>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			name: "required",
+			project: "required",
+			raw_seq: "required"
+		},
+		messages: {
+			name: {required: 'required'},
+			project: {required: 'required'},
+			raw_seq: {required: 'required'}
+		}});
+});
+</script>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+    <table width="100%" class="operate" >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
   	  <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php
+        <td width='80%'><input type='text' name='name' id="name" size="40" value="<?php
   echo stripslashes(htmlspecialchars($primer['name']));?>">*</td>
       </tr>
       <tr>
@@ -160,7 +191,7 @@ function edit_form()
      echo $primer['purity'];?>'></td>
       </tr>
       <tr><td>Sequence:</br><span id="seq_len" style="background-color:yellow"></span></td>
-      <td><textarea name='raw_seq' class="sequence" cols='80' rows='4' onchange="tidyup('raw_seq');cal_seq_len()"><?php
+      <td><textarea id="raw_seq"  name='raw_seq' class="sequence" cols='80' rows='4' onchange="tidyup('raw_seq');cal_seq_len()"><?php
      echo sm_tidyup($primer['sequence']);?></textarea>*</td>
       </tr>
       <tr>
@@ -181,7 +212,7 @@ function edit_form()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td>
       </tr>
       <?php hidden_inputs('updated_by','date_update','edit');?>
-    </form></table>
+    </table></form>
   <?php
 }
 
@@ -194,6 +225,9 @@ function edit_relation_form()
   }
 ?>
   <form name="relation" method="post" action="" target="_self">
+  
+  <table width="100%" class="operate" >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
     <tr><td colspan="2"><h3>Relate primer: <?php echo $primer['name']; ?> to these items below:</h3></td></tr>
     <tr><td width="200">
   	<select name="clipboardtarget[]" style="width:190px;font-size:7pt;" size="5" multiple
@@ -217,7 +251,7 @@ function edit_relation_form()
   	<tr><td ><input type='submit' onmouseover="allselected(document.getElementById('clipboardtarget[]'))" name='Submit' value='Submit' />
   	</td></tr>
   	<?php hidden_inputs('','','editrelation');?>
-  </form></table>
+  </table></form>
 <?php
 }
 
@@ -229,6 +263,8 @@ function detail()
     }
 $primer = get_record_from_id('primers',$_REQUEST['id']);
 ?>
+<table width="100%" class="operate" >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
       <a href="primers_operate.php?type=edit&id=<?php echo $primer['id']?>"/><img src="./assets/image/general/edit.gif" border="0"/></a></h3></td>
       </tr>
@@ -341,6 +377,8 @@ function delete_form()
 	if($relateditem_count==0&&$storage_count==0&&$order_count==0)
 	{
 	echo "<form name='delete' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the primer: ";
     echo $primer['name'];
 	echo "?</h3></td>
@@ -350,9 +388,12 @@ function delete_form()
     hidden_inputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+    echo "</table></form>";
 	}
 	else
 	{
+		echo "<table width='100%' class='operate' >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>";
 		echo "<tr><td><h3>This primer related to ";
 		if($relateditem_count!=0)
 		{
@@ -371,20 +412,23 @@ function delete_form()
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+		echo "</table>";
 	}
-	echo "</form></table>";
+	
   }
   elseif($_SESSION['selecteditemDel'])//multiple delete
   {
 		$num_selecteditemDel=count($_SESSION['selecteditemDel']);
 	echo "<form name='edit' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the $num_selecteditemDel primer(s)?<br>
     primer related to other items, storages, orders <br>can not be deleted.</h3></td></tr> ";
 	echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     hidden_inputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
-	echo "</form></table>";
+	echo "</table></form>";
   }
 }
 function import_form() {
@@ -398,6 +442,8 @@ function submit() {
 }
 </script>
 <form name='preview' method='post' action='' enctype="multipart/form-data">
+<table width="100%" class="operate" >
+<tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
 <tr><td colspan='2'><h3>Import from file:</h3></td></tr>
 <tr>
 <td width='20%'>File:</td>

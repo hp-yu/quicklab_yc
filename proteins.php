@@ -2,14 +2,14 @@
 include_once('include/includes.php');
 ?>
 <?php 
-//��SESSION��¼һ��ҳ��ĵ�ַ�����ڴӶ���ҳ�淵��
+//��SESSION��¼һ��ҳ��ĵ�ַ�����ڴӶ���ҳ�淵��?
   $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 ?>
 <?php selectedRequest('proteins');?>
 <?php
   do_html_header('proteins-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php 
   js_selectall();

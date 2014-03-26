@@ -8,7 +8,7 @@ include('include/includes.php');
 <?php
   do_html_header('Species-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
 ?>
 <?php
   if(!userPermission(3)){

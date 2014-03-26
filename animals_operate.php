@@ -15,24 +15,20 @@ include('include/includes.php');
  }
 ?>
 <?php
-  do_html_header('Animals operate-Quicklab');
+  do_html_header_begin('Animals operate-Quicklab');
+?>
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<?php
+  do_html_header_end();
   do_header();
-  do_leftnav();
-  StandardForm();
+  //do_leftnav();
+  processRequest();
   do_rightbar();
   do_footer();
   do_html_footer();
 ?>
 <?php
-function StandardForm()
-{
-?>
-	<table width="100%" class="operate" >
-	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>
-<?php
-	processRequest();
-}
-
 function AddForm()
 {
 	if(!userPermission('3')) {
@@ -40,7 +36,26 @@ function AddForm()
     }
 	?>
 <script type="text/javascript">
-	function moveOptionToText(e1, e2) {
+$.validator.setDefaults({	submitHandler: function() {
+	document.add_form.action.value = "add";
+	document.add_form.submit();
+	//window.returnValue='ok';
+	//window.close   ();
+}});
+$(document).ready(function() {
+	$("#add_form").validate({
+		rules: {
+			strain: "required",
+			name: "required",
+			project: "required"
+		},
+		messages: {
+			strain: {required: 'required'},
+			name: {required: 'required'},
+			project: {required: 'required'}
+		}});
+});
+function moveOptionToText(e1, e2) {
 	for(var i=0;i<e1.options.length;i++){
 		if(e1.options[i].selected) {
 			var e = e1.options[i]
@@ -51,7 +66,9 @@ function AddForm()
 	}
 }
 </script>
-<form name='add' method='post' action=''>
+<form name='add_form' id="add_form" method='post' target="">
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new animal:</h3></td>
       </tr>
       <tr>
@@ -61,7 +78,7 @@ function AddForm()
         $db_conn = db_connect();
   			$result = $db_conn->query($query);
   			?>
-  			<select name='strain' onchange="moveOptionToText(document.getElementById('strain'), document.getElementById('name'))">";
+  			<select name='strain' id="strain" onchange="moveOptionToText(document.getElementById('strain'), document.getElementById('name'))">";
   			<?php
   			echo '<option value=""';
   			if($_POST['strain'] == ''||!$_POST['strain']) echo ' selected ';
@@ -84,7 +101,7 @@ function AddForm()
       </tr>
       <tr>
         <td>Name:</td>
-        <td><input type='text' name='name' size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
+        <td><input type='text' name='name' id="name" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['name']))?>"/>*</td>
       </tr>
       <tr>
         <td>Project:</td><td><?php
@@ -144,7 +161,8 @@ function AddForm()
     	</td>
       </tr>
       <?php HiddenInputs('created_by','date_create','add');?>
-      </form></table>
+      </table>
+      </form>
       <?php
 }
 
@@ -156,6 +174,19 @@ function EditForm()
   }
   ?>
 <script type="text/javascript">
+$(document).ready(function() {
+	$("#edit_form").validate({
+		rules: {
+			strain: "required",
+			name: "required",
+			project: "required"
+		},
+		messages: {
+			strain: {required: 'required'},
+			name: {required: 'required'},
+			project: {required: 'required'}
+		}});
+});
 function moveOptionToText(e1, e2) {
 	for(var i=0;i<e1.options.length;i++){
 		if(e1.options[i].selected) {
@@ -185,8 +216,10 @@ function SetDate(e) {
 	}
 }
 </script>
-    <form name='edit' method='post' action=''>
-  	  <tr><td colspan='2'><h3>Edit:</h3></td>
+    <form name='edit_form' id="edit_form" method='post' action=''>
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>
+	  <tr><td colspan='2'><h3>Edit:</h3></td>
       </tr>
       <tr>
         <td width='20%'>Strain:</td>
@@ -195,7 +228,7 @@ function SetDate(e) {
         $db_conn = db_connect();
   			$result = $db_conn->query($query);
   			?>
-  			<select name='strain' onchange="moveOptionToText(document.getElementById('strain'), document.getElementById('name'))">";
+  			<select name='strain' id="strain" onchange="moveOptionToText(document.getElementById('strain'), document.getElementById('name'))">";
   			<?php
   			echo '<option value=""';
   			if($animal['strain'] == ''||!$animal['strain']) echo ' selected ';
@@ -218,7 +251,7 @@ function SetDate(e) {
       </tr>
       <tr>
         <td width='20%'>Name:</td>
-        <td width='80%'><input type='text' name='name' size="40" value="<?php
+        <td width='80%'><input type='text' name='name'  id="name" size="40" value="<?php
   echo stripslashes(htmlspecialchars($animal['name']));?>">*</td>
       </tr>
       <tr>
@@ -232,9 +265,9 @@ function SetDate(e) {
      echo $animal['description'];?></textarea></td>
       </tr>
       <tr>
-        <td>çº§ï¿½??:</td>
+        <td>Level:</td>
         <td><?php
-		$health=array('??????'=>'1','ï¿??ï¿??'=>'2','SPF'=>'3','??????'=>'4');
+		$health=array('General'=>'1','Clean'=>'2','SPF'=>'3','Sterile'=>'4');
 		echo array_select_choose('health',$health,$animal['health']);?>
         </td>
       </tr>
@@ -340,6 +373,8 @@ function EditRelationForm()
   }
 ?>
   <form name="relation" method="post" action="" target="_self">
+ 	<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>
     <tr><td colspan="2"><h3>Relate animal: <?php echo $animal['name']; ?> to these items below:</h3></td></tr>
     <tr><td width="200">
   	<select name="clipboardtarget[]" style="width:190px;font-size:7pt;" size="5" multiple
@@ -375,6 +410,8 @@ function Detail()
     }
     $animal = get_record_from_id('animals',$_REQUEST['id']);
 ?>
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
       <a href="animals_operate.php?type=edit&id=<?php echo $animal['id']?>"/><img src="./assets/image/general/edit.gif" border="0"/></a></h3></td>
       </tr>
@@ -396,9 +433,9 @@ function Detail()
         <td><?php echo wordwrap($animal['description'],70,"<br/>");?></td>
       </tr>
       <tr>
-        <td>çº§ï¿½??:</td>
+        <td>level:</td>
         <td><?php
-     		$health=array('??????'=>'1','ï¿??ï¿??'=>'2','SPF'=>'3','??????'=>'4');
+     		$health=array('General'=>'1','Clean'=>'2','SPF'=>'3','Sterile'=>'4');
 	 			foreach($health as $key=>$value) {
 	 				if ($value==$animal['health']) {
 	 					echo $key;
@@ -528,6 +565,8 @@ function DeleteForm()
 	if($relateditem_count==0&&$storage_count==0&&$order_count==0)
 	{
 	echo "<form name='delete' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the animal: ";
     echo $animal['name'];
 	echo "?</h3></td>
@@ -540,7 +579,10 @@ function DeleteForm()
 	}
 	else
 	{
-		echo "<tr><td><h3>This animal related to ";
+		echo "<form name='edit' method='post' action=''>";
+		echo "<table width='100%' class='operate' >
+		<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>";
+		echo "<tr><td colspan='2'><h3>This animal related to ";
 		if($relateditem_count!=0)
 		{
 			echo "<br>".$relateditem_count." other items, ";
@@ -559,19 +601,21 @@ function DeleteForm()
       <a href='". $_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
 	}
-	echo "</form></table>";
+	echo "</table></form>";
   }
   elseif($_SESSION['selecteditemDel'])//multiple delete
   {
 		$num_selecteditemDel=count($_SESSION['selecteditemDel']);
 	echo "<form name='edit' method='post' action=''>";
+	echo "<table width='100%' class='operate' >
+	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>";
     echo "<tr><td colspan='2'><h3>Are you sure to delete the $num_selecteditemDel animal(s)?<br>
     animal related to other items, storages, orders <br>can not be deleted.</h3></td></tr> ";
 	echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
       src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
-	echo "</form></table>";
+	echo "</table></form>";
   }
 }
 
@@ -885,7 +929,7 @@ function export_excel($module_name,$query)
 		$query="SELECT name from ani_strains WHERE id='{$row['strain']}'";
 		$result = $db_conn->query($query);
 		$strain=$result->fetch_assoc();
-		$health_array=array('??????'=>'1','ï¿??ï¿??'=>'2','SPF'=>'3','??????'=>'4');
+		$health_array=array('General'=>'1','Clean'=>'2','SPF'=>'3','Sterile'=>'4');
 	 	foreach($health_array as $key=>$value) {
 	 		if ($value==$row['health']) {
 	 			$health=$key;
@@ -944,7 +988,7 @@ function export_excel($module_name,$query)
   "name"."\t".
   "strain"."\t".
   "description"."\t".
-  "çº§ï¿½??"."\t".
+  "Level"."\t".
   "gender"."\t".
   "qty"."\t".
   "weight"."\t".

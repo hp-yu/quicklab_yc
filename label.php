@@ -90,7 +90,7 @@ if ($_REQUEST['action']=="preview") {
 <?php
   do_html_header('Label printer-Quicklab');
   do_header();
-  do_leftnav();
+  //do_leftnav();
   js_selectall();
 ?>
 <table width="100%" class="standard"/>
