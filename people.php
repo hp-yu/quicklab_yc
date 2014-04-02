@@ -128,7 +128,6 @@ if ($results  && $results->num_rows>0) {
 	echo "Enter date</td><td class='results_header'>";
 	echo "Status</td><td class='results_header'>";
 	echo "State</td><td class='results_header'>";
-	echo "Order approver</td><td class='results_header'>";
 	echo "Operate</td></tr>";
 
 	while ($matches = $results->fetch_array()) {
@@ -147,8 +146,6 @@ if ($results  && $results->num_rows>0) {
 			}
 		}
 		echo "</td><td class='results'>";
-		$people=get_name_from_id('people',$matches['order_approver']);
-		echo "{$people['name']}</td><td class='results'>";
 		if (userPermission(2,$matches['id'])) {
 			echo '<a href="people_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
 		}

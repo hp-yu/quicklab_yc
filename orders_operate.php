@@ -5,7 +5,6 @@ if (!check_auth_user()) {
 }
 if ($_REQUEST['type']=='export_excel') {
 	$query=$_SESSION['query'];
-	unset($_SESSION['query']);
 	export_excel('orders',$query);
 	exit;
 }
@@ -16,7 +15,7 @@ if ($_REQUEST['type']=='export_excel') {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Oders operate-Quicklab</title>
-<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+<link href="css/general.css" rel="stylesheet" type="text/css" />
 <BASE target='_self'>
 <script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
@@ -49,15 +48,13 @@ $(document).ready(function() {
 			trade_name: "required",
 			dealer: "required",
 			qty: {required: true,number:true},
-			price: {required:true,number:true},
-			note: "required"
+			price: {required:true,number:true}
 		},
 		messages: {
 			trade_name: {required: 'required'},
 			dealer: {required: 'required'},
 			qty: {required: 'required'},
-			price: {required: 'required'},
-			note: {required: 'required'}
+			price: {required: 'required'}
 		}});
 });
 function closeSubmit() {
@@ -137,7 +134,7 @@ echo query_select_choose('dealer', $query,'id','name',$_REQUEST['dealer']);
 </tr>
 <tr>
 <td>Note:</td>
-<td><textarea name='note' id='note' cols="40" rows="3"  class="required" ><?php echo stripslashes($_POST['note']) ?></textarea>*</td>
+<td><textarea name='note' id='note' cols="40" rows="3"  class="" ><?php echo stripslashes($_POST['note']) ?></textarea></td>
 </tr>
 <tr>
 <td>Mask:</td>
@@ -726,15 +723,13 @@ $(document).ready(function() {
 			trade_name: "required",
 			dealer: "required",
 			qty: {required: true,number:true},
-			price: {required:true,number:true},
-			note: "required"
+			price: {required:true,number:true}
 		},
 		messages: {
 			trade_name: {required: 'required'},
 			dealer: {required: 'required'},
 			qty: {required: 'required'},
-			price: {required: 'required'},
-			note: {required: 'required'}
+			price: {required: 'required'}
 		}});
 });
 function closeSubmit() {
@@ -995,7 +990,7 @@ function detail()
 function request()
 {
 	try {
-		if (!filled_out(array($_REQUEST['trade_name'],$_REQUEST['dealer'],$_REQUEST['qty'],$_REQUEST['price'],$_REQUEST['note'])))
+		if (!filled_out(array($_REQUEST['trade_name'],$_REQUEST['dealer'],$_REQUEST['qty'],$_REQUEST['price'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
@@ -1037,9 +1032,6 @@ function request()
 		$query="SELECT * FROM `orders_mails` WHERE `key`='is_request_mail_to_administrator'";
 		$result=$db_conn->query($query);
 		$match_orders_mails_administrator=$result->fetch_assoc();
-		$query="SELECT * FROM `orders_mails` WHERE `key`='is_request_mail_to_approver'";
-		$result=$db_conn->query($query);
-		$match_orders_mails_approver=$result->fetch_assoc();
 		if ($match_orders_approve['value']==1&&$price>=$match_orders_approve_limit['value']) {
 			if ($match_orders_mails_administrator['value']==1) {
 				$query="SELECT * FROM orders_admin";
@@ -1081,28 +1073,6 @@ function request()
 					}
 				}
 			}		
-			//
-			if ($match_orders_mails_approver['value']==1) {
-				$query="SELECT order_approver FROM people where id=$created_by";
-				$result=$db_conn->query($query);
-				while ($match=$result->fetch_assoc()) {
-					$people=get_record_from_id('people',$match['order_approver']);
-					$subject = 'Order reminder from quicklab';
-					$to=$people['email'];
-					$people=get_record_from_id('people',$created_by);
-					$message = "
-  <p>".$people['name']." requested ".$trade_name." (price:".$price.") on ".$create_date."</p>
-  <p><a href='http://".IP_ADDRESS."/quicklab/orders.php?id=$order_id' target='_blank'>Go to quicklab and approve.</a> (If it can not link to the quicklab, copy the address below.)<br>http://".IP_ADDRESS."/quicklab/orders.php?id=$order_id</p>
-";
-					$mail= new Mailer();
-					$mail->basicSetting();
-					$mail->Subject =$subject;
-					$css="<style>body{font-family:Verdana, Arial, sans-serif;font-size:8pt;}td{font-family:Verdana, Arial, sans-serif;font-size:8pt;}</style>";
-					$mail->MsgHTML($css.$message);
-					$mail->AddAddress($to);
-					@$mail->Send();
-				}
-			}
  		}
 ?>
 <script>

@@ -41,7 +41,7 @@ function loginx () {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $title;?></title>
-<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+<link href="css/general.css" rel="stylesheet" type="text/css" />
 </head>
 <body leftmargin="5" topmargin="5">
 <table id="header" width="100%" cellpadding="0" cellspacing="0">

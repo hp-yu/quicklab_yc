@@ -23,7 +23,7 @@ include('./tree/common_functions.php');
 <title>
 Links in folder
 </title>
-<link href="./CSS/general.css" rel="stylesheet" type="text/css" />
+<link href="./css/general.css" rel="stylesheet" type="text/css" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>

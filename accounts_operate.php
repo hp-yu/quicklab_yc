@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('accounts',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Accounts operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -183,6 +181,7 @@ function Detail()
     }
   $account = get_record_from_id('accounts',$_REQUEST['id']);
 ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="operate" >
 	<tr><td colspan='2'><div align='center'><h2>Accounts</h2></div></td></tr>
       <tr><td colspan='2'><h3>Details:&nbsp;
@@ -453,8 +452,8 @@ function export_excel($module_name,$query)
   $num_rows=$results->num_rows;
   while($row = $results->fetch_array())
   {    
-    $state_array = array( array( '0', 'No'),
-		                   array( '1', 'Yes'));
+    $state_array = array( array( '0', 'off'),
+		                   array( '1', 'on'));
 	for ($i=0; $i < 2; $i++) 
     {
       if ($state_array[$i][0] == $row['state']) 

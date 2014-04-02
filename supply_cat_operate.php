@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('supply_cat',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Supply categories operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();

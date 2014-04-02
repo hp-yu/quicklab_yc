@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('users',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Users operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -337,21 +335,29 @@ function export_excel($module_name,$query)
         $valid= $valid_array[$i][1];
       }
     }
+	$authority_array= array( array( '1', 'Super administrator'),
+      				  array( '2', 'Administrator'),
+					  array( '3', 'Staff'),
+		              array( '4', 'User'));
+	  for ($i=0; $i < 4; $i++)
+      {
+        if ($authority_array[$i][0] == $row['authority'])
+       	{
+          $authority= $authority_array[$i][1];
+        }
+      }
+      $people=get_name_from_id('people',$row['people_id']);
     $xls[]= ereg_replace("[\r,\n,\t]"," ",$row['id'])."\t".
     ereg_replace("[\r,\n,\t]"," ",$row['username'])."\t".
-    ereg_replace("[\r,\n,\t]"," ",$row['description'])."\t".
-    ereg_replace("[\r,\n,\t]"," ",$row['date_start'])."\t".
-    ereg_replace("[\r,\n,\t]"," ",$row['date_finish'])."\t".
-    ereg_replace("[\r,\n,\t]"," ",$row['note'])."\t".
-    ereg_replace("[\r,\n,\t]"," ",$state);
+    ereg_replace("[\r,\n,\t]"," ",$authority)."\t".
+    ereg_replace("[\r,\n,\t]"," ",$people[name])."\t".
+    ereg_replace("[\r,\n,\t]"," ",$valid);
   }
   $title="id"."\t".
-  "name"."\t".
-  "description"."\t".
-  "date_start"."\t".
-  "date_finish"."\t".
-  "note"."\t".
-  "state";
+  "username"."\t".
+  "authority"."\t".
+  "people"."\t".
+  "valid";
 
   $xls = implode("\r\n", $xls);
 

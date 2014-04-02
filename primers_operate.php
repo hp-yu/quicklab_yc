@@ -8,7 +8,6 @@ if ($_REQUEST['type']=='export_excel') {
 		header('location:'.$_SESSION['url_1']);
 	}
 	$query=$_SESSION['query'];
-	unset($_SESSION['query']);
 	export_excel('primers',$query);
 	exit;
 }
@@ -20,7 +19,6 @@ if ($_REQUEST['type']=='import_template') {
 <?php
   do_html_header_begin('Primers operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="include/bioinfo/sm_common.js"></script>
 <script>
@@ -58,14 +56,10 @@ function add_form()
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			name: "required",
-			project: "required",
-			raw_seq: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'},
-			raw_seq: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -82,7 +76,7 @@ $(document).ready(function() {
         <td>Project:</td><td><?php
 		$query= "select * from projects where state=1";
 		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>
-        *</td>
+        </td>
       </tr>
       <tr>
         <td>Description:</td>
@@ -105,7 +99,7 @@ $(document).ready(function() {
         <td><input type='text' name='purity' value="<?php echo stripslashes(htmlspecialchars($_POST['purity']))?>"/></td>
       </tr>
       <tr><td>Sequence:</br><span id="seq_len" style="background-color:yellow"></span></td>
-      <td><textarea id="raw_seq"  name='raw_seq' class="sequence" cols="80" rows="4" onchange="tidyup('raw_seq');cal_seq_len()"><?php echo stripslashes($_POST['raw_seq'])?></textarea>*</td>
+      <td><textarea id="raw_seq"  name='raw_seq' class="sequence" cols="80" rows="4" onchange="tidyup('raw_seq');cal_seq_len()"><?php echo stripslashes($_POST['raw_seq'])?></textarea></td>
       </tr>   
       <tr>
         <td>Note:</td>
@@ -141,14 +135,10 @@ function edit_form()
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			name: "required",
-			project: "required",
-			raw_seq: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'},
-			raw_seq: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -192,7 +182,7 @@ $(document).ready(function() {
       </tr>
       <tr><td>Sequence:</br><span id="seq_len" style="background-color:yellow"></span></td>
       <td><textarea id="raw_seq"  name='raw_seq' class="sequence" cols='80' rows='4' onchange="tidyup('raw_seq');cal_seq_len()"><?php
-     echo sm_tidyup($primer['sequence']);?></textarea>*</td>
+     echo sm_tidyup($primer['sequence']);?></textarea></td>
       </tr>
       <tr>
         <td>Note:</td>
@@ -263,6 +253,7 @@ function detail()
     }
 $primer = get_record_from_id('primers',$_REQUEST['id']);
 ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="operate" >
 <tr><td colspan='2'><div align='center'><h2>Primers</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
@@ -600,7 +591,7 @@ function import_template() {
 function add()
 {
   try {
-  if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['raw_seq'],$_REQUEST['created_by'])))
+  if (!filled_out(array($_REQUEST['name'],$_REQUEST['created_by'])))
   {
   	throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
   }
@@ -717,7 +708,7 @@ function edit_relation()
 function edit()
 {
   try {
-  if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['raw_seq'],$_REQUEST['updated_by'])))
+  if (!filled_out(array($_REQUEST['name'],$_REQUEST['updated_by'])))
   {
   	throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
   }

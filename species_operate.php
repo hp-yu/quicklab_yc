@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('species',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Species operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -42,12 +40,10 @@ function addform()
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			name: "required",
-			latin: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			latin: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -63,7 +59,7 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td>Scientific name:</td>
-        <td><input type="text" name="latin" id="latin" value="<?php echo stripslashes(htmlspecialchars($_POST['latin']))?>"/>*</td>
+        <td><input type="text" name="latin" id="latin" value="<?php echo stripslashes(htmlspecialchars($_POST['latin']))?>"/></td>
       </tr>
       <tr>
         <td colspan="2"><input type="submit" name="Submit" value="Submit" />
@@ -86,12 +82,10 @@ function editform()
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			name: "required",
-			latin: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			latin: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -109,7 +103,7 @@ $(document).ready(function() {
       <tr>
         <td width="20%">Scientific name: </td>
         <td width="80%"><input type='text' name='latin' id="latin" size="40" value="<?php
-  echo stripslashes(htmlspecialchars($species['latin']));?>">*</td>
+  echo stripslashes(htmlspecialchars($species['latin']));?>"></td>
       </tr>
       <tr>
         <td colspan="2"><input type="submit" name="Submit" value="Submit" />

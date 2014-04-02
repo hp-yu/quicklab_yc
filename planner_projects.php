@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('sellers',$query);
  	exit;
  }

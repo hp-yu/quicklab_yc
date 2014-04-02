@@ -5,13 +5,11 @@ if (!check_auth_user()) {
 }
 if ($_REQUEST['type']=='export_excel') {
 	$query=$_SESSION['query'];
-	unset($_SESSION['query']);
 	export_excel('orders',$query);
 	exit;
 }
 do_html_header('Plasmid request operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
 standard_form();

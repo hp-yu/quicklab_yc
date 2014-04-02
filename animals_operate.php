@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('animals',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Animals operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -45,14 +43,10 @@ $.validator.setDefaults({	submitHandler: function() {
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			strain: "required",
-			name: "required",
-			project: "required"
+			name: "required"
 		},
 		messages: {
-			strain: {required: 'required'},
-			name: {required: 'required'},
-			project: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 function moveOptionToText(e1, e2) {
@@ -95,7 +89,7 @@ function moveOptionToText(e1, e2) {
           echo ">".$option['name']." (".$species['name'].")</option>";
         }
         echo "</select>";
-        ?>*&nbsp;
+        ?>&nbsp;
         <a href="ani_strains_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add strains' border='0'/></a>
         </td>
       </tr>
@@ -106,7 +100,7 @@ function moveOptionToText(e1, e2) {
       <tr>
         <td>Project:</td><td><?php
 		$query= "select * from projects where state=1";
-		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>*
+		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>
         </td>
       </tr>
       <tr>
@@ -177,14 +171,10 @@ function EditForm()
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			strain: "required",
-			name: "required",
-			project: "required"
+			name: "required"
 		},
 		messages: {
-			strain: {required: 'required'},
-			name: {required: 'required'},
-			project: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 function moveOptionToText(e1, e2) {
@@ -245,7 +235,7 @@ function SetDate(e) {
           echo ">".$option['name']." (".$species['name'].")</option>";
         }
         echo "</select>";
-        ?>*&nbsp;
+        ?>&nbsp;
         <a href="ani_strains_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add strains' border='0'/></a>
         </td>
       </tr>
@@ -257,7 +247,7 @@ function SetDate(e) {
       <tr>
         <td>Project:</td><td><?php
 		$query= "select * from projects";
-		echo query_select_choose('project', $query,'id','name',$animal['project']);?>*
+		echo query_select_choose('project', $query,'id','name',$animal['project']);?>
         </td></tr>
       <tr>
         <td>Description:</td>
@@ -410,6 +400,7 @@ function Detail()
     }
     $animal = get_record_from_id('animals',$_REQUEST['id']);
 ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="operate" >
 	<tr><td colspan='2'><div align='center'><h2>Animals</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
@@ -531,6 +522,7 @@ function Detail()
         </td>
       </tr>
     </table>
+    </form>
 <?php
 }
 function DeleteForm()
@@ -622,7 +614,7 @@ function DeleteForm()
 function Add()
 {
   try {
-  	if (!filled_out(array($_REQUEST['name'],$_REQUEST['strain'],$_REQUEST['project'],$_REQUEST['created_by']))) {
+  	if (!filled_out(array($_REQUEST['name'],$_REQUEST['created_by']))) {
   		throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
   	}
   	$strain = $_REQUEST['strain'];
@@ -742,7 +734,7 @@ function EditRelation()
 function Edit()
 {
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['strain'],$_REQUEST['updated_by'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['updated_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}

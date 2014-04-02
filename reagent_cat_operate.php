@@ -14,7 +14,6 @@ if (!check_auth_user())
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('reagent_cat',$query);
  	exit;
  }
@@ -22,7 +21,6 @@ if (!check_auth_user())
 <?php
   do_html_header_begin('Reagent categories operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();

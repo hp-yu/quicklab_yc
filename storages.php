@@ -9,7 +9,7 @@ $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Storages-Quicklab</title>
-<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+<link href="css/general.css" rel="stylesheet" type="text/css" />
 </head>
 <body leftmargin="5" topmargin="5">
 <?php

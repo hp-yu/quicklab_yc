@@ -18,7 +18,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Devices operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript">
 function moveOptionToTextarea(e1, e2){
@@ -66,18 +65,10 @@ function add_form()
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			name: "required",
-			project: "required",
-			device_cat_id: "required",
-			manufacturer: "required",
-			keeper: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'},
-			device_cat_id: {required: 'required'},
-			manufacturer: {required: 'required'},
-			keeper: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -96,7 +87,7 @@ $(document).ready(function() {
         $query= "select * from projects where state=1";
 		echo query_select_choose('project', $query,'id','name',$_POST['project']);
 ?>
-		*</td>
+		</td>
   </tr>
   <tr>
 		<td>Description:</td>
@@ -108,7 +99,7 @@ $(document).ready(function() {
 $query= "SELECT * FROM device_cat ORDER BY name";
 echo query_select_choose('device_cat_id', $query,'id','name',$_POST['device_cat_id']);
 ?>
-  	*</td>
+  	</td>
   </tr>
   <tr>
     <td>Manufacturer:</td>
@@ -117,7 +108,7 @@ echo query_select_choose('device_cat_id', $query,'id','name',$_POST['device_cat_
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('manufacturer', $query,'id','name',$_POST['manufacturer']);
 ?>
-		*&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
     <td>Dealer:</td>
@@ -147,7 +138,7 @@ $people=($result->fetch_assoc());
 $query= "select * from people ORDER BY CONVERT(name USING GBK)";
 echo query_select_choose('keeper', $query,'id','name',$people['people_id']);
 ?>
-		*</td>
+		</td>
 	</tr>
 	<tr>
 		<td>Warranty start date:</td>
@@ -215,18 +206,10 @@ function edit_form()
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			name: "required",
-			project: "required",
-			device_cat_id: "required",
-			manufacturer: "required",
-			keeper: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'},
-			device_cat_id: {required: 'required'},
-			manufacturer: {required: 'required'},
-			keeper: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -246,7 +229,7 @@ $(document).ready(function() {
 $query= "select * from projects";
 echo query_select_choose('project', $query,'id','name',$device['project']);
 ?>
-		*</td></tr>
+		</td></tr>
 	<tr>
   	<td>Description:</td>
     <td><textarea name='description' cols='50' rows='3'><?php echo $device['description'];?></textarea></td>
@@ -257,7 +240,7 @@ echo query_select_choose('project', $query,'id','name',$device['project']);
 $query= "SELECT * FROM device_cat ORDER BY name";
 echo query_select_choose('device_cat_id', $query,'id','name',$device['device_cat_id']);
 ?>
-  	*</td>
+  	</td>
   </tr>
   <tr>
     <td>Manufacturer:</td>
@@ -266,7 +249,7 @@ echo query_select_choose('device_cat_id', $query,'id','name',$device['device_cat
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('manufacturer', $query,'id','name',$device['manufacturer']);
 ?>
-		*&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
     <td>Dealer:</td>
@@ -292,7 +275,7 @@ echo query_select_choose('dealer', $query,'id','name',$device['dealer']);
 $query= "select * from people ORDER BY CONVERT(name USING GBK)";
 echo query_select_choose('keeper', $query,'id','name',$device['keeper']);
 ?>
-		*</td>
+		</td>
 	</tr>
 	<tr>
 		<td>Warranty start date:</td>
@@ -390,6 +373,7 @@ function detail()	{
 	}
 	$device = get_record_from_id('devices',$_REQUEST['id']);
 	?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="operate" >
   <tr><td colspan='2'><div align='center'><h2>Devices</h2></div></td></tr>
   <tr><td colspan='2'><h3>Details:&nbsp;
@@ -817,7 +801,7 @@ mask*</td>
 function add()
 {
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['device_cat_id'],$_REQUEST['manufacturer'],$_REQUEST['keeper'],$_REQUEST['created_by'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['created_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
@@ -901,7 +885,7 @@ function edit_relation()
 function edit()
 {
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['updated_by'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['updated_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
@@ -1223,7 +1207,7 @@ function export_excel($module_name,$query)
 	$title="id"."\t".
 	"name"."\t".
 	"description"."\t".
-	"device_cat_id"."\t".
+	"device_cat"."\t".
 	"manufacturer"."\t".
 	"dealer"."\t".
 	"cat_nbr"."\t".

@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('people',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('People operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -42,15 +40,11 @@ $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
 			name: "required",
-			email: "required",
-			date_enter: "required",
-			status: "required"
+			email: "required"
 		},
 		messages: {
 			name: {required: 'required'},
-			email: {required: 'required'},
-			date_enter: {required: 'required'},
-			status: {required: 'required'}
+			email: {required: 'required'}
 		}});
 });
 </script>
@@ -105,7 +99,7 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td>Enter date:</td>
-        <td><input type='text' name='date_enter' value="<?php echo stripslashes(htmlspecialchars($_POST['date_enter'])) ?>"/>*(YYYY-MM-DD)</td>
+        <td><input type='text' name='date_enter' value="<?php echo stripslashes(htmlspecialchars($_POST['date_enter'])) ?>"/>(YYYY-MM-DD)</td>
       </tr>
       <tr>
         <td>Graduate school: </td>
@@ -117,15 +111,9 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td>Status:</td>
-        <td><input type='text' name='status' id="status" value="<?php echo stripslashes(htmlspecialchars($_POST['status'])) ?>"/>*</td>
+        <td><input type='text' name='status' id="status" value="<?php echo stripslashes(htmlspecialchars($_POST['status'])) ?>"/></td>
       </tr>
       <tr>
-      <tr>
-      	<td>Order approver:</td>
-      	<td><?php
-        $query= "select id,name from people ORDER BY CONVERT(name USING GBK)";
-		echo query_select_choose_numeric('order_approver', $query,'id','name');?></td>
-      </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' /></td></tr>
     <?php HiddenInputs("add");?>
@@ -145,15 +133,11 @@ $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
 			name: "required",
-			email: "required",
-			date_enter: "required",
-			status: "required"
+			email: "required"
 		},
 		messages: {
 			name: {required: 'required'},
-			email: {required: 'required'},
-			date_enter: {required: 'required'},
-			status: {required: 'required'}
+			email: {required: 'required'}
 		}});
 });
 </script>
@@ -227,7 +211,7 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td>Enter date:</td>
-        <td><input type='text' name='date_enter' value='<?php echo $people['date_enter'];?>'>*(YYYY-MM-DD)</td>
+        <td><input type='text' name='date_enter' value='<?php echo $people['date_enter'];?>'>(YYYY-MM-DD)</td>
       </tr>
       <tr>
         <td>Leave date:</td>
@@ -243,19 +227,13 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td>Status:</td>
-        <td><input type='text' name='status' id="status" value='<?php echo $people['status'];?>'>*</td>
+        <td><input type='text' name='status' id="status" value='<?php echo $people['status'];?>'></td>
       </tr>
       <tr>
         <td >State:</td>
         <td ><?php
         $state=array('In lab'=>'0','Leave lab'=>'1');
         echo array_select('state',$state,$people['state']);?></td>
-      </tr>
-       <tr>
-      	<td>Order approver:</td>
-      	<td><?php
-        $query= "select id,name from people ORDER BY CONVERT(name USING GBK)";
-		echo query_select_choose_numeric('order_approver', $query,'id','name',$people['order_approver']);?></td>
       </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />
@@ -277,6 +255,7 @@ function Detail()
     }
     $people = get_record_from_id('people',$_REQUEST['id']);
 	?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 	<table width='100%'  class='operate'>
 	      <tr><td colspan='2'><div align='center'>
           <h2>People</h2></div></td></tr>
@@ -360,10 +339,6 @@ function Detail()
         <td>Status:</td>
         <td><?php echo $people['status'];?></td>
       </tr>
-      <tr>
-        <td>Order approver:</td>
-        <td><?php echo $people['order_approver'];?></td>
-      </tr>
       <tr><td colspan='2'>
       <a href='<?php echo $_SESSION['url_1'];?>'>
       <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td>
@@ -404,10 +379,9 @@ function Add() {
 	$graduate_school=$_REQUEST['graduate_school'];
 	$hometown = $_REQUEST['hometown'];
 	$status = $_REQUEST['status'];
-	$order_approver = $_REQUEST['order_approver'];
 	try
 	{
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['email'],$_REQUEST['date_enter'],$_REQUEST['status'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['email'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>'
 			.'- please try again.');
@@ -433,9 +407,9 @@ function Add() {
 		}
 
 		$query = "INSERT INTO people
-         (name,gender,identity_card,email,mobile,im,tel,birthday,date_enter,graduate_school,hometown,status,order_approver )
+         (name,gender,identity_card,email,mobile,im,tel,birthday,date_enter,graduate_school,hometown,status )
          VALUES
-         ('$name','$gender','$identity_card','$email','$mobile','$im','$tel','$birthday','$date_enter','$graduate_school','$hometown','$status','$order_approver')";
+         ('$name','$gender','$identity_card','$email','$mobile','$im','$tel','$birthday','$date_enter','$graduate_school','$hometown','$status')";
 		$result = $db_conn->query($query);
 		$id=$db_conn->insert_id;
 		if (!$result)
@@ -501,9 +475,8 @@ function Edit() {
 	$hometown = $_REQUEST['hometown'];
 	$status = $_REQUEST['status'];
 	$state = $_REQUEST['state'];
-	$order_approver = $_REQUEST['order_approver'];
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['email'],$_REQUEST['date_enter'],$_REQUEST['status'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['email'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>'
 			.'- please try again.');
@@ -542,8 +515,7 @@ function Edit() {
 			graduate_school='$graduate_school',
 			hometown='$hometown',
 			status='$status',
-			state='$state',
-			order_approver='$order_approver'
+			state='$state'
 			where id='$id'";
 
 		$result = $db_conn->query($query);
@@ -691,7 +663,6 @@ function export_excel($module_name,$query)
         $state= $key;
       }
     }
-    $order_approver=get_name_from_id('people',$row['order_approver']);
     $xls[]= $row['id']."\t".
     ereg_replace("[\r,\n,\t]"," ",$row['name'])."\t".
     ereg_replace("[\r,\n,\t]"," ",$gender)."\t".
@@ -706,8 +677,7 @@ function export_excel($module_name,$query)
     ereg_replace("[\r,\n,\t]"," ",$row['date_enter'])."\t".
     ereg_replace("[\r,\n,\t]"," ",$row['date_leave'])."\t".
     ereg_replace("[\r,\n,\t]"," ",$row['status'])."\t".
-    ereg_replace("[\r,\n,\t]"," ",$state)."\t".
-    ereg_replace("[\r,\n,\t]"," ",$order_approver['name']);
+    ereg_replace("[\r,\n,\t]"," ",$state);
   }
   $title="id"."\t".
   "name"."\t".
@@ -723,8 +693,7 @@ function export_excel($module_name,$query)
   "date_enter"."\t".
   "date_leave"."\t".
   "status"."\t".
-  "state"."\t".
-  "order approver";
+  "state";
 
   $xls = implode("\r\n", $xls);
 

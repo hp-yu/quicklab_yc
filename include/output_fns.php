@@ -7,7 +7,8 @@ function do_html_header($title)
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $title;?></title>
-	<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+	<link href="css/general.css" rel="stylesheet" type="text/css" />
+	<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 	<BASE target='_self'>
   </head>
   <body leftmargin="5" topmargin="5">
@@ -21,7 +22,8 @@ function do_html_header_begin($title)
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $title;?></title>
-	<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+	<link href="css/general.css" rel="stylesheet" type="text/css" />		
+	<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 	<BASE target='_self'>
 <?php
 }
@@ -74,7 +76,12 @@ function do_header() {
 </td>
 </tr>
 </table>
-<script type="text/javascript" src="include/chromejs/chrome.js">
+<script src="include/chromejs/chrome.js" type="text/javascript" ></script>
+<script src="include/jquery/jquery.watermark.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function () {
+		$("#code").watermark("Enter Quick ID");
+	});
 </script>
 <table id="menu" width="100%" cellpadding="0" cellspacing="0" class="menu">
 <tr>
@@ -92,16 +99,9 @@ function do_header() {
 </ul>
 </div>
 </td>
-<td style="background:#006633" align="right">
-<script>
-function quickId() {
-	if (document.quickIdFrom.code.value=="Quick ID") {
-		document.quickIdFrom.code.value="";
-	}
-}
-</script>
+<td style="background:#006633" align="right" valign="middle">
 <form name="quickIdFrom" action="code.php" method="get" target="_blank">
-<input class="code" type="text" size="15" name="code" style="font-size:10;height:20px;text-align: middle;" value="Quick ID" onclick="javascript:quickId()" align="middle">
+<input class="code" type="search" name="code" id="code" style="height:18px;WIDTH:120px;" placeholder="Enter Quick ID">
 <!--<input type="submit" value="Go" style="font-size:10;height:20px;">-->
 </form>
 </td>
@@ -137,7 +137,7 @@ function quickId() {
 <a href="./projects.php">Projects</a>
 <a href="./accounts.php">Accounts</a>
 <a href="./sellers.php">Sellers</a>
-<a href="./abook.php">Address book</a>
+<!--<a href="./abook.php">Address book</a>-->
 <a href="./ordering_rules.php">Ordering rules</a>
 <a href="./rebase.php">Restriction enzyme</a>
 <a href="./species.php">Species</a>
@@ -592,7 +592,7 @@ function search_header($module_name) {
   <?php
 }
 
-function search_keywords($module_name,$fields,$suggest_field = null,$start_length = null) {
+function search_keywords_retired($module_name,$fields,$suggest_field = null,$start_length = null) {
 	if ($suggest_field == null||$suggest_field == "") {
 		$suggest_field = "name";
 	}
@@ -618,7 +618,7 @@ start_length= "<?php echo $start_length ?>";
 <tr onclick="hideSuggestions();">
 <td colspan='2' height='21' valign='top'>
 <input type="hidden" name="fields" value="<?php echo $fields ?>">
-<div id="content" class="suggestcontent">Serach:
+<div id="content" class="suggestcontent">Search:
 <input type='text' name='keywords' id='keyword' size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
 <input type='Submit' name='Submit' value='Go' />
 <input type="reset" value="Clean"/>
@@ -631,6 +631,26 @@ start_length= "<?php echo $start_length ?>";
 </tr>
   <?php
 }
+
+function search_keywords($module_name,$fields,$suggest_field = null,$start_length = null) {
+	if ($suggest_field == null||$suggest_field == "") {
+		$suggest_field = "name";
+	}
+	if ($start_length == null||$start_length == "") {
+		$start_length = 2;
+	}
+	?>
+<tr >
+<td colspan='2' height='21' valign='top'>
+<input type="hidden" name="fields" value="<?php echo $fields ?>">
+Search:
+<input type='text' name='keywords' id='keyword' size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
+<input type='Submit' name='Submit' value='Go' />
+</td>
+</tr>
+  <?php
+}
+
 function search_project () {
 	?>
 <tr>

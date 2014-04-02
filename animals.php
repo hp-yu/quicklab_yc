@@ -48,7 +48,7 @@ function   addStorage (module_id, item_id) {
 	  </td>
     </tr>
     <tr>
-      <td colspan='2' height='21' valign='top'>Serach strain:<?php
+      <td colspan='2' height='21' valign='top'>Search strain:<?php
       $query="SELECT * FROM ani_strains ORDER BY name";
       $db_conn = db_connect();
   		$result = $db_conn->query($query);
@@ -73,8 +73,6 @@ function   addStorage (module_id, item_id) {
       $state=array('- Select all -'=>'%','available'=>'1','on experiment'=>'2','dead'=>'3');
       echo array_select('state',$state,$_REQUEST['state']);
       ?>
-      <input type='Submit' name='Submit' value='Go' />
-      <input type="reset" value="Clean"/>
       </td>
 		</tr>
 		<?php search_keywords('animals',$fields); ?>

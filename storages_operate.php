@@ -8,7 +8,6 @@ if (!check_auth_user()) {
 if ($_REQUEST['type']=='export_excel')
 {
 	$query=$_SESSION['query'];
-	unset($_SESSION['query']);
 	export_excel('storages',$query);
 	exit;
 }
@@ -16,7 +15,6 @@ if ($_REQUEST['type']=='export_excel')
 <?php
 do_html_header('Storages operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
 process_request();

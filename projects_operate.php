@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('projects',$query);
  	exit;
  }
@@ -17,7 +16,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Projects operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -165,6 +163,7 @@ function Detail()
     }
   $project = get_record_from_id('projects',$_REQUEST['id']);
 ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="operate" >
 	<tr><td colspan='2'><div align='center'><h2>Projects</h2></div></td></tr>
       <tr><td colspan='2'><h3>Details:&nbsp;

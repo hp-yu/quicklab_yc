@@ -223,6 +223,11 @@ table.login
 {
     margin: 250px auto 0px auto;
     border: 1px solid #CCCCCC;
+    text-align: left;
+}
+div.login
+{
+    text-align: center;
 }
 table.results
 {
@@ -719,3 +724,4 @@ plasmid mapping
     border: solid 1px #000000;
     overflow: auto;
 }
+

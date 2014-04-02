@@ -9,7 +9,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('sellers',$query);
  	exit;
  }
@@ -18,7 +17,7 @@ include('include/includes.php');
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Planner-Quicklab</title>
-	<link href="CSS/general.css" rel="stylesheet" type="text/css" />
+	<link href="css/general.css" rel="stylesheet" type="text/css" />
 <script>
 function task_submit() {
 	window.returnValue='ok';
@@ -365,11 +364,11 @@ $db_conn=db_connect();
 $result = $db_conn->query("SELECT * FROM planner_tasks WHERE id=$root AND project=$project;");
 $row = $result->fetch_assoc();
 
-// ׼��һ��յ���ֵ��ջ
+// ׼��һ��յ���ֵ���?
 $right = array();
 $task=array();
 
-// ��ø������������ڵ�
+// ��ø������������ڵ�?
 $result = $db_conn->query("SELECT * FROM planner_tasks WHERE `left` BETWEEN {$row['left']} AND {$row['right']} AND project=$project ORDER BY `left` ASC;");
 
 // ��ʾÿһ��
@@ -385,10 +384,10 @@ array_pop($right);
 }
 }
 
-// �����ʾ�ڵ�����
+// �����ʾ�ڵ�����?
 $task[$row['id']]=str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',count($right)).$row['name'];
 
-// �����ڵ���뵽��ջ��
+// �����ڵ���뵽��ջ��?
 $right[] = $row['right'];
 }
 return $task;

@@ -15,7 +15,6 @@ function add_form()
 	}
   ?>
 <script type="text/javascript" src="include/js/moveoptions.js"></script>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script>
 function close_submit() {
@@ -273,7 +272,6 @@ function edit_form()
 	$role = get_record_from_id('rbac_roles',$_REQUEST['id']);
 	?>
 <script type="text/javascript" src="include/js/moveoptions.js"></script>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script>
 function close_submit() {

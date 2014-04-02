@@ -5,7 +5,6 @@ include('include/includes.php');
 <?php
 do_html_header_begin('Login-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript">
 $.validator.setDefaults({	submitHandler: function() {
@@ -34,6 +33,7 @@ if ($_REQUEST['action']=="login") {
 }
 ?>
 <form method="POST" id="login_form" name="login_form" target="">
+<div class="login">
 <table cellspacing="5" cellpadding="5" class="login">
 <tr>
 <td colspan="2">
@@ -57,6 +57,7 @@ Password:</br>
 </tr>
 <input type='hidden' name='action' value='login' >
 </table>
+</div>
 </form>
 
 <?php

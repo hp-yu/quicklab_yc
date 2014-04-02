@@ -7,7 +7,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('samples',$query);
  	exit;
  }
@@ -19,7 +18,6 @@ include('include/includes.php');
 <?php
   do_html_header_begin('Samples operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -41,12 +39,10 @@ function add_form() {
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			name: "required",
-			project: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -62,7 +58,7 @@ $(document).ready(function() {
 	<tr>
 		<td>Project:</td><td><?php
 		$query= "select * from projects where state=1";
-		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>*
+		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>
     </td>
 	</tr>
 	<tr>
@@ -124,12 +120,10 @@ function edit_form()	{
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			name: "required",
-			project: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -249,6 +243,7 @@ function detail() {
 	}
 	$sample = get_record_from_id('samples',$_REQUEST['id']);
 ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="operate" >
 	<tr><td colspan='2'><div align='center'><h2>Samples</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Detail:
@@ -557,7 +552,7 @@ mask*</td>
 }
 function add() {
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['created_by']))) {
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['created_by']))) {
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
 		$name = $_REQUEST['name'];
@@ -673,7 +668,7 @@ function edit_relation() {
 }
 function edit()	{
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['updated_by']))) {
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['updated_by']))) {
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
 		$id=$_REQUEST['id'];

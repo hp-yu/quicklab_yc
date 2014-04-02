@@ -39,11 +39,13 @@ function submitDelete(f) {
 	}
 }
 </script>
+<form name='detail_form' id="detail_form" method='post' action=''>
 <table width="100%" class="standard">
+<form id="approve" method="post" target="_self">
   <tr>
 	  <td colspan="2" align="center"><h2>Ordering rules</h2></td>
 	</tr>
-<form id="approve" method="post" target="_self">
+
 	<tr>
 		<td colspan="2"><b><i>Approval:</i></b></td>
 	</tr>
@@ -93,20 +95,6 @@ function submitDelete(f) {
 	</tr>
 	<tr>
 		<td colspan="2">
-		<input type="checkbox" name="IsRequestMailToApprover"
-		<?php 
-		$query="SELECT * FROM `orders_mails` WHERE `key`='is_request_mail_to_approver'";
-		$result=$db_conn->query($query);
-		$match=$result->fetch_assoc();
-		if ($match['value']==1) {
-			echo " checked";
-		}
-		?>
-		/>&nbsp;&nbsp;Send reminder mail to the order appprover after the order is requested.
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
 		<input type="checkbox" name="IsApproveMailToRequester"
 		<?php 
 		$query="SELECT * FROM `orders_mails` WHERE `key`='is_approve_mail_to_requester'";
@@ -131,34 +119,6 @@ function submitDelete(f) {
 		}
 		?>
 		/>&nbsp;&nbsp;Send mail to the people who requested this order after the product is received by other people.
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<input type="checkbox" name="IsStatAnnuallyToAdministrator"
-		<?php 
-		$query="SELECT * FROM `orders_mails` WHERE `key`='is_stat_annually_to_administrator'";
-		$result=$db_conn->query($query);
-		$match=$result->fetch_assoc();
-		if ($match['value']==1) {
-			echo " checked";
-		}
-		?>
-		/>&nbsp;&nbsp;Send mail of orders statistical annually report to the order administrator.
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<input type="checkbox" name="IsStatMonthlyToAdministrator"
-		<?php 
-		$query="SELECT * FROM `orders_mails` WHERE `key`='is_stat_monthly_to_administrator'";
-		$result=$db_conn->query($query);
-		$match=$result->fetch_assoc();
-		if ($match['value']==1) {
-			echo " checked";
-		}
-		?>
-		/>&nbsp;&nbsp;Send mail of orders statistical monthly report to the order administrator.
 		</td>
 	</tr>
 	<tr>
@@ -288,11 +248,8 @@ function Edit() {
 function reminderMail() {
 	try {
 		$is_request_mail_to_administrator=$_REQUEST['IsRequestMailToAdministrator'];
-		$is_request_mail_to_approver=$_REQUEST['IsRequestMailToApprover'];
 		$is_approve_mail_to_requester=$_REQUEST['IsApproveMailToRequester'];
 		$is_receive_mail_to_requester=$_REQUEST['IsReceiveMailToRequester'];
-		$is_stat_annually_to_administrator=$_REQUEST['IsStatAnnuallyToAdministrator'];
-		$is_stat_monthly_to_administrator=$_REQUEST['IsStatMonthlyToAdministrator'];
 		$db_conn=db_connect();
 		if ($is_request_mail_to_administrator==true) {
 			$query="UPDATE orders_mails SET `value`=1 WHERE `key`='is_request_mail_to_administrator'";
@@ -303,21 +260,6 @@ function reminderMail() {
 		}
 		else {
 			$query="UPDATE orders_mails SET `value`=0 WHERE `key`='is_request_mail_to_administrator'";
-			$result=$db_conn->query($query);
-			if (!$result) {
-				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
-			}
-		}
-		//added by Yu, Hai Ping on 23-Feb-2014, new rule
-		if ($is_request_mail_to_approver==true) {
-			$query="UPDATE orders_mails SET `value`=1 WHERE `key`='is_request_mail_to_approver'";
-			$result=$db_conn->query($query);
-			if (!$result) {
-				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
-			}
-		}
-		else {
-			$query="UPDATE orders_mails SET `value`=0 WHERE `key`='is_request_mail_to_approver'";
 			$result=$db_conn->query($query);
 			if (!$result) {
 				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
@@ -346,34 +288,6 @@ function reminderMail() {
 		}
 		else {
 			$query="UPDATE orders_mails SET `value`=0 WHERE `key`='is_receive_mail_to_requester'";
-			$result=$db_conn->query($query);
-			if (!$result) {
-				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
-			}
-		}
-		if ($is_stat_annually_to_administrator==true) {
-			$query="UPDATE orders_mails SET `value`=1 WHERE `key`='is_stat_annually_to_administrator'";
-			$result=$db_conn->query($query);
-			if (!$result) {
-				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
-			}
-		}
-		else {
-			$query="UPDATE orders_mails SET `value`=0 WHERE `key`='is_stat_annually_to_administrator'";
-			$result=$db_conn->query($query);
-			if (!$result) {
-				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
-			}
-		}
-		if ($is_stat_monthly_to_administrator==true) {
-			$query="UPDATE orders_mails SET `value`=1 WHERE `key`='is_stat_monthly_to_administrator'";
-			$result=$db_conn->query($query);
-			if (!$result) {
-				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");
-			}
-		}
-		else {
-			$query="UPDATE orders_mails SET `value`=0 WHERE `key`='is_stat_monthly_to_administrator'";
 			$result=$db_conn->query($query);
 			if (!$result) {
 				throw new Exception("There was a database error when executing <pre>$query</pre>,</br>please try again.");

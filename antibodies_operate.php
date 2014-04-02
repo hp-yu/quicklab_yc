@@ -7,7 +7,6 @@ if ($_REQUEST['type']=='export_excel') {
 		header('location:'.$_SESSION['url_1']);
 	}
 	$query=$_SESSION['query'];
-	unset($_SESSION['query']);
 	export_excel('antibodies',$query);
 	exit;
 }
@@ -19,7 +18,6 @@ if ($_REQUEST['type']=='import_template') {
 <?php
   do_html_header_begin('Antibodies operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <?php
   do_html_header_end();
@@ -43,18 +41,10 @@ function add_form()
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			name: "required",
-			project: "required",
-			antibody_type: "required",
-			specification: "required",
-			host: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'},
-			antibody_type: {required: 'required'},
-			specification: {required: 'required'},
-			host: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 function moveOptionToText(e1, e2) {
@@ -94,7 +84,7 @@ function moveOptionToTextarea(e1, e2){
         <td>Project:</td><td><?php
         $query= "select * from projects where state=1";
 		echo query_select_choose('project', $query,'id','name',$_POST['project']);?>
-        *</td>
+        </td>
       </tr>
       <tr>
         <td>Description:</td>
@@ -104,13 +94,13 @@ function moveOptionToTextarea(e1, e2){
         <td>Type:</td>
         <td><?php $antibody_type=array('monoclonal'=>'1','polyclonal'=>'2');
         echo array_select_choose(antibody_type,$antibody_type,$_POST['antibody_type']);?>
-        *</td>
+        </td>
       </tr>
       <tr>
         <td>Specification:</td>
         <td><?php $specification=array('primary'=>'1','secondary'=>'2');
         echo array_select_choose(specification,$specification,$_POST['specification']);?>
-        *</td>
+       	</td>
       </tr>
       <tr>
         <td>Isotype:</td>
@@ -123,7 +113,7 @@ function moveOptionToTextarea(e1, e2){
         <td><?php
         $query="SELECT * FROM species ORDER BY name";
         echo query_select_choose('host',$query,'id','name',$_POST['host']);
-        ?>*&nbsp;
+        ?>&nbsp;
         <a href="species_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add species' border='0'/></a></td>
       </tr>
       <tr>
@@ -209,18 +199,10 @@ function edit_form()
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			name: "required",
-			project: "required",
-			antibody_type: "required",
-			specification: "required",
-			host: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'},
-			antibody_type: {required: 'required'},
-			specification: {required: 'required'},
-			host: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 function moveOptionToText(e1, e2) {
@@ -261,7 +243,7 @@ function moveOptionToTextarea(e1, e2){
         <td>Project:</td><td><?php
         $query= "select * from projects";
 		echo query_select_choose('project', $query,'id','name',$antibody['project']);?>
-        *</td></tr>
+        </td></tr>
       <tr>
         <td>Description:</td>
         <td><textarea name='description' cols='50' rows='3'><?php
@@ -272,14 +254,14 @@ function moveOptionToTextarea(e1, e2){
         <td><?php
         $antibody_type = array('monoclonal'=>'1','polyclonal'=>'2');
 	echo array_select_choose('antibody_type',$antibody_type,$antibody['antibody_type'])?>
-        *</td>
+        </td>
       </tr>
       <tr>
         <td>Specification:</td>
         <td><?php
         $specification = array('primary'=>'1','secondary'=>'2');
 	echo array_select_choose('specification',$specification,$antibody['specification'])?>
-        *</td>
+        </td>
       </tr>
       <tr>
         <td>Isotype:</td>
@@ -291,7 +273,7 @@ function moveOptionToTextarea(e1, e2){
         <td>Host:</td>
         <td><?php
         $query="SELECT * FROM species ORDER BY name";
-        echo query_select_choose('host',$query,'id','name',$antibody['host']);?>*&nbsp;
+        echo query_select_choose('host',$query,'id','name',$antibody['host']);?>&nbsp;
         <a href="species_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add species' border='0' /></a></td>
       </tr>
       <tr>
@@ -386,6 +368,7 @@ function detail()
 	}
 	$antibody = get_record_from_id('antibodies',$_REQUEST['id']);
 ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
 	<table width="100%" class="operate" >
 	<tr><td colspan='2'><div align='center'><h2>Antibodies</h2></div></td></tr>
       <tr><td colspan='2'><h3>Detail:
@@ -502,6 +485,7 @@ function detail()
         </td>
       </tr>
     </table>
+    </form>
 <?php
 }
 function delete_form()
@@ -764,7 +748,7 @@ mask*</td></tr>
 function add()
 {
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['type'],$_REQUEST['specification'],$_REQUEST['host'],$_REQUEST['created_by'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['created_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
@@ -928,7 +912,7 @@ function edit_relation()
 function edit()
 {
 	try {
-		if (!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['type'],$_REQUEST['specification'],$_REQUEST['host'],$_REQUEST['updated_by'])))
+		if (!filled_out(array($_REQUEST['name'],$_REQUEST['updated_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}

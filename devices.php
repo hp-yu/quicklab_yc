@@ -133,8 +133,7 @@ if ($results  && $results->num_rows) {
 	echo "Warranty</td><td class='results_header'>";
 	echo "Operate</td><td class='results_header'>";
 	echo "Storage</td><td class='results_header'>";
-	echo "Order</td><td class='results_header'>";
-	echo "Maintenance</td></tr>";
+	echo "Order</td></tr>";
 	while ($matches = $results->fetch_array()) {
 		$module=get_record_from_name('modules','devices');
 		echo "<tr><td class='results'><input type='checkbox'  onclick=changechecked(this)  name='selectedItem[]' value={$matches[id]}></td><td class='results'>";
@@ -196,36 +195,15 @@ if ($results  && $results->num_rows) {
 		$order = $db_conn->query($query);
 		$order_count=$order->num_rows;
 		if($order_count>0)  {
-			echo '<a href="orders.php?module_id='.$module['id'].'&item_id='.$matches['id'].'" target="_blank"><img src="./assets/image/general/info-s.gif" title="Info" border="0"/></a></td><td class="results">';
+			echo '<a href="orders.php?module_id='.$module['id'].'&item_id='.$matches['id'].'" target="_blank"><img src="./assets/image/general/info-s.gif" title="Info" border="0"/></a></td></tr>';
 		}
 		else {
 			if (userPermission('3')) {
-				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']},{$matches['manufacturer']},{$matches['dealer']},'{$matches['cat_nbr']}')\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" title=\"Request\" border=\"0\"/></a></td><td class=\"results\">";
+				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']},{$matches['manufacturer']},{$matches['dealer']},'{$matches['cat_nbr']}')\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" title=\"Request\" border=\"0\"/></a></td></tr>";
 			}
 			else {
-				echo '<img src="./assets/image/general/add-s-grey.gif" title="Request" border="0"/></td><td class="results">';
+				echo '<img src="./assets/image/general/add-s-grey.gif" title="Request" border="0"/></td></tr>';
 			}
-		}
-		//maintenance records
-		$query = "select * from maintenance WHERE device_id='{$matches['id']}'";
-		$rs_maintenance = $db_conn->query($query);
-		$maintenance_count=$rs_maintenance->num_rows;
-		if($maintenance_count>0)
-		{
-			echo '<a href="maintenance.php?device_id='.$matches['id'].'">'.$maintenance_count.'</a>';
-		}
-		else
-		{
-			echo $maintenance_count;
-		}
-		echo "&nbsp;&nbsp;";
-		if (userPermission('3'))
-		{
-			echo '<a href="maintenance_operate.php?type=add&device_id='.$matches['id'].'"><img src="./assets/image/general/add-s.gif" title="Add maintenance" border="0"/></a></td></tr>';
-		}
-		else
-		{
-			echo '<img src="./assets/image/general/add-s-grey.gif" title="Add maintenance" border="0"/></td></tr>';
 		}
 	}
 	echo '</table>';

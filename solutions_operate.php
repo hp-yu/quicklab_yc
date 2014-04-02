@@ -7,7 +7,6 @@ include('include/includes.php');
  	  header('location:'.$_SESSION['url_1']);
  	}
  	$query=$_SESSION['query'];
- 	unset($_SESSION['query']);
  	export_excel('solutions',$query);
  	exit;
  }
@@ -24,7 +23,6 @@ include('include/includes.php');
 function StandardForm() {
 ?>
 	<table width="100%" class="operate" >
-	<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 	<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 	<tr><td colspan='2'><div align='center'><h2>Solution center&nbsp;&nbsp;<a href='<?php echo $_SESSION['url_1'];?>'><img
 	 src='./assets/image/general/back.gif' alt='Back' border='0'/></a></h2></div></td></tr>

@@ -6,8 +6,8 @@ include('./include/includes.php');
 <head>
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="CSS/general.css" rel="stylesheet" type="text/css" />
-<link href="CSS/jquery.treeview.css" rel="stylesheet" type="text/css" />
+<link href="css/general.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery.treeview.css" rel="stylesheet" type="text/css" />
 <BASE target='_self'>
 <script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <!--<script src="include/jquery/jquery.cookie.js" type="text/javascript"></script>-->

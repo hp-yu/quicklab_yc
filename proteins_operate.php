@@ -9,7 +9,6 @@ if ($_REQUEST['type']=='export_excel') {
 		header('location:'.$_SESSION['url_1']);
 	}
 	$query=$_SESSION['query'];
-	unset($_SESSION['query']);
 	export_excel('proteins',$query);
 	exit;
 }
@@ -21,7 +20,6 @@ if ($_REQUEST['type']=='import_template') {
 <?php
   do_html_header_begin('Proteins operate-Quicklab');
 ?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
 <script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script type="text/javascript" src="include/bioinfo/sm_common.js"></script>
 <script>
@@ -59,16 +57,14 @@ function add_form()
 $(document).ready(function() {
 	$("#add_form").validate({
 		rules: {
-			name: "required",
-			project: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
-	<form name='add_form' id="add_form" method='post' action='' enctype='multipart/form-data'>'
+	<form name='add_form' id="add_form" method='post' action='' enctype='multipart/form-data'>
 	<table width="100%" class="operate" >
 <tr><td colspan='2'><div align='center'><h2>Proteins</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Add new protein:</h3></td>
@@ -83,7 +79,7 @@ $(document).ready(function() {
         <?php
         $query= "select * from projects WHERE state=1";
         echo query_select_choose('project', $query,'id','name',$_POST['project']);
-		?>*</td></tr>
+		?></td></tr>
       <tr>
         <td>Description:</td>
         <td><textarea name='description' cols="50" rows="3"><?php echo stripslashes($_POST['description']) ?></textarea></td>
@@ -150,12 +146,10 @@ function edit_form()
 $(document).ready(function() {
 	$("#edit_form").validate({
 		rules: {
-			name: "required",
-			project: "required"
+			name: "required"
 		},
 		messages: {
-			name: {required: 'required'},
-			project: {required: 'required'}
+			name: {required: 'required'}
 		}});
 });
 </script>
@@ -173,7 +167,7 @@ $(document).ready(function() {
         <td>Project:</td><td>
         <?php
         $query= "select * from projects";
-		echo query_select_choose('project', $query,'id','name',$protein['project']);?>*</td>
+		echo query_select_choose('project', $query,'id','name',$protein['project']);?></td>
 	  </tr>
       <tr>
         <td>Description:</td>
@@ -290,6 +284,7 @@ function detail()
 	}
 	$protein = get_record_from_id('proteins',$_REQUEST['id']);
   ?>
+<form name='detail_form' id="detail_form" method='post' action=''>
   <table width="100%" class="operate" >
 <tr><td colspan='2'><div align='center'><h2>Proteins</h2></div></td></tr>
   <tr><td colspan='2'><h3>Detail:
@@ -654,7 +649,7 @@ mask*</td></tr>
 function add()
 {
 	try {
-		if(!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['created_by'])))
+		if(!filled_out(array($_REQUEST['name'],$_REQUEST['created_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
@@ -704,7 +699,7 @@ function add()
 function edit()
 {
 	try {
-		if(!filled_out(array($_REQUEST['name'],$_REQUEST['project'],$_REQUEST['updated_by'])))
+		if(!filled_out(array($_REQUEST['name'],$_REQUEST['updated_by'])))
 		{
 			throw new Exception('You have not filled the form out correctlly,</br>- please try again.');
 		}
