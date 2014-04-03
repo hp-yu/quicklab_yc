@@ -1,10 +1,5 @@
 <?php
 include('include/includes.php');
-if (!check_auth_user())
-{
-  header('Location: '.'login.php');
-  exit;
-}
 ?>
 <?php
 //��SESSION��¼һ��ҳ��ĵ�ַ�����ڴӶ���ҳ�淵��?

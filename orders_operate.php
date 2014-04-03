@@ -1,8 +1,6 @@
 <?php
 include('include/includes.php');
-if (!check_auth_user()) {
-	login();
-}
+check_login_status();
 if ($_REQUEST['type']=='export_excel') {
 	$query=$_SESSION['query'];
 	export_excel('orders',$query);

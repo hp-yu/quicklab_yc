@@ -10,7 +10,7 @@ include_once('include/includes.php');
   //do_leftnav();
 ?>
 <?php
-  if(!userPermission(1)){
+  if(!userPermission(2)){
    echo '<table class="alert"><tr><td><h3>You do not have the authority to do this!</h3></td></tr></table>';
    do_rightbar();
    do_footer();

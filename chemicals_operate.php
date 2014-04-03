@@ -880,6 +880,8 @@ function submitMol() {
 }
 </SCRIPT>
 <form action='' name='editor' method='post' target="_self" enctype="multipart/form-data">
+<table width="100%" class="operate" >
+	<tr><td colspan='2'><div align='center'><h2>Chemicals</h2></div></td></tr>
 	<tr><td colspan='2'><h3>Edit chemical structure:</h3></td>
   </tr>
   <tr>
@@ -918,7 +920,7 @@ function submitMol() {
   	<td colspan='2'><input type='button' value=' Submit Molecule ' onClick = "submitMol()"/></td>
   </tr>
   <input type="hidden" name="action" value="structure"/>
-</form></table>
+</table></form>
   <?php
 }
 
@@ -970,8 +972,8 @@ function structure() {
 		if ( (isset($_FILES['structure']['name']) && is_uploaded_file($_FILES['structure']['tmp_name']))) {
 			$type = basename($_FILES['structure']['type']);
 			switch ($type) {
-				case 'x-mdl-sdf':break;
 				case 'octet-stream':break;
+				case 'plain':break;
 				default:        throw new Exception('Invalid structure format: '.
 				$_FILES['structure']['type'].$type) ;
 			}

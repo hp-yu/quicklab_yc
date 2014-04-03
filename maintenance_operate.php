@@ -4,7 +4,7 @@ include('include/includes.php');
 <?php
  if ($_REQUEST['type']=='export_excel')
  {
- 	if(!userPermission(1))
+ 	if(!userPermission(3))
  	{
  	  header('location:'.$_SESSION['url_1']);
  	}

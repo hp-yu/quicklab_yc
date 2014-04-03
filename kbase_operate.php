@@ -1,10 +1,7 @@
 <?php
 include('include/includes.php');
 include("fckeditor/fckeditor.php") ;
-if (!check_auth_user()) {
-  header('Location: login.php');
-  exit;
-}
+check_login_status();
 ?>
 <html>
 <head>

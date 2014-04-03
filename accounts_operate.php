@@ -4,7 +4,7 @@ include('include/includes.php');
 <?php
  if ($_REQUEST['type']=='export_excel')
  {
- 	if(!userPermission(1))
+ 	if(!userPermission(2))
  	{
  	  header('location:'.$_SESSION['url_1']);
  	}
@@ -30,7 +30,7 @@ include('include/includes.php');
 
 function AddForm()
 {
-	if(!userPermission('1'))
+	if(!userPermission(2))
     {
   	  alert();
     }
@@ -100,7 +100,7 @@ $(document).ready(function() {
 function EditForm()
 {
   $account = get_record_from_id('accounts',$_REQUEST['id']);
-  if(!userPermission('1',$account['created_by']))
+  if(!userPermission(2))
   {
   	alert();
   }
@@ -175,7 +175,7 @@ $(document).ready(function() {
 
 function Detail()
 {
-	if(!userPermission('1'))
+	if(!userPermission(2))
     {
   	  alert();
     }
@@ -242,7 +242,7 @@ function Detail()
 function DeleteForm()
 {
   $account = get_record_from_id('accounts',$_REQUEST['id']);
-  if(!userPermission('1'))
+  if(!userPermission(2))
   {
   	alert();
   }

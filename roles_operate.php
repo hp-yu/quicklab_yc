@@ -9,7 +9,7 @@ do_html_footer();
 <?php
 function add_form()
 {
-	if(!userPermission('1'))
+	if(!userPermission(1))
 	{
 		alert();
 	}
@@ -62,7 +62,7 @@ $(document).ready(function() {
 }
 function add_permission_form()
 {
-	if(!userPermission('1'))
+	if(!userPermission(1))
 	{
 		alert();
 	}
@@ -134,7 +134,7 @@ function close_submit() {
 }
 
 function detail(){
-	if(!userPermission('1'))
+	if(!userPermission(1))
 	{
 		alert();
 	}
@@ -190,7 +190,7 @@ function close_submit() {
 
 function edit_permission_form()
 {
-	if(!userPermission('1'))
+	if(!userPermission(1))
 	{
 		alert();
 	}
@@ -265,7 +265,7 @@ function   add_permission (id) {
 
 function edit_form()
 {
-	if(!userPermission('1'))
+	if(!userPermission(1))
 	{
 		alert();
 	}
@@ -312,7 +312,7 @@ $(document).ready(function() {
 
 function delete_form()
 {
-	if(!userPermission('1'))
+	if(!userPermission(1))
 	{
 		alert();
 	}

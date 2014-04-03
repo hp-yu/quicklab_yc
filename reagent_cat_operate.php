@@ -1,15 +1,10 @@
 <?php
 include('include/includes.php');
-if (!check_auth_user())
-{
-  header('Location: '.'login.php');
-  exit;
-}
 ?>
 <?php
  if ($_REQUEST['type']=='export_excel')
  {
- 	if(!userPermission(1))
+ 	if(!userPermission(2))
  	{
  	  header('location:'.$_SESSION['url_1']);
  	}

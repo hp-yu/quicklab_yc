@@ -1,9 +1,6 @@
 <?php
 include('include/includes.php');
-if (!check_auth_user()) {
-  header('Location: '.'login.php');
-  exit;
-}
+check_login_status();
 ?>
 <?php  
   $_SESSION['url_1']=$_SERVER['REQUEST_URI'];

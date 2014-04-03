@@ -1,10 +1,6 @@
 <?php
 include('include/includes.php');
 include("fckeditor/fckeditor.php") ;
-if (!check_auth_user()) {
-  header('Location: '.'login.php');
-  exit;
-}
   $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 
   do_html_header('Send mail-Quicklab');

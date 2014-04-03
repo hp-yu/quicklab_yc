@@ -1,8 +1,6 @@
 <?php
 include('include/includes.php');
-if (!check_auth_user()) {
-	login();
-}
+check_login_status();
 ?>
 <?php
 if ($_REQUEST['type']=='export_excel')
