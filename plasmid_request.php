@@ -208,13 +208,13 @@ if ($results  && $results->num_rows) {
 					if (userPermission("2")) {
 						echo "<a onclick=\"check({$matches['id']})\" style=\"cursor:pointer\"/>";
 					}
-					echo "<span style='color:red;'>Check</span></br><a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancel({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></td></tr>";
+					echo "<span style='color:red;'>Check</span></br><a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancel({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel' border='0'/></td></tr>";
 					break;
 				case '2':
-					echo "<a onclick=\"take({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Take</span></a></br><a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancel({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></a></td></tr>";
+					echo "<a onclick=\"take({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Take</span></a></br><a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancel({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel' border='0'/></a></td></tr>";
 					break;
 				case '3':
-					echo "<a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a></td></tr>";
+					echo "<a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a></td></tr>";
 					break;
 			}
 		}

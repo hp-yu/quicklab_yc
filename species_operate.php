@@ -64,7 +64,7 @@ $(document).ready(function() {
       <tr>
         <td colspan="2"><input type="submit" name="Submit" value="Submit" />
         <a href='<?php echo $_SESSION['url_1'];?>'>
-        <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
       </tr>
     <?php HiddenInputs("add");?>
     </table></form>
@@ -108,7 +108,7 @@ $(document).ready(function() {
       <tr>
         <td colspan="2"><input type="submit" name="Submit" value="Submit" />
         <a href='<?php echo $_SESSION['url_1'];?>'>
-        <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
         <input type="hidden" name="oldusername" value='<?php echo $user['username'];?>'></td></tr>
     <?php HiddenInputs("edit");?>
     </table></form>

@@ -66,7 +66,6 @@ function submitResultsForm(f) {
       echo query_select_choose('module',$query,'name','name',$_REQUEST['module']);
       ?>
       <input type="submit" name="Submit" value="Go" />
-      <input type="button" onclick="resetform(document.search,10)" value="Clear"/>
       </td>
     </tr>
 	</table>

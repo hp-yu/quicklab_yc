@@ -196,7 +196,7 @@ $(document).ready(function() {
 	?>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />&nbsp;&nbsp;<a href='<?php
-        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     	</td>
       </tr>
       <?php hidden_inputs('created_by','date_create','add');?>
@@ -412,7 +412,7 @@ function detail()	{
 <tr><td colspan='2'><div align='center'><h2>Plasmids</h2></div></td></tr>
   <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="plasmids_operate.php?type=edit&id=<?php echo $plasmid['id']?>"/>
-    <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3>
+    <img src='./assets/image/general/edit.gif' alt='edit' title='edit' border='0'/></a></h3>
     </td>
   </tr>
   <tr>
@@ -620,7 +620,7 @@ function detail()	{
     </tr>
     <tr>
       <td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'>
-      <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+      <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
       </td>
     </tr>
   </table>
@@ -668,7 +668,7 @@ function delete_form()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     		hidden_inputs('','',"delete");
     		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     		echo "</table></form>";
     	}
     	else
@@ -692,7 +692,7 @@ function delete_form()
       </tr>
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     		echo "</form>";
     	}
     	
@@ -710,7 +710,7 @@ function delete_form()
 		echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
 		hidden_inputs('','',"delete");
 		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
 		echo "</table></form>";
 	}
 }
@@ -986,6 +986,8 @@ function add()
 			}
 		}
 		$db_conn = db_connect();
+		//start transaction
+		$db_conn->autocommit(false);
 		$query_custom_fields="SELECT * FROM custom_fields WHERE module_name='plasmids' ORDER BY id";
 
 		if($isinsert=='1') {
@@ -1028,8 +1030,8 @@ function add()
 		}
 		if ( (isset($_FILES['map']['name']) && is_uploaded_file($_FILES['map']['tmp_name'])))
 		{
-			$filename = "data/plasmids/map_$id.jpg";
-			move_uploaded_file($_FILES['map']['tmp_name'],'./'.$filename);
+			$filename = "../quicklab_data/plasmids/map_$id.jpg";
+			move_uploaded_file($_FILES['map']['tmp_name'],$filename);
 			$query = "update plasmids
               set map = '$filename'
               where id = $id";
@@ -1044,6 +1046,8 @@ function add()
     	('$id','$sequence')";
 			$result = $db_conn->query($query);
 		}
+		//finish transaction
+		$db_conn->commit();
 		header('Location: plasmids.php?id='.$id);
 	}
 	catch (Exception $e)
@@ -1281,8 +1285,8 @@ function edit()
 		}
 		//plasmid map uploaded
 		if ( (isset($_FILES['map']['name']) && is_uploaded_file($_FILES['map']['tmp_name']))) {
-			$filename = "data/plasmids/map_$id.jpg";
-			move_uploaded_file($_FILES['map']['tmp_name'],'./'.$filename);
+			$filename = "../quicklab_data/plasmids/map_$id.jpg";
+			move_uploaded_file($_FILES['map']['tmp_name'],$filename);
 			$query = "update plasmids
               set map = '$filename'
               where id = '$id'";
@@ -1317,7 +1321,8 @@ function edit()
 function delete()
 {
 	$db_conn=db_connect();
-
+	//start transaction
+	$db_conn->autocommit(false);
 	if(isset($_REQUEST['id'])&&$_REQUEST['id']!='')//single delete
 	{
 		$query="SELECT map from plasmids where id='{$_REQUEST['id']}'";
@@ -1327,6 +1332,16 @@ function delete()
 			unlink("./".$match['map']);
 		}
 		$query="DELETE from plasmid_sequences where plasmid_id='{$_REQUEST['id']}'";
+		$result = $db_conn->query($query);
+		$query="DELETE from plasmid_request where plasmid_id='{$_REQUEST['id']}'";
+		$result = $db_conn->query($query);
+		$query="DELETE from plasmid_bank where plasmid_id='{$_REQUEST['id']}'";
+		$result = $db_conn->query($query);
+		$query="DELETE from plasmid_map where plasmid_id='{$_REQUEST['id']}'";
+		$result = $db_conn->query($query);
+		$query="DELETE from plasmid_map_res where plasmid_id='{$_REQUEST['id']}'";
+		$result = $db_conn->query($query);
+		$query="DELETE from plasmid_map_fea where plasmid_id='{$_REQUEST['id']}'";
 		$result = $db_conn->query($query);
 		$query = "delete from plasmids where id = '{$_REQUEST['id']}'";
 		$result = $db_conn->query($query);
@@ -1364,11 +1379,23 @@ function delete()
     		}
     		$query="DELETE from plasmid_sequences where plasmid_id='{$selecteditemDel[$i]}'";
     		$result = $db_conn->query($query);
+    		$query="DELETE from plasmid_request where plasmid_id='{$selecteditemDel[$i]}'";
+			$result = $db_conn->query($query);
+			$query="DELETE from plasmid_bank where plasmid_id='{$selecteditemDel[$i]}'";
+			$result = $db_conn->query($query);
+			$query="DELETE from plasmid_map where plasmid_id='{$selecteditemDel[$i]}'";
+			$result = $db_conn->query($query);
+			$query="DELETE from plasmid_map_res where plasmid_id='{$selecteditemDel[$i]}'";
+			$result = $db_conn->query($query);
+			$query="DELETE from plasmid_map_fea where plasmid_id='{$selecteditemDel[$i]}'";
+			$result = $db_conn->query($query);
     		$query = "delete from plasmids where id = '{$selecteditemDel[$i]}'";
     		$result = $db_conn->query($query);
     	}
 		}
 	}
+	//finish transaction
+	$db_conn->commit();
 	header('Location: '.$_SESSION['url_1']);
 }
 

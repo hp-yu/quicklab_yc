@@ -205,12 +205,12 @@ if ($results  && $results->num_rows) {
 		echo "&nbsp;&nbsp;";
 		if (userPermission('3')) {
 			echo "<a onclick=\"addStorage({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img
-	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" border=\"0\"/></a></td><td class=\"results\">";
+	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" title=\"Store\" border=\"0\"/></a></td><td class=\"results\">";
 		} else {
-			echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" border="0"/></td><td class="results">';
+			echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" title="Store" border="0"/></td><td class="results">';
 		}
 		//operate
-		echo "<a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"del({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td></tr>";
+		echo "<a onclick=\"edit({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick=\"del({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/del-s.gif' alt='Delete' title='Delete' border='0'/></a></td></tr>";
 	}
 	?>
 </table>

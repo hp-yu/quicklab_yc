@@ -108,7 +108,7 @@ echo query_select_choose('device_cat_id', $query,'id','name',$_POST['device_cat_
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('manufacturer', $query,'id','name',$_POST['manufacturer']);
 ?>
-		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
     <td>Dealer:</td>
@@ -186,7 +186,7 @@ while ($match=$rs->fetch_assoc() ) {
 ?>
 	<tr>
 		<td colspan='2'><input type='submit' name='Submit' value='Submit' />&nbsp;&nbsp;<a href='<?php
-    echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+    echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     </td>
 	</tr>
 	<?php hidden_inputs('created_by','date_create','add');?>
@@ -249,7 +249,7 @@ echo query_select_choose('device_cat_id', $query,'id','name',$device['device_cat
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('manufacturer', $query,'id','name',$device['manufacturer']);
 ?>
-		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
     <td>Dealer:</td>
@@ -378,7 +378,7 @@ function detail()	{
   <tr><td colspan='2'><div align='center'><h2>Devices</h2></div></td></tr>
   <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="devices_operate.php?type=edit&id=<?php echo $device['id']?>"/>
-    <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3>
+    <img src='./assets/image/general/edit.gif' alt='edit' title='edit' border='0'/></a></h3>
     </td>
   </tr>
   <tr>
@@ -494,7 +494,7 @@ if($num_relateditems!=0)
 ?>
 	<tr>
 		<td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'>
-    <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+    <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     </td>
   </tr>
 </table>
@@ -539,7 +539,7 @@ function delete_form() {
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     		hidden_inputs('','',"delete");
     		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     		echo "</table></form>";
     	} else {
     		echo "<table width='100%' class='operate' >
@@ -558,7 +558,7 @@ function delete_form() {
       </tr>
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     		echo "</table>";
     	}
     	
@@ -572,7 +572,7 @@ function delete_form() {
 		echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
 		hidden_inputs('','',"delete");
 		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
 		echo "</table></form>";
 	}
 }

@@ -53,7 +53,8 @@ if (!isset($plasmid_map_diameter)) $plasmid_map_diameter = "250";
 if (!isset($plasmid_map_res)) $plasmid_map_res = array();
 if (!isset($plasmid_map_fea)) $plasmid_map_fea = array();
 if (!isset($plasmid_map_insert)) $plasmid_map_insert = array();
-//if submitted
+if (!isset($sequence)) $sequence = "";
+//if submitted 
 if (!empty($_POST)) {
 	//name, size, diameter
 	$plasmid_map_name = $_POST['name'];
@@ -66,6 +67,11 @@ if (!empty($_POST)) {
 		$rs=$db_conn->query($query);
 		$match=$rs->fetch_assoc();
 		$plasmid_map_size = $match['size'];
+		//sequence
+		$query="SELECT * FROM plasmid_sequences WHERE `plasmid_id`='$plasmid_id'";
+		$rs=$db_conn->query($query);
+		$match=$rs->fetch_assoc();
+		if(!empty($match['sequence'])) {$sequence= $match['sequence'];}
 		//query restriction sites
 		$query="SELECT * FROM `plasmid_map_res` WHERE `plasmid_id`='$plasmid_id' ORDER BY `site`";
 		$rs=$db_conn->query($query);
@@ -106,9 +112,10 @@ if (!empty($_POST)) {
 			$n++;
 		}
 	} elseif ($_POST['draw_from_seq']==1) {  //else if draw from seqences
-		$sequence=$_POST['sequence'];
-		$sequence=sm_extract_sequences($sequence);
-		$plasmid_map_size=strlen($sequence[0]["seq"]);
+		//sequence
+		$sequence=sm_remove_useless($_POST['sequence']);
+		$sequence_extract=sm_extract_sequences($_POST['sequence']);
+		$plasmid_map_size=strlen($sequence_extract[0]["seq"]);
 		//if only commercial available endonucleases
 		if ($_POST['rs_commercial']==1) {
 			$commercial_sql="AND `commercial`=1";
@@ -135,7 +142,7 @@ if (!empty($_POST)) {
 			}
 		}
 		//get the cleavage positions using function sm_restriction_digest()
-		$digestion[0]=sm_restriction_digest($enzymes_array,$sequence[0]["seq"]);
+		$digestion[0]=sm_restriction_digest($enzymes_array,$sequence_extract[0]["seq"]);
 		$n=1;
 		$plasmid_map_res = array();
 		foreach ($digestion[0] as $key=>$value) {
@@ -161,17 +168,17 @@ if (!empty($_POST)) {
 			$features[$n]['name']=$match['name'];
 			$n++;
 		}
-		$plasmid_map_fea=sm_feature_finder($features,$sequence[0]["seq"]);
+		$plasmid_map_fea=sm_feature_finder($features,$sequence_extract[0]["seq"]);
 		*/
 		//get the setting of minimum size of protein sequence
 		$orf_prot_size=$_POST['orf_prot_size'];
 		//search orf using function sm_orf_finder(), then merge 6 arrays together into $orf
-		$orf[0]=sm_orf_finder($sequence[0]["seq"],1,0,1,$orf_prot_size);
-		$orf[1]=sm_orf_finder($sequence[0]["seq"],1,1,1,$orf_prot_size);
-		$orf[2]=sm_orf_finder($sequence[0]["seq"],1,2,1,$orf_prot_size);
-		$orf[3]=sm_orf_finder($sequence[0]["seq"],1,0,2,$orf_prot_size);
-		$orf[4]=sm_orf_finder($sequence[0]["seq"],1,1,2,$orf_prot_size);
-		$orf[5]=sm_orf_finder($sequence[0]["seq"],1,2,2,$orf_prot_size);
+		$orf[0]=sm_orf_finder($sequence_extract[0]["seq"],1,0,1,$orf_prot_size);
+		$orf[1]=sm_orf_finder($sequence_extract[0]["seq"],1,1,1,$orf_prot_size);
+		$orf[2]=sm_orf_finder($sequence_extract[0]["seq"],1,2,1,$orf_prot_size);
+		$orf[3]=sm_orf_finder($sequence_extract[0]["seq"],1,0,2,$orf_prot_size);
+		$orf[4]=sm_orf_finder($sequence_extract[0]["seq"],1,1,2,$orf_prot_size);
+		$orf[5]=sm_orf_finder($sequence_extract[0]["seq"],1,2,2,$orf_prot_size);
 		$orf=array_merge($orf[0],$orf[1],$orf[2],$orf[3],$orf[4],$orf[5]);
 
 		//$n=sizeof($plasmid_map_fea);
@@ -187,6 +194,8 @@ if (!empty($_POST)) {
 			$k++;
 		}
 	} else {  //draw from manual input
+		//sequence
+		$sequence=sm_remove_useless($_POST['sequence']);
 		//get restriction sites
 		$n=1;//the start restriction site id
 		//clean all restriction sites first
@@ -267,62 +276,62 @@ if (!empty($_POST)) {
 			$plasmid_map_insert[$n]['ori'] = $_POST['insert_ori_add'];
 			$plasmid_map_insert[$n]['color'] = $_POST['insert_color_add'];
 		}
-		//update database if saved
-		if ($_POST['save']=="Draw and save"&&!empty($_GET['plasmid_id'])) {
-			$plasmid_id=$_GET['plasmid_id'];
-			$date=date('Y-m-d H:i:s');
-			$query = "select * from `users` where `username` = '{$_COOKIE['wy_user']}'";
-			$rs = $db_conn->query($query);
-			$user=$rs->fetch_assoc();
-			//start transaction
-			$db_conn->autocommit(false);
-			//update plasmid sequence
-			$sequence=sm_remove_useless($_POST['sequence']);
-			$query="DELETE FROM `plasmid_sequences` WHERE `plasmid_id`='$plasmid_id'";
+	}
+	//update database if saved
+	if ($_POST['save']=="Draw and save"&&!empty($_GET['plasmid_id'])) {
+		$plasmid_id=$_GET['plasmid_id'];
+		$date=date('Y-m-d H:i:s');
+		$query = "select * from `users` where `username` = '{$_COOKIE['wy_user']}'";
+		$rs = $db_conn->query($query);
+		$user=$rs->fetch_assoc();
+		//start transaction
+		$db_conn->autocommit(false);
+		//update plasmid sequence
+		//$sequence=sm_remove_useless($sequence);
+		$query="DELETE FROM `plasmid_sequences` WHERE `plasmid_id`='$plasmid_id'";
+		$db_conn->query($query);
+		if(strlen($sequence)>0) {
+			$query="INSERT INTO `plasmid_sequences` (`plasmid_id`,`sequence`) VALUES ('$plasmid_id','$sequence')";
 			$db_conn->query($query);
-			if(strlen($sequence)>0) {
-				$query="INSERT INTO `plasmid_sequences` (`plasmid_id`,`sequence`) VALUES ('$plasmid_id','$sequence')";
-				$db_conn->query($query);
-			}
-			//update or insert table plasmid_map
-			$query="SELECT * FROM `plasmid_map` WHERE `plasmid_id`='$plasmid_id'";
-			$rs=$db_conn->query($query);
-			if ($rs->num_rows>0) {
-				$query="UPDATE `plasmid_map` SET
-			`name`='$plasmid_map_name',
-			`size`='$plasmid_map_size',
-			`diameter`='$plasmid_map_diameter',
-			`updated_by`='{$user['people_id']}',
-			`date_update`='$date'
-			WHERE `plasmid_id`='$plasmid_id'";
-			} else {
-				$query="INSERT INTO `plasmid_map` (`plasmid_id`,`name`,`size`,`diameter`,`created_by`,`date_create`) VALUES ('$plasmid_id','$plasmid_map_name','$plasmid_map_size','$plasmid_map_diameter','{$user['people_id']}','$date')";
-			}
-			$db_conn->query($query);
-			//update table plasmid_map_res
-			$query="DELETE FROM `plasmid_map_res` WHERE `plasmid_id`='$plasmid_id'";
-			$db_conn->query($query);
-			foreach ($plasmid_map_res as $value) {
-				$query="INSERT INTO `plasmid_map_res` (`plasmid_id`,`name`,`site`) VALUES ('$plasmid_id','{$value['name']}','{$value['site']}')";
-				$db_conn->query($query);
-			}
-			//update table plasmid_map_fea
-			$query="DELETE FROM `plasmid_map_fea` WHERE `plasmid_id`='$plasmid_id'";
-			$db_conn->query($query);
-			foreach ($plasmid_map_fea as $value) {
-				$query="INSERT INTO `plasmid_map_fea` (`plasmid_id`,`name`,`color`,`start`,`end`,`ori`,`insert`) VALUES ('$plasmid_id','{$value['name']}','{$value['color']}','{$value['start']}','{$value['end']}','{$value['ori']}','0')";
-				$rs=$db_conn->query($query);
-				if (!$rs) {
-					echo $query;
-				}
-			}
-			foreach ($plasmid_map_insert as $value) {
-				$query="INSERT INTO `plasmid_map_fea` (`plasmid_id`,`name`,`color`,`start`,`end`,`ori`,`insert`) VALUES ('$plasmid_id','{$value['name']}','{$value['color']}','{$value['start']}','{$value['end']}','{$value['ori']}','1')";
-				$db_conn->query($query);
-			}
-			//finish transaction
-			$db_conn->commit();
 		}
+		//update or insert table plasmid_map
+		$query="SELECT * FROM `plasmid_map` WHERE `plasmid_id`='$plasmid_id'";
+		$rs=$db_conn->query($query);
+		if ($rs->num_rows>0) {
+			$query="UPDATE `plasmid_map` SET
+		`name`='$plasmid_map_name',
+		`size`='$plasmid_map_size',
+		`diameter`='$plasmid_map_diameter',
+		`updated_by`='{$user['people_id']}',
+		`date_update`='$date'
+		WHERE `plasmid_id`='$plasmid_id'";
+		} else {
+			$query="INSERT INTO `plasmid_map` (`plasmid_id`,`name`,`size`,`diameter`,`created_by`,`date_create`) VALUES ('$plasmid_id','$plasmid_map_name','$plasmid_map_size','$plasmid_map_diameter','{$user['people_id']}','$date')";
+		}
+		$db_conn->query($query);
+		//update table plasmid_map_res
+		$query="DELETE FROM `plasmid_map_res` WHERE `plasmid_id`='$plasmid_id'";
+		$db_conn->query($query);
+		foreach ($plasmid_map_res as $value) {
+			$query="INSERT INTO `plasmid_map_res` (`plasmid_id`,`name`,`site`) VALUES ('$plasmid_id','{$value['name']}','{$value['site']}')";
+			$db_conn->query($query);
+		}
+		//update table plasmid_map_fea
+		$query="DELETE FROM `plasmid_map_fea` WHERE `plasmid_id`='$plasmid_id'";
+		$db_conn->query($query);
+		foreach ($plasmid_map_fea as $value) {
+			$query="INSERT INTO `plasmid_map_fea` (`plasmid_id`,`name`,`color`,`start`,`end`,`ori`,`insert`) VALUES ('$plasmid_id','{$value['name']}','{$value['color']}','{$value['start']}','{$value['end']}','{$value['ori']}','0')";
+			$rs=$db_conn->query($query);
+			if (!$rs) {
+				echo $query;
+			}
+		}
+		foreach ($plasmid_map_insert as $value) {
+			$query="INSERT INTO `plasmid_map_fea` (`plasmid_id`,`name`,`color`,`start`,`end`,`ori`,`insert`) VALUES ('$plasmid_id','{$value['name']}','{$value['color']}','{$value['start']}','{$value['end']}','{$value['ori']}','1')";
+			$db_conn->query($query);
+		}
+		//finish transaction
+		$db_conn->commit();
 	}
 	//if not submitted
 } else {
@@ -383,6 +392,11 @@ if (!empty($_POST)) {
 			$plasmid_map_name = $match['name'];
 			$plasmid_map_diameter = "250";
 		}
+		//sequence
+		$query="SELECT * FROM plasmid_sequences WHERE `plasmid_id`='$plasmid_id'";
+		$rs=$db_conn->query($query);
+		$match=$rs->fetch_assoc();
+		if(!empty($match['sequence'])) {$sequence= $match['sequence'];}
 	}
 }
 ?>
@@ -431,19 +445,7 @@ if ($plasmid_map_name!=""&&$plasmid_map_size!=""&&$plasmid_map_diameter!="") {
 </br>
 &nbsp;&nbsp;<textarea id="sequence"  name='sequence' class="sequence" cols="80" rows="6" onchange="tidyup('sequence');cal_seq_len()">
 <?php
-if (!empty($_POST['sequence'])) {
-	echo $_POST['sequence'];
-} elseif (!empty($_POST['backbone'])) {
-	$query="SELECT * FROM plasmid_sequences WHERE `plasmid_id`='{$_POST['backbone']}'";
-	$rs=$db_conn->query($query);
-	$match=$rs->fetch_assoc();
-	if(!empty($match['sequence'])) {echo sm_tidyup($match['sequence']);}
-} elseif (!empty($_GET['plasmid_id'])) {
-	$query="SELECT * FROM plasmid_sequences WHERE `plasmid_id`='{$_POST['plasmid_id']}'";
-	$rs=$db_conn->query($query);
-	$match=$rs->fetch_assoc();
-	if(!empty($match['sequence'])) {echo sm_tidyup($match['sequence']);}
-}
+echo  sm_tidyup($sequence);
 ?>
 </textarea>
 </div>
@@ -557,7 +559,7 @@ foreach ($plasmid_map_res as $key=>$value) {
 	//echo "<input type = 'text' name = 'res_name_{$value['id']}' value ='{$value['name']}' size = '10' class='required'/>";
 	echo "</td>";
 	echo "<td><input type = 'text' name = 'res_site_{$value['id']}' value ='{$value['site']}' size = '4'  class='required'/></td>";
-	echo "<td><a href='rebase.php?keywords=".$value['name']."' target = '_blank'><img src='./assets/image/general/info-s.gif' alt='Restriction enzyme details' border='0'/></td>";
+	echo "<td><a href='rebase.php?keywords=".$value['name']."' target = '_blank'><img src='./assets/image/general/info-s.gif' alt='Restriction enzyme details' title='Restriction enzyme details' border='0'/></td>";
 	echo "</tr>";
 }
 ?>
@@ -673,13 +675,12 @@ foreach ($plasmid_map_insert as $key=>$value) {
 </tr>
 <tr>
 <td colspan="2" align="center">
-<input type="submit" value="Draw"/>&nbsp;
+<input type="submit" name="draw" value="Draw"/>&nbsp;
 <?php
 if (!empty($_REQUEST['plasmid_id'])) {
 	echo "<input type='submit' name='save' value='Draw and save'/>&nbsp;";
 }
 ?>
-<input type="reset" value="Reset"/>
 </td>
 </tr>
 </tr>

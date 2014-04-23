@@ -111,7 +111,7 @@ include_once('include/includes.php');
 	  @$percent=number_format($match['SUM(price)']/$matches['money_available']*100,2)."%";
 	  echo $momey_used."/".$money_available." ".$percent."</td><td class='results'>";
     echo "{$matches['date_start']}</td><td class='results'>";
-	  echo '<a href="accounts_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
+	  echo '<a href="accounts_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></td></tr>';
     }
     echo '</table></form>';
   }

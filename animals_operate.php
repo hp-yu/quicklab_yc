@@ -90,7 +90,7 @@ function moveOptionToText(e1, e2) {
         }
         echo "</select>";
         ?>&nbsp;
-        <a href="ani_strains_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add strains' border='0'/></a>
+        <a href="ani_strains_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add strains' title='Add strains' border='0'/></a>
         </td>
       </tr>
       <tr>
@@ -151,7 +151,7 @@ function moveOptionToText(e1, e2) {
       </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />&nbsp;&nbsp;<a href='<?php
-        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     	</td>
       </tr>
       <?php HiddenInputs('created_by','date_create','add');?>
@@ -236,7 +236,7 @@ function SetDate(e) {
         }
         echo "</select>";
         ?>&nbsp;
-        <a href="ani_strains_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add strains' border='0'/></a>
+        <a href="ani_strains_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add strains'  title='Add strains'border='0'/></a>
         </td>
       </tr>
       <tr>
@@ -518,7 +518,7 @@ function Detail()
 	 }?>
       <tr>
         <td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'><img
-	 src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+	 src='./assets/image/general/back.gif' alt='Back'  title='Back' border='0'/></a>
         </td>
       </tr>
     </table>
@@ -567,7 +567,7 @@ function DeleteForm()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back'  title='Back' border='0'/></a></td></tr>";
 	}
 	else
 	{
@@ -591,7 +591,7 @@ function DeleteForm()
       </tr>
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back'  title='Back' border='0'/></a></td></tr>";
 	}
 	echo "</table></form>";
   }
@@ -606,7 +606,7 @@ function DeleteForm()
 	echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back'  title='Back' border='0'/></a></td></tr>";
 	echo "</table></form>";
   }
 }

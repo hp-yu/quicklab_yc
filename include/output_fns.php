@@ -127,7 +127,7 @@ $(function () {
 <!--<a href="./solution_calc.php">Solution calculator</a>-->
 <a href="./jme.php">Chemical structure editor</a>
 <a href="./sendmail.php">Send mail</a>
-<a href="./posts.php">Posts</a>
+<!--<a href="./posts.php">Posts</a>-->
 </div>
 
 <div id="dropmenu4" class="dropmenudiv" style="width: 150px;">
@@ -228,8 +228,8 @@ function do_header_2()
       <table cellspacing="0" cellpadding="0">
   		<form method="POST" id="login" action="login.php" >
   		<tr><td><img
-	    src="./assets/image/general/user.gif" alt="Username" border="0" align="absmiddle"/>&nbsp;<input type="text" name="username" size="6" style="height:18">&nbsp;<img
-	    src="./assets/image/general/key.gif" alt="Password" border="0"  align="absmiddle"/>&nbsp;<input type="password" name="password" size="6" style="height:18">&nbsp;<input type="submit" value="Login" style="height:18;font-size:7pt" align="absmiddle" ></td></tr>
+	    src="./assets/image/general/user.gif" alt="Username" title="Username" border="0" align="absmiddle"/>&nbsp;<input type="text" name="username" size="6" style="height:18">&nbsp;<img
+	    src="./assets/image/general/key.gif" alt="Password" title="Password" border="0"  align="absmiddle"/>&nbsp;<input type="password" name="password" size="6" style="height:18">&nbsp;<input type="submit" value="Login" style="height:18;font-size:7pt" align="absmiddle" ></td></tr>
   		<tr><td valign="middle">
   		<input type="checkbox" name="remember" >Remember me&nbsp;&nbsp;
   		<a href='register.php'>Register</a></td></tr>
@@ -353,8 +353,7 @@ function do_footer()
 function do_leftnav()
 {
 ?>
-<script type="text/javascript" src="./include/Accordionjs/jquery.js"></script>
-<script type="text/javascript" src="./include/Accordionjs/ddaccordion.js"></script>
+<script type="text/javascript" src="./include/accordionjs/ddaccordion.js"></script>
 <script type="text/javascript">
 ddaccordion.init({
 	headerclass: "submenuheader", //Shared CSS class name of headers group that are expandable
@@ -580,12 +579,12 @@ function search_header($module_name) {
 <td align='center' valign='middle'><h2><?php echo $module_name?>&nbsp;&nbsp;
 	<?php
 	if (userPermission("3")){
-		echo "<a href='".$module_name."_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a>";
-//		echo "&nbsp;<a href='".$module_name."_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
+		echo "<a href='".$module_name."_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a>";
+//		echo "&nbsp;<a href='".$module_name."_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' title='Import from file' border='0'/></a></h2>";
 	}
 	else {
-		echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/>';
-//		echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
+		echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/>';
+//		echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" title="Import from file" border="0"/></h2>';
 	}
  	?>
 </td></tr>
@@ -708,7 +707,7 @@ function homeSearch()
       <td >Search name for:
         <input type='text' name='keywords' size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
         <input type='Submit' name='Submit' value='Go' />
-        <input type="button" onclick="resetform(document.search)" value="Clear"/></td></tr>
+    </td></tr>
     <tr><td>And project:<?php
     $query= "select * from projects";
     echo query_select_all('project', $query,'id','name',$_REQUEST['project']);
@@ -982,10 +981,10 @@ function pagerForm($module_name,$query,$PageSize='10',$export=1)
 		if ($export==1) {
 			echo "<td align='right'>";
 			if(!userPermission('3')) {
-				echo "<img src='./assets/image/general/excel-grey.gif' alt='Export search results to EXCEL' border='0'/></td>";
+				echo "<img src='./assets/image/general/excel-grey.gif' alt='Export search results to EXCEL' title='Export search results to EXCEL' border='0'/></td>";
 			} else {
 				echo "<a href='".$module_name."_operate.php?type=export_excel' ><img
-	  src='./assets/image/general/excel.gif' alt='Export search results to EXCEL' border='0'/></a></td>";
+	  src='./assets/image/general/excel.gif' alt='Export search results to EXCEL' title='Export search results to EXCEL' border='0'/></a></td>";
 			}
 		}
 		echo "</tr></table>";
@@ -1031,15 +1030,15 @@ function   addStorage (module_id, item_id)
 			$people=get_record_from_id('people',$matches['created_by']);
 			echo $people['name']." ".$matches['date_create']."</td><td class='results'>";			
 			if (userPermission('2',$matches['created_by'])) {
-//				echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='".$module_name."_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
-//				echo "<a href='".$module_name."_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='".$module_name."_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
+//				echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' title='Print label' border='0'/></a>&nbsp;&nbsp;";
+				echo "<a href='".$module_name."_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;";
+//				echo "<a href='".$module_name."_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' title='Related items' border='0'/></a>&nbsp;&nbsp;";
+				echo "<a href='".$module_name."_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete' title='Delete' border='0'/></a></td><td class='results'>";
 			} else {
-//				echo '<img src="./assets/image/general/label-s.gif" alt="Print label" border="0"/>&nbsp;&nbsp;';
-				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
-//				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
-				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
+//				echo '<img src="./assets/image/general/label-s.gif" alt="Print label" title="Print label" border="0"/>&nbsp;&nbsp;';
+				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/>&nbsp;&nbsp;';
+//				echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" title="Related items" border="0"/>&nbsp;&nbsp;';
+				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete" title="Delete" border="0"/></td><td class="results">';
 			}
 			//query the storages of this item where the state is in stock.
 			$db_conn=db_connect();
@@ -1056,9 +1055,9 @@ function   addStorage (module_id, item_id)
 			echo "&nbsp;&nbsp;";
 			if (userPermission('3')) {
 				echo "<a onclick=\"addStorage({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img
-	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" border=\"0\"/></a></td><td class=\"results\">";
+	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" title=\"Store\" border=\"0\"/></a></td><td class=\"results\">";
 			} else {
-				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" border="0"/></td><td class="results">';
+				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" title="Store" border="0"/></td><td class="results">';
 			}
 			//query the orders of this item where the state is not cancelled.
 			$query = "select id from orders WHERE module_id='{$module['id']}'
@@ -1073,9 +1072,9 @@ function   addStorage (module_id, item_id)
 			}
 			echo "&nbsp;&nbsp;";
 			if (userPermission('3')) {
-				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a></td></tr>";
+				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" title=\"Request\" border=\"0\"/></a></td></tr>";
 			} else {
-				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" border="0"/></td></tr>';
+				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" title="Request" border="0"/></td></tr>';
 			}
 		}
 		echo '</table>';

@@ -1,6 +1,5 @@
 <?php
 include('./include/includes.php');
-include("fckeditor/fckeditor.php") ;
 include('./tree/common_functions.php');
 /*
 <%@ Language=VBScript %>
@@ -20,12 +19,10 @@ include('./tree/common_functions.php');
 */
 ?>
 <html>
-<title>
-Links in folder
-</title>
-<link href="./css/general.css" rel="stylesheet" type="text/css" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Links in folder</title>
+<link href="./css/general.css" rel="stylesheet" type="text/css" />
 <style>
    TD {font-size: 8pt;
        font-family: verdana,helvetica;
@@ -41,8 +38,14 @@ Links in folder
        border-top-color:'silver';
       }
 </style>
-
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<script type="text/javascript" src="include/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="include/ckfinder/ckfinder.js"></script>
 <script>
+$(document).ready(function() {
+	$("#form").validate();
+});
 function submitShowFormT(actionType) {
   document.forms[0].submit()
 }
@@ -112,7 +115,7 @@ function submitShowForm(actionType) {
 //Outputs the hidden filds that most of the forms will need
 //sub standardForm(principalAction, parent, parentName, user)
 function standardForm($principalAction, $parent, $parentName, $user) {
-	echo '<form name="form" action="kbase_content.php" method=post>' . "\n" . "\n";
+	echo '<form name="form" id="form" action="kbase_content.php" method=post>' . "\n" . "\n";
 	//Don't change order
 	echo "<input type=hidden name=action value='$principalAction'>" . "\n" ;
 	echo "<input type=hidden name=parent value='$parent'>" . "\n";
@@ -177,11 +180,11 @@ function ShowLinks($user, $parentId) {
 	standardForm ("EDITLINKFORM", $parentId, $parentName, $user);
 	echo '<table border=0 width=100% cellspacing=0 cellpadding=5>' .  "\n";
 	echo "<tr><td colspan=5 class=separator><font size=+2 color='#3A5AF4'>".$parentName." (".$rs_num.")</font>&nbsp;&nbsp;";
-	//echo "<a href='#' ><img src='./assets/image/general/add.gif' alt='Add New Article' border='0' onclick=\"submitShowForm('NEWLINKFORM')\"/></a>";
+	//echo "<a href='#' ><img src='./assets/image/general/add.gif' alt='Add New Article' title='Add New Article' border='0' onclick=\"submitShowForm('NEWLINKFORM')\"/></a>";
 	if (userPermission(3)) {
-		echo "<a href='kbase_content.php?action=NEWLINKFORM&p=$parentId' target='_self' ><img src='./assets/image/general/add.gif' alt='Add New Article' border='0'/></a>";
+		echo "<a href='kbase_content.php?action=NEWLINKFORM&p=$parentId' target='_self' ><img src='./assets/image/general/add.gif' alt='Add New Article' title='Add New Article' border='0'/></a>";
 	} else {
-		echo "<img src='./assets/image/general/add-grey.gif' alt='Add New Article' border='0'/>";
+		echo "<img src='./assets/image/general/add-grey.gif' alt='Add New Article' title='Add New Article' border='0'/>";
 	}
 	echo "<br>" .$notes;
 	echo "<br>" .getPath($pid).  "</td></tr>";
@@ -218,10 +221,10 @@ function ShowLinks($user, $parentId) {
 		echo "<td class=separator><small>".$num_comments." / ".$rsHits['views']."</small></td>";
 		//will need to encode and decode the name
 		if (userPermission(3)) {
-			echo "<td class=separator><a href='kbase_content.php?action=EDITLINKFORM&id={$rsHits['id']}' target='_self' ><img src='./assets/image/general/edit.gif' alt='Edit' border='0'/></a></td></tr>";
+			echo "<td class=separator><a href='kbase_content.php?action=EDITLINKFORM&id={$rsHits['id']}' target='_self' ><img src='./assets/image/general/edit.gif' alt='Edit' title='Edit' border='0'/></a></td></tr>";
 		}
 		else {
-			echo "<td class=separator><img src='./assets/image/general/edit-grey.gif' alt='Edit' border='0'/></td></tr>";
+			echo "<td class=separator><img src='./assets/image/general/edit-s-grey.gif' alt='Edit' title='Edit' border='0'/></td></tr>";
 		}
 	}
 ?>
@@ -285,10 +288,10 @@ function SearchForm() {
 		echo "<td class=separator><small>".$num_comments." / ".$rsHits['views']."</small></td>";
 		//will need to encode and decode the name
 		if (userPermission(3)) {
-			echo "<td class=separator><a href='kbase_content.php?action=EDITLINKFORM&id={$rsHits['id']}' target='_self' ><img src='./assets/image/general/edit.gif' alt='Edit' border='0'/></a></td></tr>";
+			echo "<td class=separator><a href='kbase_content.php?action=EDITLINKFORM&id={$rsHits['id']}' target='_self' ><img src='./assets/image/general/edit.gif' alt='Edit' title='Edit' border='0'/></a></td></tr>";
 		}
 		else {
-			echo "<td class=separator><img src='./assets/image/general/edit-grey.gif' alt='Edit' border='0'/></td></tr>";
+			echo "<td class=separator><img src='./assets/image/general/edit-s-grey.gif' alt='Edit' title='Edit' border='0'/></td></tr>";
 		}
 	}
 	}
@@ -323,14 +326,12 @@ function LinkForm ($nodeId, $name, $comments, $url, $action) {
 	echo "<tr><td>Name:</td>";
 	echo "<td><input name=name size=50 value='$name'></td></tr>";
 	echo "<tr><td colspan='2'>";
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value = $_REQUEST['content'];
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Width = "100%";
-	$oFCKeditor->ToolbarSet= "Quicklab";
-	$oFCKeditor->Create() ;
+	?>
+	<textarea id="content" name="content" class="ckeditor"><?php echo $_REQUEST['content'];?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>	<?php
 	echo "</td></tr>";
 	echo "<tr><td align=left colspan='2'>";
 	echo "<input type=submit name=whichButton value='Save'>&nbsp;";
@@ -344,8 +345,6 @@ function AddLinkForm () {
 		alert_map();
 	}
 	?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
-<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script>
 $(document).ready(function() {
 	$("#add_link_form").validate({
@@ -369,15 +368,12 @@ $(document).ready(function() {
 	echo "<tr><td>Name:</td>";
 	echo "<td><input name=name size=50 value='$name'></td></tr>";
 	echo "<tr><td colspan='2'>";
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value = $_REQUEST['content'];
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Width = "100%";
-	$oFCKeditor->ToolbarSet= "Tree";
-	$oFCKeditor->Create() ;
 	?>
+	<textarea id="content" name="content" class="ckeditor"><?php echo $_REQUEST['content'];?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 	</td></tr>
 	<tr><td align=left colspan='2'>
 	<input type=submit name=whichButton id='Save' value='Save'>&nbsp;
@@ -419,12 +415,10 @@ function EditLinkForm () {
   $query="SELECT * FROM kbase WHERE id=$id";
   $rs=$db_conn->query($query);
   $article=$rs->fetch_assoc();
-  if(!userPermission('2',$match['created_by'])) {
+  if(!userPermission(3)) {
   	alert_map();
   }
 	?>
-<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
-<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script>
 $(document).ready(function() {
 	$("#add_link_form").validate({
@@ -449,15 +443,12 @@ $(document).ready(function() {
 	//be careful, use double quotes
 	echo "<td><input name=name size=50 value=\"{$article['name']}\"></td></tr>";
 	echo "<tr><td colspan='2'>";
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value = $article['content'];
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Width = "100%";
-	$oFCKeditor->ToolbarSet= "Tree";
-	$oFCKeditor->Create() ;
 	?>
+	<textarea id="content" name="content" class="ckeditor"><?php echo $article['content'];?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 	</td></tr>
 	<tr><td align=left colspan='2'>
 	<input type=submit name=whichButton id='Save' value='Save'>&nbsp;
@@ -513,15 +504,12 @@ function AddCommentForm () {
 	echo "<tr><td>Name:</td>";
 	echo "<td><a href='kbase_content.php?action=LINKDETAILFORM&id=$id' target='_self'/>{$article['name']}</a></td></tr>";
 	echo "<tr><td colspan='2'>";
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value = $_REQUEST['content'];
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Width = "100%";
-	$oFCKeditor->ToolbarSet= "Tree";
-	$oFCKeditor->Create() ;
 	?>
+	<textarea id="content" name="content" class="ckeditor"><?php echo $_REQUEST['content'];?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 	</td></tr>
 	<tr><td align=left colspan='2'>
 	<input type=submit name=whichButton id='Save' value='Save'>&nbsp;
@@ -580,15 +568,12 @@ function EditCommentForm () {
 	echo "<tr><td>Name:</td>";
 	echo "<td><a href='kbase_content.php?action=LINKDETAILFORM&id={$comment['article_id']}' target='_self'/>{$article['name']}</a></td></tr>";
 	echo "<tr><td colspan='2'>";
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value = $comment['content'];
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Width = "100%";
-	$oFCKeditor->ToolbarSet= "Tree";
-	$oFCKeditor->Create() ;
 	?>
+	<textarea id="content" name="content" class="ckeditor"><?php echo $comment['content'];?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 	</td></tr>
 	<tr><td align=left colspan='2'>
 	<input type=submit name=whichButton id='Save' value='Save'>&nbsp;
@@ -682,10 +667,10 @@ function FolderForm ($nodeId, $name, $comments, $action) {
 	}
 	echo "<tr><td>Forder Name:<td>" .  "\n";
 	//echo "<input name=name size=50 value=".FixUpItems($name).">" .  "\n";
-	echo "<input name=name size=50 value='$name'>" .  "\n";
+	echo "<input name='name' id='name' size=50 value='$name' class='required'>" .  "\n";
 	echo "<tr><td>Comments:<td>" .  "\n";
 	//echo '<input size=50 name=comments value='.FixUpItems($comments).">" .  "\n";
-	echo "<input size=50 name=comments value='$comments'>" .  "\n";
+	echo "<input size=50 name=comments id=comments value='$comments'  >" .  "\n";
 	echo "<tr><td> <td align=left>" .  "\n";
 	echo '<input type=submit name=whichButton value="Save">';
 	if ($action == "NEWFOLDER" ) {
@@ -721,57 +706,6 @@ function EditFolderForm () {
 	}
 }
 
-function CopyFolderForm ()
-{
-	if(!userPermission('3'))
-    {
-  	  alert_map();
-    }
-	$nodeId = $_REQUEST['parent'];
-	$db_conn=db_connect();
-	$queryString = "SELECT name, pid, note FROM kbase_cat WHERE ((id=" . $nodeId . "))";
-	$rs=$db_conn->query($queryString);
-	$rsHits=$rs->fetch_assoc();
-	if (!$rsHits)
-	{
-		echo "Could not find folder in database.";
-	}
-	else
-	{
-	  if( $rsHits['pid']==0)
-	  {
-        echo '<table class="alert"><tr><td><h3>Can not copy the root location!</h3></td></tr></table>';
-        exit;
-	  }
-	  else
-	  {
-		$name = $rsHits['name'];
-		$comments = $rsHits['note'];
-		standardForm ("COPYFOLDER", $_REQUEST['parent'], $_REQUEST['parentName'], $_REQUEST['user']);
-		echo "<input type=hidden name=nodeId value='$nodeId '>" .  "\n";
-		echo "<table border=0 cellspacing=0 cellpadding=5>" .  "\n";
-		echo "<tr><td colspan=2 class=separator align=left><font size=+2 color='#3A5AF4'>Copy Location</font>" .  "\n";
-		echo "<tr><td valign=top>Contained in:<td>";
-		echo getPath($rsHits['pid']);
-		echo "<tr><td valign=top>Location Name:<td>" .  "\n";
-		//echo FixUpItems($name) .  "\n";
-		echo $name.  "\n";
-		echo "<tr><td valign=top>Comments:<td>" .  "\n";
-		//echo FixUpItems($comments) .  "\n";
-		//echo $comments.  "\n";
-		echo "<tr><td valign=top>Paste To:<td>" .  "\n";
-		echo "<SELECT name=moveTo size=24>" ."\n";
-		$db_conn=db_connect();
-		outputFolderSelection ($rsHits['id'], 0, "",$db_conn);
-		echo "</SELECT>" .  "\n";
-		echo "<tr><td> <td align=left>"."\n";
-		echo '<input type=submit name=whichButton value="Save">';
-		echo ' <input type=submit name=whichButton value="Cancel">';
-		echo "</table>";
-		echo "</form>";
-	  }
-	}
-}
 function MoveFolderForm () {
 	if(!userPermission('3')) {
 		alert_map();
@@ -1071,7 +1005,6 @@ function DBFolderUpdate () {
 	$db_conn=db_connect();
 	$user = $_REQUEST['user'];
 	$parent = $_REQUEST['parent'];
-	$isbox = 0;
 	$nodeName = $_REQUEST['name'];
 	$notes = $_REQUEST['comments'];
 
@@ -1136,84 +1069,6 @@ function RecursiveDeleteOfFolders($folderId)
   	  echo '<table class="alert"><tr><td><h3>'.$e->getMessage().'</h3></td></tr></table>';
   	  exit;
     }
-	/*
-	//debugPrint queryString
-	//Conn.Execute queryString, , adExecuteNoRecords
-
-	//$queryString = "DELETE FROM location WHERE ((pid=" . $folderId . ") AND (isbox=1))";
-	//$rs = $db_conn->query($queryString);
-	//debugPrint queryString
-	//Conn.Execute queryString, , adExecuteNoRecords
-
-	//$queryString = "SELECT FROM location WHERE ((pid=" . $folderId . ") AND (isbox=0))";
-	//Set rsHits = Server.CreateObject("ADODB.Recordset")
-	//$rs = $db_conn->query($queryString);
-	//$rsHits=$rs->fetch_assoc();
-	//$subFolder=9999;
-	//do while not subFolder=-1
-	while($subFolder!=0)
-	{
-		//rsHits.Open queryString, Conn
-		$subFolder=0;
-		if($rsHits)
-		{
-			$subFolder = $rsHits['id'];
-		}
-		//if not rsHits.EOF then subFolder = rsHits("nodeId")
-		//rsHits.close
-		if($subFolder!=0)
-		{
-			RecursiveDeleteOfFolders ($subFolder);
-		}
-		//if not subFolder = -1 then RecursiveDeleteOfFolders ($subFolder)
-	//loop
-	}
-	}
-	*/
-}
-
-function CopyFolder ()
-{
-	$currentFolder = $_REQUEST['nodeId'];
-	$movetoFolder = $_REQUEST['moveTo'];
-	$db_conn=db_connect();
-
-	$queryString = "SELECT * FROM kbase_cat WHERE (id=" . $currentFolder .")";
-	$rs = $db_conn->query($queryString);
-	$rsHits=$rs->fetch_assoc();
-
-	$queryString = "INSERT INTO kbase_cat
-	(name,pid,note)
-	VALUES
-	('".$rsHits['name']."','".$movetoFolder."','".$rsHits['note']."')";
-	$rs = $db_conn->query($queryString);
-	$movetoFolder=$db_conn->insert_id;
-
-	$db_conn=db_connect();
-	CopyFolderRecursion($currentFolder,$movetoFolder,$db_conn);
-
-	ShowLinks  ($_REQUEST['user'], $movetoFolder);
-	causeTreeToReload();
-}
-function CopyFolderRecursion($currentFolder,$movetoFolder,$db_conn)
-{
-	//$db_conn=db_connect();
-	$queryString = "SELECT * FROM kbase_cat WHERE (pid=" . $currentFolder ." AND isbox=0)";
-	$rs = $db_conn->query($queryString);
-	$rs_num = $rs->num_rows;
-	if($rs_num)
-	{
-	  while ($rsHits=$rs->fetch_array())
-	  {
-	  	$queryString = "INSERT INTO kbase_cat
-		(name,pid,note)
-		VALUES
-		('".$rsHits['name']."','".$movetoFolder."','".$rsHits['note']."')";
-		$insert = $db_conn->query($queryString);
-		$movetoFolder_new=$db_conn->insert_id;
-		CopyFolderRecursion($rsHits['id'],$movetoFolder_new,$db_conn);
-	  }
-	}
 }
 
 function MoveFolder ()
@@ -1234,7 +1089,7 @@ function MoveFolder ()
 }
 
 function DeleteFolder () {
-	if(!userPermission('2')) {
+	if(!userPermission('3')) {
 		alert_map();
 	}
 	RecursiveDeleteOfFolders ($_REQUEST['parent']);
@@ -1256,10 +1111,10 @@ function LinkDetailForm() {
 	echo '<table border=0 width=100% cellspacing=0 cellpadding=5>';
 	echo "<tr><td><font size=+2 color='#3A5AF4'>".$article['name']."</font>&nbsp;&nbsp;";
 	//edit link
-	if (userPermission(2,$article['created_by'])) {
+	if (userPermission(3)) {
   	echo "<a href='kbase_content.php?action=EDITLINKFORM&id=$id' target='_self' ><img src='./assets/image/general/edit.gif' title='Edit' border='0'/></a>&nbsp;&nbsp;";
   } else {
-  	echo "<img src='./assets/image/general/edit-grey.gif' title='Edit' border='0'/>&nbsp;&nbsp;";
+  	echo "<img src='./assets/image/general/edit-s-grey.gif' title='Edit' border='0'/>&nbsp;&nbsp;";
   }
   //comment link
   if (userPermission(3)) {
@@ -1307,7 +1162,7 @@ function LinkDetailForm() {
 		if (userPermission(0,$match['created_by'])) {
 			echo "<a href='kbase_content.php?id={$match['id']}&action=EDITCOMMENTFORM' target=\"_self\"><img src='./assets/image/general/edit.gif' title='Edit comment' border='0'/></a>";
 		} else {
-			echo "<img src='./assets/image/general/edit-grey.gif' title='Edit comment' border='0'/>";
+			echo "<img src='./assets/image/general/edit-s-grey.gif' title='Edit comment' border='0'/>";
 		}
 		echo "</td></tr></table>";
 		echo "<p>".$match['content']."</p>";

@@ -141,17 +141,17 @@ function   bank (plasmid_id) {
 			echo "<a href='plasmids_operate.php?type=detail&id={$matches[id]}'>".$matches['name']."</a></td><td class='results'>";
 			$people=get_record_from_id('people',$matches['created_by']);
 			echo $people['name']." ".$matches['date_create']."</td><td class='results'>";
-			//echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' border='0'/></a>&nbsp;&nbsp;";
+			//echo "<a href='label.php?module_id=".$module['id']."&item_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/label-s.gif' alt='Print label' title='Print label' border='0'/></a>&nbsp;&nbsp;";
 			if (userPermission('2',$matches['created_by'])) {
-				echo "<a href='plasmid_mapping.php?plasmid_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/plasmid-mapping-s.gif' alt='Plasmid mapping' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='plasmids_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
-				//echo "<a href='plasmids_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
-				echo "<a href='plasmids_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
+				echo "<a href='plasmid_mapping.php?plasmid_id=".$matches['id']."' target='_blank'><img src='./assets/image/general/plasmid-mapping-s.gif' alt='Plasmid mapping' title='Plasmid mapping' border='0'/></a>&nbsp;&nbsp;";
+				echo "<a href='plasmids_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;";
+				//echo "<a href='plasmids_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' title='Related items' border='0'/></a>&nbsp;&nbsp;";
+				echo "<a href='plasmids_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete' title='Delete' border='0'/></a></td><td class='results'>";
 			} else {
-				echo "<img src='./assets/image/general/plasmid-mapping-s-grey.gif' alt='Plasmid mapping' border='0'/>&nbsp;&nbsp;";
-				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
-				//echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
-				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
+				echo "<img src='./assets/image/general/plasmid-mapping-s-grey.gif' alt='Plasmid mapping' title='Plasmid mapping' border='0'/>&nbsp;&nbsp;";
+				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/>&nbsp;&nbsp;';
+				//echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" title="Related items" border="0"/>&nbsp;&nbsp;';
+				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete" title="Delete" border="0"/></td><td class="results">';
 			}
 			//query the storages of this item where the state is in stock.
 			$query = "select id from storages WHERE module_id='{$module['id']}'
@@ -167,9 +167,9 @@ function   bank (plasmid_id) {
 			echo "&nbsp;&nbsp;";
 			if (userPermission('3')) {
 				echo "<a onclick=\"addStorage({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img
-	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" border=\"0\"/></a></td><td class=\"results\">";
+	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" title=\"Store\" border=\"0\"/></a></td><td class=\"results\">";
 			} else {
-				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" border="0"/></td><td class="results">';
+				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" title="Store" border="0"/></td><td class="results">';
 			}
 			//query the orders of this item where the state is not cancelled.
 			$query = "select id from orders WHERE module_id='{$module['id']}'
@@ -184,9 +184,9 @@ function   bank (plasmid_id) {
 			}
 			echo "&nbsp;&nbsp;";
 			if (userPermission('3')) {
-				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a></td>";
+				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" title=\"Request\" border=\"0\"/></a></td>";
 			} else {
-				echo "<img src=\"./assets/image/general/add-s-grey.gif\" alt=\"Request\" border=\"0\"/>";
+				echo "<img src=\"./assets/image/general/add-s-grey.gif\" alt=\"Request\" title=\"Request\" border=\"0\"/>";
 			}
 //			query the bank.
 //			$query = "select * from plasmid_bank WHERE `plasmid_id` = '{$matches['id']}'";
@@ -200,9 +200,9 @@ function   bank (plasmid_id) {
 //				}
 //			}
 //			if (userPermission('2')) {
-//				echo "<a onclick=\"bank({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Add to bank\" border=\"0\"/></a>";
+//				echo "<a onclick=\"bank({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Add to bank\" title=\"Add to bank\" border=\"0\"/></a>";
 //			} else {
-//				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Add to bank" border="0"/>';
+//				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Add to bank" title=\"Add to bank\" border="0"/>';
 //			}
 //			echo "</td><td class=\"results\">";
 //			request
@@ -218,9 +218,9 @@ function   bank (plasmid_id) {
 //			}
 //			if ($num_bank>0) {
 //				if (userPermission('3')) {
-//					echo "<a onclick=\"request({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a>";
+//					echo "<a onclick=\"request({$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" title=\"Request\" border=\"0\"/></a>";
 //				} else {
-//					echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" border="0"/>';
+//					echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" title=\"Request\" border="0"/>';
 //				}
 //			}
 			echo "</td></tr>";

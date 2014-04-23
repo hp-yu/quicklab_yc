@@ -82,10 +82,10 @@ include_once('include/includes.php');
       echo "{$matches['tel']}</td><td class='results'>";
       echo "<a href='{$matches['url']}' target='_blank'>{$matches['url']}</a></td><td class='results'>";
       if (userPermission('3')) {
-	    echo '<a href="sellers_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
+	    echo '<a href="sellers_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></td></tr>';
       }
 	  else{
-	  	echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/></td></tr>';
+	  	echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/></td></tr>';
 	  }
     }
     echo '</table></form>';

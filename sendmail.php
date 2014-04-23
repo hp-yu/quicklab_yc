@@ -1,9 +1,18 @@
 <?php
+<<<<<<< HEAD
+	include('include/includes.php');
+=======
 include('include/includes.php');
 include("fckeditor/fckeditor.php") ;
+>>>>>>> 18cc085ea93816da6f540d940328e1fb5494f0cf
   $_SESSION['url_1']=$_SERVER['REQUEST_URI'];
 
-  do_html_header('Send mail-Quicklab');
+  do_html_header_begin('Send mail-Quicklab');
+  ?>
+  <script type="text/javascript" src="include/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="include/ckfinder/ckfinder.js"></script>
+  <?php
+  do_html_header_end();
   do_header();
   //do_leftnav();
 
@@ -24,17 +33,11 @@ include("fckeditor/fckeditor.php") ;
 </td>
 <tr><td>Subject: <input type="text" name="subject" size="40" value="<?php  echo $_REQUEST['subject'] ?>"/></td></tr>
 <tr><td>
-<?php
-$oFCKeditor = new FCKeditor('content') ;
-$oFCKeditor->BasePath	= './fckeditor/';
-$oFCKeditor->Value = stripslashes( $_REQUEST['content'] );
-//$oFCKeditor->Value		= stripslashes( $match['content'] );
-$oFCKeditor->Config['EnterMode'] = 'br';
-//$oFCKeditor->Height = '500';
-$oFCKeditor->ToolbarSet= "Basic";
-
-$oFCKeditor->Create() ;
-?>
+<textarea id="content" name="content" class="ckeditor"></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+//CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 </td></tr>
 <script>
 function submitAddAtch () {
@@ -60,7 +63,7 @@ function sendMail () {
 	document.mail.submit();
 }
 </script>
-<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' border='0'/></a></td></tr>
+<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' title='Add' border='0'/></a></td></tr>
 <?php
 for ($i=0;$i<$_REQUEST['atch_count'];$i++) {
 	echo "<tr><td>";

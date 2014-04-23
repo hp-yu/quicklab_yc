@@ -88,10 +88,6 @@ A
     text-decoration: none;
     color: blue;
 }
-select
-{
-    z-index: 1;
-}
 A:hover
 {
     text-decoration: none;
@@ -339,8 +335,20 @@ select
 {
     font-size: 8pt;
     font-family: verdana,helvetica;
+    
 }
-
+select
+{
+    z-index: 1;
+}
+select.cascade_select_h
+{
+    margin: 0px 5px 0px 0px;
+}
+select.cascade_select_v
+{
+    margin: 0px 0px 5px 0px;
+}
 textarea
 {
     font-size: 8pt;

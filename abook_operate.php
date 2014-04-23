@@ -106,7 +106,7 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />&nbsp;&nbsp;<a href='<?php 
-        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title="Back" border='0'/></a>
     	</td>
       </tr>
       <input type="hidden" name="action" value="add">
@@ -260,7 +260,7 @@ function Detail()
       </tr>
       <tr>
         <td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'><img 
-	 src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+	 src='./assets/image/general/back.gif' alt='Back' title="Back" border='0'/></a>
         </td>
       </tr>
     </table>

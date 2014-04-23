@@ -79,7 +79,7 @@ echo query_select_choose('operator', $query,'id','name',$people['people_id']);
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('company', $query,'id','name',$match['manufacturer']);
 ?>
-		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
 		<td>Price:</td>
@@ -105,7 +105,7 @@ echo option_select('mask',$mask,2,$_POST['mask']);
   <tr>
     <td colspan="2"><input type="submit" name="Submit" value="Submit" />
     <a href='<?php echo $_SESSION['url_1'];?>'>
-    <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+    <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
   </tr>
 <?php HiddenInputs('created_by','date_create','add');?>
   </form></table>
@@ -155,7 +155,7 @@ echo query_select_choose('operator', $query,'id','name',$maintenance['operator']
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('company', $query,'id','name',$maintenance['company']);
 ?>
-		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+		&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
 		<td>Price:</td>
@@ -182,7 +182,7 @@ echo option_select('mask',$mask,2,$maintenance['mask']);
   	<td colspan="2">
   	<input type="submit" name="Submit" value="Submit" />
     <a href='<?php echo $_SESSION['url_1'];?>'>
-    <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+    <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     </td>
   </tr>
 <?php HiddenInputs('updated_by','date_update','edit');?>
@@ -197,7 +197,7 @@ function Detail()	{
 	?>
   <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="maintenance_operate.php?type=edit&id=<?php echo $maintenance['id']?>"/>
-    <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3>
+    <img src='./assets/image/general/edit.gif' alt='edit' title='edit' border='0'/></a></h3>
     </td>
   </tr>
   <tr>
@@ -296,7 +296,7 @@ if($num_relateditems!=0)
 ?>
 	<tr>
 		<td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'>
-    <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+    <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     </td>
   </tr>
 </table>

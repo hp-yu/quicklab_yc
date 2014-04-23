@@ -33,7 +33,7 @@ function register_form()
         <td><?php
 		$query= "SELECT * FROM people WHERE state=0 ORDER BY CONVERT(name USING GBK)";
 		echo query_select_choose('people_id', $query,'id','name','');?>
-		*&nbsp;<a href="register_people_add.php"><img src="./assets/image/general/user-add.gif" alt="Add new" border="0"/></a></td>
+		*&nbsp;<a href="register_people_add.php"><img src="./assets/image/general/user-add.gif" alt="Add new" title="Add new" border="0"/></a></td>
       </tr>
       <input type='hidden' name='type' value='result'>
       <tr>

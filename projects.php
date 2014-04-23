@@ -31,11 +31,11 @@ include_once('include/includes.php');
 		<?php
 	        if (userPermission("2"))
 	        {
-	          echo '<a href="projects_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" border="0"/></a></h2>';
+	          echo '<a href="projects_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" title="Add new" border="0"/></a></h2>';
  	        }
  	        else
  	        {
- 	          echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
+ 	          echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/></h2>';
  	        }
 			?>
       </td>
@@ -44,7 +44,7 @@ include_once('include/includes.php');
       <td >Search name for:
         <input type="text" name="keywords" size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
         <input type="submit" name="Submit" value="Go" />
-        <input type="button" onclick="resetform(document.search,10)" value="Clear"/></td></tr>
+    </td></tr>
     <tr>
       <td>And state:<?php
 		$state=array(array("1","on"),
@@ -115,7 +115,7 @@ include_once('include/includes.php');
 	  echo "<tr><td class='results'>{$matches['id']}</td><td class='results'>";
 	  echo "<a href='projects_operate.php?type=detail&id={$matches[id]}'>{$matches['name']}</a></td><td class='results'>";
       echo "{$matches['date_start']}</td><td class='results'>";
-	  echo '<a href="projects_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
+	  echo '<a href="projects_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></td></tr>';
     }
     echo '</table></form>';
   }

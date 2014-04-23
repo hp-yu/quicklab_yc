@@ -22,12 +22,12 @@ include_once('include/includes.php');
     <td align='center' valign='middle'><h2>Solution center&nbsp;&nbsp;
     <?php
       if (userPermission("3")){
-      	echo "<a href='solutions_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a></h2>";
-      	//echo "&nbsp;<a href='solutions_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
+      	echo "<a href='solutions_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a></h2>";
+      	//echo "&nbsp;<a href='solutions_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' title='Import from file' border='0'/></a></h2>";
       }
       else {
-      	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
-      	//echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
+      	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/></h2>';
+      	//echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" title="Import from file" border="0"/></h2>';
  	    }?>
 	  </td>
   </tr>
@@ -105,12 +105,12 @@ include_once('include/includes.php');
 			echo $created_by['name']." ".$matches['date_create']."</td><td class='results'>";
 			$updated_by=get_record_from_id('people',$matches['updated_by']);
 			echo $updated_by['name']." ".$matches['date_update']."</td><td class='results'>";
-  		echo '<a href="solutions_operate.php?type=calc&id='.$matches['id'].'"><img src="./assets/image/general/calc-s.gif" alt="Calculate" border="0"/></a>&nbsp;&nbsp;';
+  		echo '<a href="solutions_operate.php?type=calc&id='.$matches['id'].'"><img src="./assets/image/general/calc-s.gif" alt="Calculate" title="Calculate" border="0"/></a>&nbsp;&nbsp;';
   		if (userPermission('3')) {
-  			echo '<a href="solutions_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
+  			echo '<a href="solutions_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Calculate" border="0"/></a></td></tr>';
   		}
   		else {
-  			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/></td></tr>';
+  			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/></td></tr>';
   		}
   	}
   	echo '</table></form>';

@@ -4,7 +4,7 @@ var dom = (document.getElementById) ? true : false;
 var ns5 = (!document.all && dom || window.opera) ? true: false;
 function describe_task(result,id) {
 	var f=document.getElementById("ganttchart");
-	var taskdiv = "<div id='task_popup_"+id+"' class = 'taskpopup' onmouseover = 'show_task("+id+")' onmouseout = 'hide_task("+id+")'><ul><li><b>"+result["name"]+"</b>&nbsp;&nbsp;<a onclick='edit_task_form("+result["project"]+","+id+")' style='cursor:pointer'/><img src='./assets/image/general/edit-s-t.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick='delete_task_form("+result["project"]+","+id+")' style='cursor:pointer'/><img src='./assets/image/general/cancel-s-t.gif' alt='Delete' border='0'/></a>";
+	var taskdiv = "<div id='task_popup_"+id+"' class = 'taskpopup' onmouseover = 'show_task("+id+")' onmouseout = 'hide_task("+id+")'><ul><li><b>"+result["name"]+"</b>&nbsp;&nbsp;<a onclick='edit_task_form("+result["project"]+","+id+")' style='cursor:pointer'/><img src='./assets/image/general/edit-s-t.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick='delete_task_form("+result["project"]+","+id+")' style='cursor:pointer'/><img src='./assets/image/general/cancel-s-t.gif' alt='Delete' title='Delete' border='0'/></a>";
 	if (result["description"]!="") {
 		taskdiv +="</li><li>"+result["description"]+"";
 	}

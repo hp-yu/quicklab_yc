@@ -1,10 +1,18 @@
 <?php
 include('include/includes.php');
-include("fckeditor/fckeditor.php") ;
+<<<<<<< HEAD
 check_login_status();
 ?>
 <?php
-  do_html_header('Posts-Quicklab');
+  do_html_header_begin('Posts-Quicklab');
+=======
+include("fckeditor/fckeditor.php") ;
+check_login_status();
+>>>>>>> 18cc085ea93816da6f540d940328e1fb5494f0cf
+?>
+<script type="text/javascript" src="include/ckeditor/ckeditor.js"></script>
+<?php
+  do_html_header_end();
   do_header();
   //do_leftnav();
 ?>
@@ -62,17 +70,13 @@ function submitPost () {
 <tr><td><div align='center'><h2>Post add</h2></div></td><tr>
 <tr><td>Title: <input type="text" name="name" size="40" value="<?php  echo $_REQUEST['name'] ?>"/></td></tr>
 <tr><td>
-	<?php
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value		= stripslashes( $_REQUEST['content'] );
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	//$oFCKeditor->Height = '500';
-	$oFCKeditor->ToolbarSet= "Basic";
-	$oFCKeditor->Create() ;
-	?>
+<textarea id="content" name="content" class="ckeditor"><?php echo stripslashes($_REQUEST['content']);?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 </td></tr>
-<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' border='0'/></a></td></tr>
+<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' title='Add' border='0'/></a></td></tr>
 	<?php
 	for ($i=0;$i<$_REQUEST['atch_count'];$i++) {
 		echo "<tr><td><input type=\"file\" name=\"attachment_$i\" /></td></tr>";
@@ -143,17 +147,13 @@ function submitPost() {
 <tr><td><div align='center'><h2>Post edit</h2></div></td></tr>
 <tr><td>Title: <input type="text" name="name" size="40" value="<?php echo stripslashes(htmlspecialchars( $match['name']))?>"/></td></tr>
 <tr><td>
-	<?php
-	$oFCKeditor = new FCKeditor('content') ;
-	$oFCKeditor->BasePath	= './fckeditor/';
-	$oFCKeditor->Value		=  stripslashes($match['content']) ;
-	$oFCKeditor->Config['EnterMode'] = 'br';
-	//$oFCKeditor->Height = '500';
-	$oFCKeditor->ToolbarSet= "Basic";
-	$oFCKeditor->Create() ;
-	?>
+<textarea id="content" name="content" class="ckeditor"><?php echo stripslashes($match['content']);?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 </td></tr>
-<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' border='0'/></a></td></tr>
+<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' title='Add' border='0'/></a></td></tr>
 	<?php
 	for ($i=0;$i<$_REQUEST['atch_count'];$i++) {
 		echo "<tr><td><input type=\"file\" name=\"attachment_$i\" /></td></tr>";
@@ -218,17 +218,13 @@ function submitPost() {
 <tr><td><div align='center'><h2>Post comment edit</h2></div></td>
 <tr><td><a href="posts_operate.php?type=detail&id=<?php echo $match['post_id'];?>"/><?php echo stripslashes(htmlspecialchars( $match['name']))?></a></td></tr>
 <tr><td>
-<?php
-$oFCKeditor = new FCKeditor('content') ;
-$oFCKeditor->BasePath	= './fckeditor/';
-$oFCKeditor->Value		=  stripslashes($match['content']) ;
-$oFCKeditor->Config['EnterMode'] = 'br';
-//$oFCKeditor->Height = '500';
-$oFCKeditor->ToolbarSet= "Basic";
-$oFCKeditor->Create() ;
-?>
+<textarea id="content" name="content" class="ckeditor"><?php echo stripslashes($match['content']);?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 </td></tr>
-<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' border='0'/></a></td></tr>
+<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' title='Add' border='0'/></a></td></tr>
 	<?php
 	for ($i=0;$i<$_REQUEST['atch_count'];$i++) {
 		echo "<tr><td><input type=\"file\" name=\"attachment_$i\" /></td></tr>";
@@ -293,17 +289,13 @@ function submitPost () {
 <tr><td><div align='center'><h2>Post comment add</h2></div></td>
 <tr><td><a href="posts_operate.php?type=detail&id=<?php echo $_REQUEST['id'];?>"/><?php echo stripslashes(htmlspecialchars( $match['name']))?></a></td></tr>
 <tr><td>
-<?php
-$oFCKeditor = new FCKeditor('content') ;
-$oFCKeditor->BasePath	= './fckeditor/';
-$oFCKeditor->Value		=  stripslashes( $_REQUEST['content'] );
-$oFCKeditor->Config['EnterMode'] = 'br';
-//$oFCKeditor->Height = '500';
-$oFCKeditor->ToolbarSet= "Basic";
-$oFCKeditor->Create() ;
-?>
+<textarea id="content" name="content" class="ckeditor"><?php echo stripslashes($_REQUEST['content']);?></textarea>
+<script>
+var editor = CKEDITOR.replace( 'content' );
+CKFinder.setupCKEditor( editor, 'include/ckfinder/' ) ;
+</script>
 </td></tr>
-<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' border='0'/></a></td></tr>
+<tr><td>Attachment:  <a href='#' onclick='javascipt:submitAddAtch()'><img src='./assets/image/general/add-s.gif' alt='Add' title='Add' border='0'/></a></td></tr>
 	<?php
 	for ($i=0;$i<$_REQUEST['atch_count'];$i++) {
 		echo "<tr><td><input type=\"file\" name=\"attachment_$i\" /></td></tr>";
@@ -353,7 +345,7 @@ function detail() {
   $created_by=get_name_from_id('people',$match['created_by']);
   echo "<div align='center'><h2>Post detail</h2></div>";
   echo "<div style='float:left;border-bottom:1px solid #006633;border-top:1px solid #006633; margin:3px'/>";
-  echo "<table width='100%'><tr><td align='left'><b>".$match['name']."</b>&nbsp;&nbsp;<a href='".$_SESSION['url_1']."'><img src='./assets/image/general/back.gif' alt='Back'  border='0'/></a></td>";
+  echo "<table width='100%'><tr><td align='left'><b>".$match['name']."</b>&nbsp;&nbsp;<a href='".$_SESSION['url_1']."'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td>";
   echo "<td align='right'>";
   if (userPermission(0,$match['created_by'])) {
   	echo "<a href='posts_operate.php?type=edit_form&id=$id' target='_self' ><img src='./assets/image/general/edit.gif' title='Edit' border='0'/></a>&nbsp;&nbsp;";

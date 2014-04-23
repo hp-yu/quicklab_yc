@@ -89,7 +89,7 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />&nbsp;&nbsp;<a href='<?php 
-        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title="Back" border='0'/></a>
     	</td>
       </tr>
       <input type="hidden" name="action" value="add">
@@ -186,7 +186,7 @@ function Detail()
 	<tr><td colspan='2'><div align='center'><h2>Accounts</h2></div></td></tr>
       <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="accounts_operate.php?type=edit&id=<?php echo $account['id']?>"/>
-    <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3></td>
+    <img src='./assets/image/general/edit.gif' alt='edit' title="edit" border='0'/></a></h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
@@ -233,7 +233,7 @@ function Detail()
 	  </tr>
       <tr>
         <td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'><img 
-	 src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+	 src='./assets/image/general/back.gif' alt='Back' title="Back" border='0'/></a>
         </td>
       </tr>
     </table>
@@ -281,7 +281,7 @@ function DeleteForm()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img 
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     echo "</table></form>";
 	}
 	else 
@@ -305,7 +305,7 @@ function DeleteForm()
       </tr>
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img 
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
 		echo "</table>";
 	}
 	
@@ -321,7 +321,7 @@ function DeleteForm()
 	echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     HiddenInputs('','',"delete");
     echo "&nbsp;<a href='".$_SESSION['url_1']."'><img 
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
 	echo "</table></form>";
   }
 }

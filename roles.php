@@ -60,13 +60,12 @@ function   role_detail (id) {
 <tr><td align="center">
 <h2>Roles&nbsp;&nbsp;
 <a onclick="add_role()" style="cursor:pointer"/>
-<img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a></h2></td>
+<img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a></h2></td>
 </tr>
 <tr>
 <td >Search:
 <input type="text" name="keywords" size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
 <input type="submit" name="Submit" value="Go" />
-<input type="button" onclick="resetform(document.search,10)" value="Clear"/>
 </td>
 </tr>
 <?php

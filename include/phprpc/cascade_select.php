@@ -4,6 +4,7 @@ include("../includes.php");
 function get_child($pid) {
 	$db_conn= db_connect();
 	$query = "SELECT id,name FROM location WHERE pid = $pid";
+	
 	$rs = $db_conn -> query ($query);
 	while ($row = $rs ->fetch_assoc()) {
 		$child[]=$row;
@@ -11,7 +12,7 @@ function get_child($pid) {
 	return $child;
 }
 
-function initiate ($id,$br) {
+function initiate ($id,$br,$box) {
 	$path = array();
 	$db_conn = db_connect();
 	if ($id != "" && $id != 0) {
@@ -19,6 +20,7 @@ function initiate ($id,$br) {
 		$n=0;
 		while ($id != 1 ) {
 			$query = "SELECT id,pid FROM location WHERE id=$id";
+			
 			$rs= $db_conn->query($query);
 			$match=$rs->fetch_assoc();
 			$path[$n]["id"] = $match["id"];
@@ -32,7 +34,11 @@ function initiate ($id,$br) {
 			if ($br == 1 && ($n-$m) !=1) {
 				$html .= "<br id = 'B".($n-$m)."'>";
 			}
-			$html .= "<select id ='S".($n-$m)."' name ='S".($n-$m)."' onchange='change_select(this.value,this)' >";
+			if ($br == 1) {
+				$html .= "<select class='cascade_select_v' id ='S".($n-$m)."' name ='S".($n-$m)."' onchange='change_select(this.value,this)' >";
+			} else {
+				$html .= "<select class='cascade_select_h' id ='S".($n-$m)."' name ='S".($n-$m)."' onchange='change_select(this.value,this)' >";
+			}
 			$html .= "<option value = ''>- choose -</option>";
 			$opt = get_child ($path[$m]['pid']);
 			for ($i=0;$i<count($opt);$i++) {
@@ -46,7 +52,11 @@ function initiate ($id,$br) {
 		}
 	} else {
 		$html .= "<input type = 'hidden' id = 'num_select' name = 'num_select' value = '1'/>";
-		$html .= "<select id ='S1' name ='S1' onchange='change_select(this.value,this)' >";
+		if ($br == 1) {
+			$html .= "<select class='cascade_select_v' id ='S1' name ='S1' onchange='change_select(this.value,this)' >";
+		} else {
+			$html .= "<select class='cascade_select_h' id ='S1' name ='S1' onchange='change_select(this.value,this)' >";
+		}
 		$html .= "<option value = ''>- choose -</option>";
 		$opt = get_child (1);
 		for ($i=0;$i<count($opt);$i++) {

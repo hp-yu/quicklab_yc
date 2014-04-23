@@ -53,8 +53,8 @@ function loginx () {
 <table cellspacing="0" cellpadding="0">
 <form method="POST" id="login" action="login.php" target="_self">
 <tr><td>
-<img src="./assets/image/general/user.gif" alt="Username" border="0" align="absmiddle"/>&nbsp;<input type="text" name="username" size="6" style="height:18">&nbsp;
-<img src="./assets/image/general/key.gif" alt="Password" border="0"  align="absmiddle"/>&nbsp;<input type="password" name="password" size="6" style="height:18">&nbsp;<input type="submit" value="Login" style="height:18;font-size:7pt" align="absmiddle" >
+<img src="./assets/image/general/user.gif" alt="Username" title="Username" border="0" align="absmiddle"/>&nbsp;<input type="text" name="username" size="6" style="height:18">&nbsp;
+<img src="./assets/image/general/key.gif" alt="Password" title="Password" border="0"  align="absmiddle"/>&nbsp;<input type="password" name="password" size="6" style="height:18">&nbsp;<input type="submit" value="Login" style="height:18;font-size:7pt" align="absmiddle" >
 </td></tr>
 <tr><td valign="middle">
 <input type="checkbox" name="remember" >Remember me&nbsp;&nbsp;</td></tr>

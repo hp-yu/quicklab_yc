@@ -25,7 +25,7 @@ include('include/includes.php');
 <form action="reagent_cat.php" method="get" name="search" target="_self" id="form1">
   <table width="100%" class="search">
     <tr><td align="center">
-      <h2>Reagent categories&nbsp;&nbsp;<a href='reagent_cat_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a></h2></td>
+      <h2>Reagent categories&nbsp;&nbsp;<a href='reagent_cat_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a></h2></td>
     </tr>
 <?php
 $fields="CONCAT(`name`)";
@@ -81,7 +81,7 @@ resultsDisplayControl($sort,10);
     {
     echo "<tr><td class='results'>".$matches['id']."</td><td class='results'>";
     echo $matches['name']."</td><td class='results'>";
-      echo '<a href="reagent_cat_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit"  border="0"/></a></td></tr>';
+      echo '<a href="reagent_cat_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></td></tr>';
     }
     echo '</table></form>';
   }

@@ -333,7 +333,7 @@ function delete_form()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
 	hidden_inputs("delete");
 	echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-	src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+	src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
 }
 function add()
 {

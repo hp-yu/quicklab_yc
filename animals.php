@@ -38,12 +38,12 @@ function   addStorage (module_id, item_id) {
 	<tr>
       <td align='center' valign='middle'><h2>Animals&nbsp;&nbsp;<?php
       if (userPermission("3")){
-      	echo "<a href='animals_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a></h2>";
-      	//echo "&nbsp;<a href='animals_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' border='0'/></a></h2>";
+      	echo "<a href='animals_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a></h2>";
+      	//echo "&nbsp;<a href='animals_operate.php?type=import'><img src='./assets/image/general/import.gif' alt='Import from file' title='Import from file' border='0'/></a></h2>";
       }
       else {
-      	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
-      	//echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" border="0"/></h2>';
+      	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/></h2>';
+      	//echo '&nbsp;<img src="./assets/image/general/import-grey.gif" alt="Import from file" title="Import from file" border="0"/></h2>';
  	    }?>
 	  </td>
     </tr>
@@ -213,20 +213,20 @@ function   addStorage (module_id, item_id) {
   				echo "on experiment<br>".$matches['date_experiment'];
   			}
   			if ($matches['state']=='3') {
-  				echo "<img src='./assets/image/general/cross.gif' alt='dead' border='0'/>&nbsp;".$matches['date_death'];
+  				echo "<img src='./assets/image/general/cross.gif' alt='dead' title='dead' border='0'/>&nbsp;".$matches['date_death'];
   			}
   		}
   		echo "</td><td class='results'>";
   		if (userPermission('2',$matches['created_by'])) {
-  			echo "<a href='animals_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
-//  			echo "<a href='animals_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' border='0'/></a>&nbsp;&nbsp;";
-  			echo "<a href='animals_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td><td class='results'>";
+  			echo "<a href='animals_operate.php?type=edit&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;";
+//  			echo "<a href='animals_operate.php?type=relation&id=".$matches['id']."'><img src='./assets/image/general/attach-s.gif' alt='Related items' title='Related items' border='0'/></a>&nbsp;&nbsp;";
+  			echo "<a href='animals_operate.php?type=delete&id=".$matches['id']."'><img src='./assets/image/general/del-s.gif' alt='Delete' title='Delete'  border='0'/></a></td><td class='results'>";
   		}
   		else
   		{
-  			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
-//  			echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" border="0"/>&nbsp;&nbsp;';
-  			echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td><td class="results">';
+  			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/>&nbsp;&nbsp;';
+//  			echo '<img src="./assets/image/general/attach-s-grey.gif" alt="Related items" title="Related items" border="0"/>&nbsp;&nbsp;';
+  			echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  title="Delete" border="0"/></td><td class="results">';
   		}
   		//query the storages of this item where the state is in stock.
   		$db_conn=db_connect();
@@ -244,10 +244,10 @@ function   addStorage (module_id, item_id) {
   		echo "&nbsp;&nbsp;";
   		if (userPermission('3')) {
   			echo "<a onclick=\"addStorage({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img
-	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" border=\"0\"/></td><td class=\"results\">";
+	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" title=\"Store\" border=\"0\"/></td><td class=\"results\">";
   		}
   		else {
-  			echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" border="0"/></td><td class="results">';
+  			echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" title="Store" border="0"/></td><td class="results">';
   		}
   		//query the orders of this item where the state is not cancelled.
   		$query = "select * ,
@@ -288,10 +288,10 @@ function   addStorage (module_id, item_id) {
   		}
   		else {
   			if (userPermission('3')) {
-  				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\" border=\"0\"/></a></td></tr>";
+  				echo "<a onclick=\"requestOrder({$module['id']},{$matches['id']})\" style=\"cursor:pointer\"/><img src=\"./assets/image/general/add-s.gif\" alt=\"Request\"  title=\"Request\" border=\"0\"/></a></td></tr>";
   			}
   			else {
-  				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" border="0"/></td></tr>';
+  				echo '<img src="./assets/image/general/add-s-grey.gif" alt="Request" title="Request" border="0"/></td></tr>';
   			}
   		}
   	}

@@ -25,13 +25,13 @@ include('include/includes.php');
 <form action="users.php" method="get" name="search" target="_self" id="form1">
   <table width="100%" class="search">
     <tr><td align="center">
-      <h2>Users&nbsp;&nbsp;<a href='users_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a></h2></td>
+      <h2>Users&nbsp;&nbsp;<a href='users_operate.php?type=add'><img src='./assets/image/general/add.gif' alt='Add new' title="Add new" border='0'/></a></h2></td>
     </tr>
     <tr>
       <td >Search username for:
         <input type="text" name="keywords" size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
         <input type="submit" name="Submit" value="Go" />
-        <input type="button" onclick="resetform(document.search,10)" value="Clear"/></td></tr>
+      </td></tr>
       <tr>
         <td>And valid: <?php
       	$valid=array(array('1','yes'),
@@ -123,8 +123,8 @@ include('include/includes.php');
       echo "</td><td class='results'>";
 	  $people=get_name_from_id('people',$matches['people_id']);
 	  echo "{$people['name']}</td><td class='results'>";
-      echo '<a href="users_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit"  border="0"/></a>&nbsp;&nbsp;';
-      echo '<a href="users_operate.php?type=delete&id='.$matches['id'].'"><img src="./assets/image/general/del-s.gif" alt="Delete"  border="0"/></a></td></tr>';
+      echo '<a href="users_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a>&nbsp;&nbsp;';
+      echo '<a href="users_operate.php?type=delete&id='.$matches['id'].'"><img src="./assets/image/general/del-s.gif" alt="Delete" title="Delete" border="0"/></a></td></tr>';
     }
     echo '</table></form>';
   }

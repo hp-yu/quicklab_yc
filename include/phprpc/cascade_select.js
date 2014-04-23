@@ -80,9 +80,9 @@ function change_select (pid , s) {
 			var add_id = "S"+(this_id_num + 1);
 			if (br == 1) {
 				var add_br_id = "B"+(this_id_num + 1);
-				f.innerHTML += "<br id="+add_br_id+"><select id='"+add_id+"' name='"+add_id+"' onchange='change_select(this.value,this)'></select>";
+				f.innerHTML += "<br id="+add_br_id+"><select class='cascade_select_v' id='"+add_id+"' name='"+add_id+"' onchange='change_select(this.value,this)'></select>";
 			} else {
-				f.innerHTML += "<select id='"+add_id+"' name='"+add_id+"' onchange='change_select(this.value,this)'></select>";
+				f.innerHTML += "<select class='cascade_select_h' id='"+add_id+"' name='"+add_id+"' onchange='change_select(this.value,this)'></select>";
 			}
 			document.getElementById("num_select").value++;
 			for (var i=0;i<this_id_num;i++) {
@@ -96,7 +96,7 @@ function change_select (pid , s) {
 		so.style.display = "";
 		clear_select(so);
 		//Callback function set_select
-		rpc_cascade_select.get_child(pid, function (result) {
+		rpc_cascade_select.get_child(pid,function (result) {
 			set_select(next_id, result, 'id', 'name',"");
 		});
 	}

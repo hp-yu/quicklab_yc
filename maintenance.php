@@ -62,7 +62,6 @@ $select .= "</select>\n";
 echo $select;
 ?>
       <input type="submit" name="Submit" value="Go" />
-      <input type="button" onclick="resetform(document.search,10)" value="Clear"/>
     </td>
   </tr>
   <tr>
@@ -140,7 +139,7 @@ if ($results&&$results->num_rows>0) {
 		$operator=$rs->fetch_assoc();
 		echo '<a href="maintenance_operate.php?type=detail&id='.$matches['id'].'">';
 		echo $operator['name']."<br>".date('Y-m-d',strtotime($matches['date_maintenance']))."</a></td><td class='results'>";
-		echo '<a href="maintenance_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit"  border="0"/></a></td><td class="results">';
+		echo '<a href="maintenance_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></td><td class="results">';
 		//query the orders of this item where the state is not cancelled.
 		$module=get_record_from_name('modules','maintenance');
 		$query = "select id from orders WHERE module_id='{$module['id']}'

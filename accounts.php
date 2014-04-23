@@ -30,10 +30,14 @@ include_once('include/includes.php');
         <h2>Accounts&nbsp;&nbsp;
 		<?php
 	        if (userPermission("2")) {
+<<<<<<< HEAD
+	          echo '<a href="accounts_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" title="Add New" border="0"/></a></h2>';
+=======
 	          echo '<a href="accounts_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" border="0"/></a></h2>';
+>>>>>>> 18cc085ea93816da6f540d940328e1fb5494f0cf
  	        }
  	        else {
- 	          echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
+ 	          echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add New" border="0"/></h2>';
  	        }
 			?>
       </td>
@@ -42,7 +46,7 @@ include_once('include/includes.php');
       <td >Search name for:
         <input type="text" name="keywords" size="40" value="<?php echo stripslashes(htmlspecialchars($_REQUEST['keywords']))?>"/>
         <input type="submit" name="Submit" value="Go" />
-        <input type="button" onclick="resetform(document.search,10)" value="Clear"/></td></tr>
+	</td></tr>
     <tr>
       <td>And state:<?php
 		$state=array(array("1","on"), array("0","off"));
@@ -115,7 +119,7 @@ include_once('include/includes.php');
 	  @$percent=number_format($match['SUM(price)']/$matches['money_available']*100,2)."%";
 	  echo $momey_used."/".$money_available." ".$percent."</td><td class='results'>";
     echo "{$matches['date_start']}</td><td class='results'>";
-	  echo '<a href="accounts_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
+	  echo '<a href="accounts_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></td></tr>';
     }
     echo '</table></form>';
   }

@@ -4,14 +4,14 @@ include('./include/includes.php');
 <?php
 $db_conn=db_connect();
 if ($_REQUEST['root'] == "source") {
-	$query = "SELECT * FROM location WHERE pid=0 AND isbox=0";
+	$query = "SELECT * FROM location WHERE pid=0";
 	$result = $db_conn->query($query);
 	if($result->num_rows>0) {
 		echo "[";
 		$i=0;
 		while ($match=$result->fetch_array()) {
 			$i++;
-			$query = "SELECT * FROM location WHERE pid={$match['id']} AND isbox=0";
+			$query = "SELECT * FROM location WHERE pid={$match['id']}";
 			if ($db_conn->query($query)->num_rows>0) {
 				$expanded="true";
 			} else {
@@ -24,12 +24,12 @@ if ($_REQUEST['root'] == "source") {
 			}
 			if ($expanded=="true") {
 				echo ",\"children\":[";
-				$query = "SELECT * FROM location WHERE pid={$match['id']} AND isbox=0";
+				$query = "SELECT * FROM location WHERE pid={$match['id']}";
 				$result2 = $db_conn->query($query);
 				$j=0;
 				while ($match2=$result2->fetch_array()) {
 					$j++;
-					$query = "SELECT * FROM location WHERE pid={$match2['id']} AND isbox=0";
+					$query = "SELECT * FROM location WHERE pid={$match2['id']}";
 					if ($db_conn->query($query)->num_rows>0) {
 						$hasChildren="true";
 					} else {
@@ -48,14 +48,14 @@ if ($_REQUEST['root'] == "source") {
 		echo "]";
 	}
 } elseif (isset($_REQUEST['root'])&&$_REQUEST['root']<>"") {
-	$query = "SELECT * FROM location WHERE pid={$_REQUEST['root']} AND isbox=0";
+	$query = "SELECT * FROM location WHERE pid={$_REQUEST['root']}";
 	$result = $db_conn->query($query);
 	if($result->num_rows>0) {
 		echo "[";
 		$i=0;
 		while ($match=$result->fetch_array()) {
 			$i++;
-			$query = "SELECT * FROM location WHERE pid={$match['id']} AND isbox=0";
+			$query = "SELECT * FROM location WHERE pid={$match['id']}";
 			if ($db_conn->query($query)->num_rows>0) {
 				$hasChildren="true";
 			} else {

@@ -128,10 +128,10 @@ function submitResultsForm() {
   	 <tr>
        <td><h2 align='center'>Storages&nbsp;&nbsp;<?php
       if (userPermission("3")){
-      	echo "<a onclick=\"addStorage()\" style=\"cursor:pointer\"/><img src='./assets/image/general/add.gif' alt='Request' border='0'/></a></h2>";
+      	echo "<a onclick=\"addStorage()\" style=\"cursor:pointer\"/><img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a></h2>";
 		  }
 		  else {
-      	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
+      	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/></h2>';
 		  }?></td>
      </tr>
 <?php
@@ -304,19 +304,19 @@ rpc_cascade_select.useService('include/phprpc/cascade_select.php');
 				echo "</td><td class='results'>";
 			}
 			else {
-				echo "<a href='orders.php?id=".$matches['order_id']."' target = '_blank'><img src='./assets/image/general/info-s.gif' alt='Info' border='0'/></td><td class='results'>";
+				echo "<a href='orders.php?id=".$matches['order_id']."' target = '_blank'><img src='./assets/image/general/info-s.gif' alt='Info' title='Info' border='0'/></td><td class='results'>";
 			}
 			$userpid=get_pid_from_username($_COOKIE['wy_user']);
 			if ($userpid==$matches['keeper']||$userauth<=2) {
 				if($_REQUEST['state']==1) {
-					echo "<a onclick=\"editStorage({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a></td></tr>";
+					echo "<a onclick=\"editStorage({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a></td></tr>";
 				}
 				else{
-					echo "<img src='./assets/image/general/edit-s-grey.gif' alt='' border='0'/></td></tr>";
+					echo "<img src='./assets/image/general/edit-s-grey.gif' alt='' title='' border='0'/></td></tr>";
 				}
 			}
 			else {
-				echo "<img src='./assets/image/general/edit-s-grey.gif' alt='' border='0'/></td></tr>";
+				echo "<img src='./assets/image/general/edit-s-grey.gif' alt='' title='' border='0'/></td></tr>";
 			}
 		}
 		echo '</table>

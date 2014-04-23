@@ -261,7 +261,7 @@ function Detail()
           <h2>People</h2></div></td></tr>
   <tr><td colspan='2'><h3>Details:&nbsp;
     <a href="people_operate.php?type=edit&id=<?php echo $people['id']?>"/>
-    <img src='./assets/image/general/edit.gif' alt='edit' border='0'/></a></h3></td>
+    <img src='./assets/image/general/edit.gif' alt='edit' title='edit' border='0'/></a></h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
@@ -341,7 +341,7 @@ function Detail()
       </tr>
       <tr><td colspan='2'>
       <a href='<?php echo $_SESSION['url_1'];?>'>
-      <img src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td>
+      <img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td>
       </tr></table>
 <?php
 }
@@ -362,7 +362,7 @@ function DeleteForm()
       </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
-    echo "&nbsp;<a href=".$_SESSION['url_1']."><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+    echo "&nbsp;<a href=".$_SESSION['url_1']."><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     HiddenInputs("delete");
     echo "</form></table>";
 }
@@ -422,9 +422,8 @@ function Add() {
 			$type = basename($_FILES['photo']['type']);
 			switch ($type) {
 				case 'jpeg':
-				case 'pjpeg':   $filename = "data/people/photo_$id.jpg";
-				move_uploaded_file($_FILES['photo']['tmp_name'],
-				'./'.$filename);
+				case 'pjpeg':   $filename = "../quicklab_data/people/photo_$id.jpg";
+				move_uploaded_file($_FILES['photo']['tmp_name'],$filename);
 				$query = "update people
                                   set photo = '$filename'
                                   where id = $id";
@@ -439,9 +438,8 @@ function Add() {
 			$type = basename($_FILES['signature']['type']);
 			switch ($type) {
 				case 'jpeg':
-				case 'pjpeg':   $filename = "data/people/signature_$id.jpg";
-				move_uploaded_file($_FILES['signature']['tmp_name'],
-				'./'.$filename);
+				case 'pjpeg':   $filename = "../quicklab_data/people/signature_$id.jpg";
+				move_uploaded_file($_FILES['signature']['tmp_name'],$filename);
 				$query = "update people
                                   set signature = '$filename'
                                   where id = $id";
@@ -527,9 +525,8 @@ function Edit() {
 			$type = basename($_FILES['photo']['type']);
 			switch ($type) {
 				case 'jpeg':
-				case 'pjpeg':   $filename = "data/people/photo_$id.jpg";
-				move_uploaded_file($_FILES['photo']['tmp_name'],
-				'./'.$filename);
+				case 'pjpeg':   $filename = "../quicklab_data/people/photo_$id.jpg";
+				move_uploaded_file($_FILES['photo']['tmp_name'],$filename);
 				$query = "update people
                                   set photo = '$filename'
                                   where id = '$id'";
@@ -555,9 +552,8 @@ function Edit() {
 			$type = basename($_FILES['signature']['type']);
 			switch ($type) {
 				case 'jpeg':
-				case 'pjpeg':   $filename = "data/people/signature_$id.jpg";
-				move_uploaded_file($_FILES['signature']['tmp_name'],
-				'./'.$filename);
+				case 'pjpeg':   $filename = "../quicklab_data/people/signature_$id.jpg";
+				move_uploaded_file($_FILES['signature']['tmp_name'],$filename);
 				$query = "update people
                                   set signature = '$filename'
                                   where id = '$id'";

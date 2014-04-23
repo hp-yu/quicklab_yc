@@ -73,7 +73,7 @@ function AddForm()
 </tr>
   <tr>
   <td colspan='2'><input type='submit' value='Submit' onmouseover="select_all_options('people2project[]')">&nbsp;&nbsp;<a href='<?php
-  echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+  echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
   </td>
   </tr>
   <input type="hidden" name="action" value="add">
@@ -139,7 +139,7 @@ function EditForm() {
 </tr>
 <tr>
 <td colspan='2'><input type='submit' value='Submit' onmouseover="select_all_options('people2project[]')">&nbsp;&nbsp;<a href='<?php
-  echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+  echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
 </td>
 </tr>
 <input type="hidden" name="action" value="edit">
@@ -438,7 +438,7 @@ foreach ($project as $key_p=>$value_p) {
 		$rs=$db_conn->query($query);
 		$match=$rs->fetch_assoc();
 		if ($match['root']==1) {
-			echo "<td class='gantt_task_name'><b>$value</b>&nbsp;<a onclick=\"add_task_form($value_p)\" style=\"cursor:pointer\"/><img src='./assets/image/general/add-s.gif' alt='Add' border='0'/></a></td>";
+			echo "<td class='gantt_task_name'><b>$value</b>&nbsp;<a onclick=\"add_task_form($value_p)\" style=\"cursor:pointer\"/><img src='./assets/image/general/add-s.gif' alt='Add' title='Add' border='0'/></a></td>";
 		}
 		else {
 			echo "<td class='gantt_task_name'>$value</td>";

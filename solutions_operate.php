@@ -25,7 +25,7 @@ function StandardForm() {
 	<table width="100%" class="operate" >
 	<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 	<tr><td colspan='2'><div align='center'><h2>Solution center&nbsp;&nbsp;<a href='<?php echo $_SESSION['url_1'];?>'><img
-	 src='./assets/image/general/back.gif' alt='Back' border='0'/></a></h2></div></td></tr>
+	 src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></h2></div></td></tr>
 <?php
 	processRequest();
 }
@@ -56,7 +56,7 @@ function AddForm() {
       </tr>
       <tr>
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />&nbsp;&nbsp;<a href='<?php
-        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+        echo $_SESSION['url_1'];?>'><img src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
     	</td>
       </tr>
       <?php HiddenInputs('created_by','date_create','add');?>
@@ -90,7 +90,7 @@ function EditForm() {
   </script>
     <form id='edit' method='post' target="_self">
   	  <tr><td colspan='2'><h3>Edit solution:<?php echo $solution['name'];?>&nbsp;&nbsp;
-  	  <a href="solutions_operate.php?type=calc&id=<?php echo $_REQUEST['id'];?>"><img src="./assets/image/general/calc-s.gif" alt="Calculate" border="0"/></a></h3></td>
+  	  <a href="solutions_operate.php?type=calc&id=<?php echo $_REQUEST['id'];?>"><img src="./assets/image/general/calc-s.gif" alt="Calculate" title="Calculate" border="0"/></a></h3></td>
       </tr>
       <tr>
         <td width='20%'>Name:</td>
@@ -232,7 +232,7 @@ function change_state(){
 }
 </script>
   	  <tr><td colspan='2'><h3>Solution:<?php echo $solution['name'];?>&nbsp;&nbsp;
-  	  <a href="solutions_operate.php?type=edit&id=<?php echo $_REQUEST['id'];?>"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></h3>
+  	  <a href="solutions_operate.php?type=edit&id=<?php echo $_REQUEST['id'];?>"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a></h3>
   	  </td>
       </tr>
       <tr>

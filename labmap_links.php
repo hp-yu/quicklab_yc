@@ -21,12 +21,12 @@ include('./tree/common_functions.php');
 */
 ?>
 <html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
 Links in folder
 </title>
 <link href="./css/general.css" rel="stylesheet" type="text/css" />
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
    TD {font-size: 8pt;
        font-family: verdana,helvetica;
@@ -37,8 +37,13 @@ Links in folder
        border-bottom-color:'silver';
       }
 </style>
-
+<script src="include/jquery/lib/jquery.js" type="text/javascript"></script>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
 <script>
+$(document).ready(function() {
+	$("#form").validate();
+});
+
 function submitShowFormT(actionType) {
   document.forms[0].submit()
 }
@@ -139,7 +144,7 @@ function submitShowForm(actionType) {
 //sub standardForm(principalAction, parent, parentName, user)
 function standardForm($principalAction, $parent, $parentName, $user)
 {
-	echo '<form name="form" action="labmap_links.php" method=post>' . "\n" . "\n";
+	echo '<form name="form" id="form" action="labmap_links.php" method=post>' . "\n" . "\n";
 	//Don't change order
   echo "<input type=hidden name=whichAction value='$principalAction'>" . "\n" ;
   echo "<input type=hidden name=parent value='$parent'>" . "\n";
@@ -216,7 +221,7 @@ function ShowLinks($user, $parentId)
 		$notes = $rsHits['note'];
 	}
 
-	$queryString = "SELECT id, name, box_size, note FROM location WHERE ((pid=" . $parentId . ") AND (isbox=1) ) ORDER BY name";
+	$queryString = "SELECT id, name, box_size, note FROM location WHERE ((pid=" . $parentId . ") AND (isbox=2) ) ORDER BY name";
 	$rs= $db_conn->query($queryString);
 	$rs_num = $rs->num_rows;
 
@@ -286,7 +291,7 @@ function LinkForm ($nodeId, $name, $comments, $url, $action)
 	//echo "<tr><td>&nbsp;<td><font color=gray>(Include http://..., ftp://.., etc.)</font><br><br>";
 	echo "<tr><td>Box&nbsp;Name:<td>" .  "\n";
 	//echo '<input name=name size=50 value=' . FixUpItems($name) . ">" .  "\n";
-	echo "<input name=name size=50 value='$name'>" .  "\n";
+	echo "<input name=name size=50 value='$name' class='required'>" .  "\n";
 	echo "<tr><td>&nbsp;<td>&nbsp;";
 	echo "<tr><td>Comments:&nbsp;&nbsp;<td>" .  "\n";
 	//echo '<input size=50 name=comments value=""' . FixUpItems($comments) . ">" .  "\n";
@@ -379,7 +384,7 @@ rpc_cascade_select.useService('include/phprpc/cascade_select.php');
 	echo "<tr><td valign=top>Move selected<br>boxes from:<td valign=bottom>";
 	echo getPath($_REQUEST['parent']);
 	echo "<tr><td valign=top>Move To:<td>" .  "\n";
-	echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/></div>";
+	echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/><input type='hidden' id='box' value='0'/></div>";
 	echo "<tr><td>&nbsp;<td align=left>" .  "\n";
 	/*
 	print_r($_REQUEST['selectedLink']) ;
@@ -421,7 +426,7 @@ function FolderForm ($nodeId, $user, $name, $comments, $action)
 	}
 	echo "<tr><td>Location Name:<td>" .  "\n";
 	//echo "<input name=name size=50 value=".FixUpItems($name).">" .  "\n";
-	echo "<input name=name size=50 value='$name'>" .  "\n";
+	echo "<input name=name size=50 value='$name' class='required'>" .  "\n";
 	echo "<tr><td>Comments:<td>" .  "\n";
 	//echo '<input size=50 name=comments value='.FixUpItems($comments).">" .  "\n";
 	echo "<input size=50 name=comments value='$comments'>" .  "\n";
@@ -515,7 +520,7 @@ rpc_cascade_select.useService('include/phprpc/cascade_select.php');
 		//echo FixUpItems($comments) .  "\n";
 		echo $comments.  "\n";
 		echo "<tr><td valign=top>Paste To:<td>" .  "\n";
-		echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/></div>";
+		echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/><input type='hidden' id='box' value='0'/></div>";
 		echo "<tr><td> <td align=left>"."\n";
 		echo '<input type=submit name=whichButton value="Save">';
 		echo ' <input type=submit name=whichButton value="Cancel">';
@@ -570,7 +575,7 @@ rpc_cascade_select.useService('include/phprpc/cascade_select.php');
 		//echo FixUpItems($comments) .  "\n";
 		echo $comments.  "\n";
 		echo "<tr><td valign=top>Move To:<td>" .  "\n";
-		echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/></div>";
+		echo "<div id=\"cascade_select\"><input type='hidden' id='br' value='1'/><input type='hidden' id='box' value='0'/></div>";
 		echo "<tr><td> <td align=left>"."\n";
 		echo '<input type=submit name=whichButton value="Save">';
 		echo ' <input type=submit name=whichButton value="Cancel">';

@@ -94,7 +94,7 @@ function closeSubmit() {
 <?php
     $query= "select id,name from sellers order by CONVERT(name USING GBK)";
     echo query_select_choose('manufacturer', $query,'id','name',$_REQUEST['manufacturer']);
-?>&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+?>&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
 </tr>
 <tr>
 <td>Dealer:</td>
@@ -103,7 +103,7 @@ function closeSubmit() {
 $query= "select id,name from sellers order by CONVERT(name USING GBK)";
 echo query_select_choose('dealer', $query,'id','name',$_REQUEST['dealer']);
 ?>
-*&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a>
+*&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a>
 </td>
 </tr>
 <tr>
@@ -549,7 +549,7 @@ function quick_order_form()
     $query= "select id,name from sellers order by CONVERT(name USING GBK)";
     echo query_select_choose('manufacturer', $query,'id','name',$_POST['manufacturer']);
     ?>&nbsp;
-        <a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a>
+        <a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a>
     </td>
   </tr>
   <tr>
@@ -559,7 +559,7 @@ function quick_order_form()
     echo query_select_choose('dealer', $query,'id','name',$_POST['dealer']);
     ?>
     *&nbsp;
-        <a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+        <a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
   </tr>
   <tr>
     <td>Cat. number:</td>
@@ -762,7 +762,7 @@ $order=get_record_from_id('orders',$_REQUEST['id']);
 $query= "select id,name from sellers ORDER BY CONVERT(name USING GBK)";
 echo query_select_choose('manufacturer', $query,'id','name',$order['manufacturer']);
 ?>
-&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a>
+&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a>
 </td>
 </tr>
 <tr>
@@ -772,7 +772,7 @@ echo query_select_choose('manufacturer', $query,'id','name',$order['manufacturer
 $query= "select id,name from sellers ORDER BY CONVERT(name USING GBK)";
 echo query_select_choose('dealer', $query,'id','name',$order['dealer']);
 ?>
-*&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' border='0'/></a></td>
+*&nbsp;<a href="sellers_operate.php?type=add" target="_blank"><img src='./assets/image/general/add-s.gif' alt='Add sellers' title='Add sellers' border='0'/></a></td>
 </tr>
 <tr>
 <td>Cat. number:</td>

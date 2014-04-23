@@ -23,9 +23,9 @@ include_once('include/includes.php');
 <tr><td align='center' valign='middle'><h2>Posts&nbsp;&nbsp;
 	<?php
 	if (userPermission("3")){
-		echo "<a href='posts_operate.php?type=add_form'><img src='./assets/image/general/add.gif' alt='Add new' border='0'/></a>";
+		echo "<a href='posts_operate.php?type=add_form'><img src='./assets/image/general/add.gif' alt='Add new' title='Add new' border='0'/></a>";
 	} else {
-		echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/>';
+		echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/>';
 	}
 	?>
 <h2>
@@ -170,17 +170,17 @@ function submitResultsForm2(v,r) {
 			$comments_count=$match_comments['comments_count'];
 			echo $matches['count']."/".$comments_count."</td><td class='results'>";
 			if (userPermission(0,$matches['created_by'])) {
-				echo "<a href='posts_operate.php?type=edit_form&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' border='0'/></a>&nbsp;&nbsp;";
+				echo "<a href='posts_operate.php?type=edit_form&id=".$matches['id']."'><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;";
 			} else {
-				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/>&nbsp;&nbsp;';
+				echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/>&nbsp;&nbsp;';
 			}
 			if (userPermission(2)) {
 				?>
 				<a href='#' onclick='javascipt:submitResultsForm2(<?php echo $matches[id]
-?>,"delete")'><img src='./assets/image/general/del-s.gif' alt='Delete'  border='0'/></a></td></tr>
+?>,"delete")'><img src='./assets/image/general/del-s.gif' alt='Delete' alt='Delete' border='0'/></a></td></tr>
 				<?php
 			} else {
-				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete"  border="0"/></td></tr>';
+				echo '<img src="./assets/image/general/del-s-grey.gif" alt="Delete" title="Delete" border="0"/></td></tr>';
 			}
 		}
 		echo '</table>';

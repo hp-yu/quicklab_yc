@@ -170,17 +170,17 @@ function   editStorage (id) {
       <td><h2 align="center">Orders manager&nbsp;&nbsp;
 <?php
 if (userPermission("2")){
-	echo "<a onclick=\"requestOrder()\" style=\"cursor:pointer\"/><img src='./assets/image/general/add.gif' alt='Request' border='0'/></a>&nbsp;&nbsp;";
+	echo "<a onclick=\"requestOrder()\" style=\"cursor:pointer\"/><img src='./assets/image/general/add.gif' alt='Request' title='Request' border='0'/></a>&nbsp;&nbsp;";
 }
 else {
-	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/>&nbsp;&nbsp;';
+	echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/>&nbsp;&nbsp;';
 }
 /*
 if (userPermission("2")) {
-	echo "<a href='orders_operate.php?type=quickorder'><img src='./assets/image/general/add-r.gif' alt='Quick order' border='0'/></a></h2>";
+	echo "<a href='orders_operate.php?type=quickorder'><img src='./assets/image/general/add-r.gif' alt='Quick order' title='Quick order' border='0'/></a></h2>";
 }
 else {
-	echo "<img src='./assets/image/general/add-grey.gif' alt='Quick order' border='0'/></h2>";
+	echo "<img src='./assets/image/general/add-grey.gif' alt='Quick order' title='Quick order' border='0'/></h2>";
 }*/
 ?>
 			</h2></td>
@@ -450,40 +450,40 @@ else {
 							if (userPermission("2")) {
 								echo "<a onclick=\"checkOrder({$matches['id']})\" style=\"cursor:pointer\"/>";
 							}
-							echo "<span style='color:red;'>Check</span></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></td><td class='results'>";
+							echo "<span style='color:red;'>Check</span></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel'  border='0'/></td><td class='results'>";
 						}
 						else {
-							echo "<a onclick=\"receiveOrder({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Receive</span></a></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></a></td><td class='results'>";
+							echo "<a onclick=\"receiveOrder({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Receive</span></a></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel' border='0'/></a></td><td class='results'>";
 						break;
 							/*
-							echo "<a href='orders_operate.php?type=order&id={$matches[id]}'><span style='color:red;'>Order</span></br><a href='orders_operate.php?type=edit&id={$matches[id]}'><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a href='orders_operate.php?type=cancel&id={$matches[id]}'><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></td><td class='results'>";
+							echo "<a href='orders_operate.php?type=order&id={$matches[id]}'><span style='color:red;'>Order</span></br><a href='orders_operate.php?type=edit&id={$matches[id]}'><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a href='orders_operate.php?type=cancel&id={$matches[id]}'><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel' border='0'/></td><td class='results'>";
 							*/
 						}
 						break;
 					case '2':
-					  echo "<a onclick=\"receiveOrder({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Receive</span></a></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></a></td><td class='results'>";
+					  echo "<a onclick=\"receiveOrder({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Receive</span></a></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  title='Cancel' border='0'/></a></td><td class='results'>";
 						break;
 						/*
-						echo "<a href='orders_operate.php?type=order&id={$matches[id]}'><span style='color:red;'>Order</span></br><a href='orders_operate.php?type=edit&id={$matches[id]}'><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a href='orders_operate.php?type=cancel&id={$matches[id]}'><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></td><td class='results'>";
+						echo "<a href='orders_operate.php?type=order&id={$matches[id]}'><span style='color:red;'>Order</span></br><a href='orders_operate.php?type=edit&id={$matches[id]}'><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a href='orders_operate.php?type=cancel&id={$matches[id]}'><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel' border='0'/></td><td class='results'>";
 						break;
 						*/
 					case '3':
-						echo "<a onclick=\"receiveOrder({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Receive</span></a></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel'  border='0'/></a></td><td class='results'>";
+						echo "<a onclick=\"receiveOrder({$matches['id']})\" style=\"cursor:pointer\"/><span style='color:red;'>Receive</span></a></br><a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a>&nbsp;&nbsp;<a onclick=\"cancelOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/cancel-s.gif' alt='Cancel' title='Cancel' border='0'/></a></td><td class='results'>";
 						break;
 					case '4':
-						echo "<a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit'  border='0'/></a></td><td class='results'>";
+						echo "<a onclick=\"editOrder({$matches['id']})\" style=\"cursor:pointer\"/><img src='./assets/image/general/edit-s.gif' alt='Edit' title='Edit' border='0'/></a></td><td class='results'>";
 						break;
 				}
 			}
 			/*
 			if($matches['invoice']!='') {
-				echo "<img src='./assets/image/general/ok-s.gif' alt=''  border='0'/></td><td class='results'>";
+				echo "<img src='./assets/image/general/ok-s.gif' alt='' title='' border='0'/></td><td class='results'>";
 			}
 			else {
 				echo "</td><td class='results'>";
 			}
 			if($matches['account_id']!=''&&$matches['account_id']!=0) {
-				echo "<img src='./assets/image/general/ok-s.gif' alt=''  border='0'/></td><td class='results'>";
+				echo "<img src='./assets/image/general/ok-s.gif' alt='' title='' border='0'/></td><td class='results'>";
 			}
 			else {
 				echo "</td><td class='results'>";
@@ -502,9 +502,9 @@ else {
 				echo "&nbsp;&nbsp;";
 				if (userPermission('3')) {
 					echo "<a onclick=\"addStorage({$matches['id']})\" style=\"cursor:pointer\"/><img
-	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" border=\"0\"/></a>";
+	    src=\"./assets/image/general/add-s.gif\" alt=\"Store\" title=\"Store\" border=\"0\"/></a>";
 				} else {
-					echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" border="0"/>';
+					echo '<img src="./assets/image/general/add-s-grey.gif" alt="Store" title="Store" border="0"/>';
 				}
 			}
 			echo "</td></tr>";

@@ -179,7 +179,7 @@ function showHit($id) {
     //while (strlen($id) < $digits) { $id = "0" . $id; }
     $subdir = '';
     if ($subdirdigits > 0) { $subdir = substr($id,0,$subdirdigits) . '/'; }
-    print "<img src=\"${bitmapURLdir}/${subdir}${id}.png\" alt=\"hit structure\">\n";
+    print "<img src=\"${bitmapURLdir}/${subdir}${id}.png\" alt=\"hit structure\" title=\"hit structure\">\n";
   } 
   else {  
     // if no bitmaps are available, we must invoking another instance of JME 

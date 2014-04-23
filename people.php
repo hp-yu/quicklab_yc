@@ -58,10 +58,10 @@ function submitResultsForm() {
         <h2>People&nbsp;&nbsp;
 		<?php
 		if (userPermission("3")) {
-			echo '<a href="people_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" border="0"/></a></h2>';
+			echo '<a href="people_operate.php?type=add"><img src="./assets/image/general/add.gif" alt="Add new" title="Add new" border="0"/></a></h2>';
 		}
 		else {
-			echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" border="0"/></h2>';
+			echo '<img src="./assets/image/general/add-grey.gif" alt="Add new" title="Add new" border="0"/></h2>';
 		}
 			?>
       </td>
@@ -147,10 +147,10 @@ if ($results  && $results->num_rows>0) {
 		}
 		echo "</td><td class='results'>";
 		if (userPermission(2,$matches['id'])) {
-			echo '<a href="people_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" border="0"/></a></td></tr>';
+			echo '<a href="people_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Add new" border="0"/></a></td></tr>';
 		}
 		else {
-			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" border="0"/></td></tr>';
+			echo '<img src="./assets/image/general/edit-s-grey.gif" alt="Edit" title="Edit" border="0"/></td></tr>';
 		}
 	}
 	echo '</table>';

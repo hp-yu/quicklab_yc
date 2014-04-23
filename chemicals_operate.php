@@ -370,7 +370,7 @@ function detail()
 	 }?>
       <tr>
         <td colspan='2'><a href='<?php echo $_SESSION['url_1'];?>'><img
-	 src='./assets/image/general/back.gif' alt='Back' border='0'/></a>
+	 src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a>
         </td>
       </tr>
     </table>
@@ -418,7 +418,7 @@ function delete_form()
         <td colspan='2'><input type='submit' name='Submit' value='Submit' />";
     		hidden_inputs('','',"delete");
     		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     		echo "</table></form>";
     	}
     	else
@@ -442,7 +442,7 @@ function delete_form()
       </tr>
       <tr><td>
       <a href='". $_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
     		echo "</table>";
     	}
     	
@@ -458,7 +458,7 @@ function delete_form()
 		echo "<tr><td colspan='2'><input type='submit' name='Submit' value='Submit' />";
 		hidden_inputs('','',"delete");
 		echo "&nbsp;<a href='".$_SESSION['url_1']."'><img
-      src='./assets/image/general/back.gif' alt='Back' border='0'/></a></td></tr>";
+      src='./assets/image/general/back.gif' alt='Back' title='Back' border='0'/></a></td></tr>";
 		echo "</table></form>";
 	}
 }
