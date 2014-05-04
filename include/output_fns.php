@@ -70,7 +70,7 @@ function do_header() {
 			echo " [{$authority_name[$i][1]}]</td></tr>";
 		}
 	}
-	echo "<tr><td align='right'><a href='./logout.php'>Log out</a> | <a href='change_password.php?username=".$_COOKIE['wy_user']."'>Change password</a></td></tr>";
+	echo "<tr><td align='right'><a href='./logout.php'>Log out</a> | <a href='users_operate.php?type=change_password&id=".get_uid_from_username($_COOKIE['wy_user'])."'>Change password</a></td></tr>";
  	?>
 </table>
 </td>
@@ -220,7 +220,7 @@ function do_header_2()
     			echo " [{$authority_name[$i][1]}]</td></tr>";
     		}
     	}
-    	echo "<tr><td align='right'><a href='./logout.php'>Log out</a> | <a href='change_password.php?username=".$_COOKIE['wy_user']."'>Change password</a></td></tr>";
+    	echo "<tr><td align='right'><a href='./logout.php'>Log out</a> | <a href='users_operate?type=change_password&id=".get_uid_from_username($_COOKIE['wy_user'])."'>Change password</a></td></tr>";
   }
   else {
     ?>

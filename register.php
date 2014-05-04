@@ -2,17 +2,26 @@
 include('include/includes.php');
 ?>
 <?php
-  do_html_header('Register-Quicklab');
-  do_header();
-  processRequest();
-  do_html_footer();
+do_html_header_begin('Login-Quicklab');
+?>
+<script src="include/jquery/jquery.validate.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#register_form").validate();
+	$("#username").focus();
+});
+</script>
+<?php
+do_html_header_end();
+processRequest();
 ?>
 <?php
 function register_form()
 {
 	?>
-	<form id="form1" name="form1" method="post" action="">
-   <table class="search" style="margin-top:3px"width="100%">
+	<form id="register_form" name="register_form" method="post" action="">
+	<div class="register">
+   <table class="register" cellspacing="5" cellpadding="5" >
       <tr>
         <td colspan="2"><h3>User Registration:</h3></td>
         </tr>
@@ -37,10 +46,11 @@ function register_form()
       </tr>
       <input type='hidden' name='type' value='result'>
       <tr>
-        <td colspan="2"><input type="submit" name="Submit" value="Submit" />
+        <td colspan="2"><input type="submit" name="Submit" value="Submit" /></td>
+      </tr>
      </table>
+     </div>
      </form>
-    </table>
      <?php
 }
 

@@ -99,6 +99,83 @@ $(document).ready(function() {
    </table> </form>
   <?php
 }
+function change_password_form()
+{
+	if(!userPermission2(2,$_REQUEST['id']))
+    {
+  	  alert();
+    }
+    $user = get_record_from_id('users',$_REQUEST['id']);
+  ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#change_password_form").validate();
+});
+</script>
+  <form id='change_password_form' name='change_password_form' method='post' action=''>
+	  <table width='100%' class='operate'>
+	  <tr><td colspan='2'><div align='center'><h2>Users</h2></div></td></tr>
+      <tr>
+        <td colspan="2"><h3>Change password</h3>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%">Username:</td>
+        <td width="80%">
+        <?php
+  echo stripslashes(htmlspecialchars($user['username']));?>
+        </td>
+      </tr>
+      <tr>
+        <td>New password:</td>
+        <td><input type="password" name="new_password" value="" class="required"  /></td>
+      </tr>
+      <tr>
+        <td>Repeat new password:</td>
+        <td><input type="password" name="new_password2" value="" class="required"  /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input type="submit" name="Submit" value="Submit" />
+        <input type="hidden" name="action" value="change_password">
+        <input type="hidden" name="destination" value="
+        <?php echo $_SERVER['HTTP_REFERER'];?>
+        "/>
+        </td>
+      </tr>
+    <?php
+}
+function change_password()
+{
+    $id = $_REQUEST['id'];
+    $new_password = $_REQUEST['new_password'];
+    $new_password2 = $_REQUEST['new_password2'];
+  	try 
+  	{
+    if (!filled_out(array($_REQUEST['id'],$_REQUEST['new_password'],$_REQUEST['new_password2'])))
+    {
+  		throw new Exception('You have not filled the form out correctlly,</br>'
+  		.'- please try again.');
+    }
+  	$db_conn = db_connect();
+  	if ($new_password!=$new_password2)
+       throw new Exception('New passwords entered were not the same.  Not changed.');
+	$query = "update users
+		    set password=sha1('$new_password')
+			where id='$id'";
+				  
+  	$result = $db_conn->query($query);
+	if (!$result) 
+	{
+      throw new Exception("There was a database error when executing <pre>$query</pre>,</br>
+      	please try again.");
+    }
+	header('Location:'. $_REQUEST['destination']);
+    }
+    catch (Exception $e)
+    {
+  	  echo '</table><table class="alert"><tr><td><h3>'.$e->getMessage().'</h3></td></tr>';
+    }
+}
 function editform()
 {
   if(!userPermission('2'))
@@ -244,8 +321,8 @@ function Edit() {
 			.'- please try again.');
 		}
 		$db_conn=db_connect();
-		$query = "update users
-		    set people_id='$people_id',
+		$query = "update users set
+		    people_id='$people_id',
 			authority='$authority',
 			valid='$valid'
 			where id='$id'";
@@ -285,39 +362,23 @@ function HiddenInputs($action)
 function processRequest()
 {
 	$type = $_REQUEST['type'];
-	if ($type == "add")
-		{
-			AddForm();
-		}
-	if ($type == "detail")
-		{
-			Detail();
-		}
-	if ($type == "edit")
-		{
-			EditForm();
-		}
-	if ($type == "delete")
-		{
-			DeleteForm();
-		}
+	switch ($type) {
+		case "type":AddForm();break;
+		case "detail":Detail();break;
+		case "edit":EditForm();break;
+		case "delete":DeleteForm();break;
+		case "change_password":change_password_form();break;
+		default:break;
+	}
 	$action = $_POST['action'];
-	if ($action == "add")
-		{
-			Add();
-		}
-	if ($action == "detail")
-		{
-			Detail();
-		}
-	if ($action == "edit")
-		{
-			Edit();
-		}
-	if ($action == "delete")
-		{
-			Delete();
-		}
+	switch ($action) {
+		case "add":Add();break;
+		case "detail":Detail();break;
+		case "edit":Edit();break;
+		case "delete":Delete();break;
+		case "change_password":change_password();break;
+		default:break;
+	}
 }
 function export_excel($module_name,$query)
 {

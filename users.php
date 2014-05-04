@@ -124,6 +124,7 @@ include('include/includes.php');
 	  $people=get_name_from_id('people',$matches['people_id']);
 	  echo "{$people['name']}</td><td class='results'>";
       echo '<a href="users_operate.php?type=edit&id='.$matches['id'].'"><img src="./assets/image/general/edit-s.gif" alt="Edit" title="Edit" border="0"/></a>&nbsp;&nbsp;';
+      echo '<a href="users_operate.php?type=change_password&id='.$matches['id'].'"><img src="./assets/image/general/key-s.gif" alt="Change password" title="Change password" border="0"/></a>&nbsp;&nbsp;';
       echo '<a href="users_operate.php?type=delete&id='.$matches['id'].'"><img src="./assets/image/general/del-s.gif" alt="Delete" title="Delete" border="0"/></a></td></tr>';
     }
     echo '</table></form>';

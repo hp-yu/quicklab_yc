@@ -80,7 +80,7 @@ function get_username($id)
     return($result->fetch_assoc());
   }
 function get_pid_from_username($username )
-  // get username from the people_id
+  // get people id from the username
   {
     $db_conn = db_connect();
     $query = "select people_id from users where username  = '$username '";
@@ -88,7 +88,15 @@ function get_pid_from_username($username )
     $people=$result->fetch_assoc();
     return $people['people_id'];
   }
-
+function get_uid_from_username($username )
+  // get user id from the username
+  {
+    $db_conn = db_connect();
+    $query = "select id from users where username  = '$username '";
+    $result = $db_conn->query($query);
+    $user=$result->fetch_assoc();
+    return $user['id'];
+  }
 function check_user_authority($username)
   // check user has permission to act on this story
   {
@@ -105,6 +113,26 @@ function userPermission($authority,$pid='') {
 	$userpid=get_pid_from_username($_COOKIE['wy_user']);
 	if($pid!='') {
 		if($userauth<=$authority OR $userpid==$pid) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		if($userauth<=$authority) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+function userPermission2($authority,$uid='') {
+	$userauth=check_user_authority($_COOKIE['wy_user']);
+	$uid2=get_uid_from_username($_COOKIE['wy_user']);
+	if($uid!='') {
+		if($userauth<=$authority OR $uid2==$uid) {
 			return true;
 		}
 		else {

@@ -12,7 +12,7 @@ function get_child($pid) {
 	return $child;
 }
 
-function initiate ($id,$br,$box) {
+function initiate ($id,$br) {
 	$path = array();
 	$db_conn = db_connect();
 	if ($id != "" && $id != 0) {
